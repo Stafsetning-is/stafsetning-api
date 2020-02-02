@@ -17,7 +17,7 @@ const mongoUrl = MONGODB_URI;
 
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true } ).then(
     () => {
-        console.log("Connected to MongoDB")
+        console.log("Connected to MongoDB");
     }
 ).catch((err: any) => {
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);

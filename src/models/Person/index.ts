@@ -1,4 +1,4 @@
-import { Document, model, Schema, Model } from "mongoose"
+import { Document, model, Schema, Model } from "mongoose";
 
 const personSchema = new Schema({
     age: {
@@ -16,14 +16,14 @@ const personSchema = new Schema({
     }
 });
 
-export interface IPerson extends Document{
+export interface PersonInterface extends Document{
     age: number;
     name: string;
-    mother?: IPerson
+    mother?: PersonInterface;
 }
 
-export interface IPersons extends Model<IPerson> {
-    getRelatives: Promise<IPerson[]>
+export interface PersonCollectionInterface extends Model<PersonInterface> {
+    getRelatives: Promise<PersonInterface[]>;
 }
 
-export const Person = model<IPerson, IPersons>("person", personSchema, "person");
+export const Person = model<PersonInterface, PersonCollectionInterface>("person", personSchema, "person");
