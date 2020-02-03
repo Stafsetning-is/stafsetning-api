@@ -6,6 +6,7 @@ import mongo from "connect-mongo";
 import path from "path";
 import mongoose from "mongoose";
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+import {Person} from "./models";
 
 const MongoStore = mongo(session);
 
@@ -41,6 +42,8 @@ app.use(session({
 app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
+
+
 
 
 
