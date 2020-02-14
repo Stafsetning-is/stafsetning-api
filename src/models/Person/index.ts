@@ -1,29 +1,31 @@
-import { Document, model, Schema, Model } from "mongoose";
+import { model, Schema, Mongoose } from "mongoose";
+import { PersonCollectionInterface, PersonInterface } from "./interface";
+import * as statics from "./statics";
+import * as methods from "./methods";
 
 const personSchema = new Schema({
-    age: {
-        type: Number,
-        required: true
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    mother: {
-        type: Schema.Types.ObjectId,
-        ref: "person",
-        required: false
-    }
+	age: {
+		type: Number,
+		required: true
+	},
+	name: {
+		type: String,
+		required: true
+	},
+	mother: {
+		type: Schema.Types.ObjectId,
+		ref: "person",
+		required: false
+	}
 });
 
-export interface PersonInterface extends Document{
-    age: number;
-    name: string;
-    mother?: PersonInterface;
-}
+personSchema.statics = statics;
+personSchema.methods = methods;
 
-export interface PersonCollectionInterface extends Model<PersonInterface> {
-    getRelatives: Promise<PersonInterface[]>;
-}
+export const Person = model<PersonInterface, PersonCollectionInterface>(
+	"person",
+	personSchema,
+	"person"
+);
 
-export const Person = model<PersonInterface, PersonCollectionInterface>("person", personSchema, "person");
+export * from "./interface";

@@ -5,8 +5,8 @@ import bodyParser from "body-parser";
 import mongo from "connect-mongo";
 import path from "path";
 import mongoose from "mongoose";
+
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
-import {Person} from "./models";
 
 const MongoStore = mongo(session);
 
@@ -44,6 +44,7 @@ app.use(
 );
 
 
+console.log(process.env.NODE_ENV)
 
 
 
