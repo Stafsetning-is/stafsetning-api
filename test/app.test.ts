@@ -7,3 +7,9 @@ describe("GET /random-url", () => {
             .expect(404, done);
     });
 });
+
+describe("testing CI", () => {
+    it("should not work", () => {
+        expect(5).toEqual(3);
+    })
+})

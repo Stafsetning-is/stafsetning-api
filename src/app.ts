@@ -8,8 +8,6 @@ import mongoose from "mongoose";
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 
 
-require("./type-script-test")
-
 // Create Express server
 const app = express();
 /**
