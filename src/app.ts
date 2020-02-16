@@ -5,10 +5,10 @@ import bodyParser from "body-parser";
 import mongo from "connect-mongo";
 import path from "path";
 import mongoose from "mongoose";
-
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 
 
+require("./type-script-test")
 
 // Create Express server
 const app = express();
@@ -47,10 +47,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
-
-
-console.log(process.env.NODE_ENV);
-
 
 
 export default app;
