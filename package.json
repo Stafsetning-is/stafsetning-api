@@ -9,8 +9,8 @@
     "author": "",
     "license": "",
     "scripts": {
-        "start": "export NODE_ENV=production && npm run serve",
-        "dev": "export NODE_ENV=dev && nodemon src/server.ts",
+        "start": "npm run serve",
+        "dev": "nodemon src/server.ts",
         "build": "npm run build-ts && npm run lint",
         "serve": "node dist/server.js",
         "watch-node": "nodemon dist/server.js",

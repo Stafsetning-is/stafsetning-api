@@ -1,1 +1,1 @@
-export * from "./EnvService"
+export * from "./EnvService";

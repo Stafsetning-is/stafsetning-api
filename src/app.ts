@@ -8,14 +8,16 @@ import mongoose from "mongoose";
 
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 
-const MongoStore = mongo(session);
+
 
 // Create Express server
 const app = express();
+/**
+ * 
 
 // Connect to MongoDB
 const mongoUrl = MONGODB_URI;
-
+const MongoStore = mongo(session);
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true } ).then(
     () => {
         console.log("Connected to MongoDB");
@@ -23,12 +25,6 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUni
 ).catch((err: any) => {
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
 });
-
-// Express configuration
-app.set("port", process.env.PORT || 3000);
-app.use(compression());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     resave: true,
     saveUninitialized: true,
@@ -38,13 +34,22 @@ app.use(session({
         autoReconnect: true
     })
 }));
+ * 
+*/
+
+// Express configuration
+app.set("port", process.env.PORT || 3000);
+app.use(compression());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
 
 
-console.log(process.env.NODE_ENV)
+console.log(process.env.NODE_ENV);
 
 
 

@@ -10,6 +10,6 @@ export class EnvService{
      * @param cb functionality as call back
      */
     static doIn(env: Envs, cb: () => void) {
-        if(process.env.NODE_ENV === env) cb()
+        if(process.env.NODE_ENV === env) cb();
     }
 }
