@@ -1,14 +1,38 @@
-sudo: false
+# Set the language
 language: node_js
+
+# Set the node version
 node_js:
-    - "8"
-    - "9"
-    - "10"
+    - "12"
+
 services:
+    # Use docker command line and mongodb
+    - docker
     - mongodb
-cache:
-    directories:
-        - node_modules
-script:
+
+before_install:
+    - docker build -t stafsetning-api .
+    - docker run stafsetning-api
+
+install:
+    # Install dependencies for tests
+    - npm ci
+
+# cache:
+#     directories:
+#         - node_modules
+
+before_script:
+    # Start server for tests
     - npm run build
+
+script:
+    # Run tests
     - npm run test
+
+# deploy:
+#     # Build Docker container and push to Docker Hub
+#     provider: script
+#     script: bash scripts/deploy.sh
+#     on:
+#         branch: master

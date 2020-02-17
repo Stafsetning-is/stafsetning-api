@@ -10,6 +10,6 @@ describe("GET /random-url", () => {
 
 describe("testing CI", () => {
     it("should not work", () => {
-        expect(5).toEqual(3);
+        expect(5).toEqual(5);
     })
 })
