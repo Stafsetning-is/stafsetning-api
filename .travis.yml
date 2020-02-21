@@ -32,19 +32,19 @@ jobs:
         #     - ./scripts/docker_build.sh ${git.GIT_COMMIT}"
         #     - ./scripts/docker_push.sh ${git.GIT_COMMIT}"
 
-before_install:
-    - docker build -t stafsetning-api .
+# before_install:
+#     - docker build -t stafsetning-api .
 
-script:
-    # Run tests
-    - npm run test
+# script:
+#     # Run tests
+#     - npm run test
 
-# deploy:
-#     # Build Docker container and push to Docker Hub
-#     provider: script
-#     script: bash scripts/deploy.sh
-#     on:
-#         branch: master
+# # deploy:
+# #     # Build Docker container and push to Docker Hub
+# #     provider: script
+# #     script: bash scripts/deploy.sh
+# #     on:
+# #         branch: master
 
-after_script:
-    - docker-compose up
+# after_script:
+#     - docker-compose up
