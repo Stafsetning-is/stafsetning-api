@@ -1,0 +1,7 @@
+version: '3'
+services:
+  stafsetning_api:
+    container_name: stafsetning_api_1
+    image: stafsetning-api
+    ports:
+    - '3000:3000'
