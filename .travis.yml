@@ -15,8 +15,6 @@ services:
 
 jobs:
     include:
-        - stage: travis test
-          script: cat TRAVIS_COMMIT_MESSAGE
         - stage: clean
           script: 
           - git clean -dfxq
