@@ -2,19 +2,16 @@
 FROM node:latest
 
 # Maintainer label
-LABEL maintainer="Gabríel"
+LABEL maintainer="Gabríel S"
 
 # Set container work directory to /code
 WORKDIR /code
 
-# Copy the dependency file to the container
-COPY package.json package.json
-
-# Install all the dependencies
-RUN npm install --only=prod
-
 # Copy the node application files
 COPY . .
+
+# Install all the dependencies
+RUN npm ci
 
 # Build the application
 RUN npm run build

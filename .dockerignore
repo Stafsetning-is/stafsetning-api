@@ -1,16 +1,5 @@
-.github
-.vscode
-dist
 /node_modules
-scripts
 .dockerignore
-.env
-.eslintignore
-.eslintrc
-.firebaserc
-.gitignore
-.travis.yml
 Dockerfile
-firebase.json
 LICENSE
 README.md
