@@ -23,7 +23,7 @@ jobs:
           - npm run lint
           - npm run test:unit
         - stage: build
-          script: ./scripts/docker_build.sh GIT_COMMIT"
+          script: ./scripts/docker_build.sh GIT_COMMIT
 
 # before_install:
 #     - docker build -t stafsetning-api .
