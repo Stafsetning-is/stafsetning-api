@@ -6,7 +6,7 @@ node_js:
     - "12"
 
 env:
-    - GIT_COMMIT=git log --format="%H" -n 1
+    - GIT_COMMIT="git log --format="%H" -n 1"
 
 services:
     # Use docker command line and mongodb
@@ -15,16 +15,13 @@ services:
 
 jobs:
     include:
-        - stage: clean
+        - stage: clean, setup, lint and test
           script: 
           - git clean -dfxq
           - git stash
-        - stage: setup
-          script: npm install
-        - stage: lint
-          script: npm run lint
-        - stage: unit test
-          script: npm run test:unit
+          - npm install
+          - npm run lint
+          - npm run test:unit
         - stage: build
           script: ./scripts/docker_build.sh GIT_COMMIT"
 
