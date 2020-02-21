@@ -5,10 +5,32 @@ language: node_js
 node_js:
     - "12"
 
+# env:
+#     - git=checkout scm
+
 services:
     # Use docker command line and mongodb
     - docker
     - mongodb
+
+jobs:
+    include:
+        - stage: travis test
+          script: cat TRAVIS_COMMIT_MESSAGE
+        - stage: clean
+          script: 
+          - git clean -dfxq
+          - git stash
+        - stage: setup
+          script: npm install
+        - stage: lint
+          script: npm run lint
+        - stage: unit test
+          script: npm run test:unit
+        # - stage: build
+        #     script:
+        #     - ./scripts/docker_build.sh ${git.GIT_COMMIT}"
+        #     - ./scripts/docker_push.sh ${git.GIT_COMMIT}"
 
 before_install:
     - docker build -t stafsetning-api .
