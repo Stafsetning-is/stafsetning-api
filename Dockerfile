@@ -2,7 +2,7 @@
 FROM node:latest
 
 # Maintainer label
-LABEL maintainer="Gabríel S"
+LABEL maintainer="Gabríel"
 
 # Set container work directory to /code
 WORKDIR /code
