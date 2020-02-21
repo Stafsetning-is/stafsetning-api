@@ -5,8 +5,8 @@ language: node_js
 node_js:
     - "12"
 
-# env:
-#     - git=checkout scm
+env:
+    - GIT_COMMIT=git log --format="%H" -n 1
 
 services:
     # Use docker command line and mongodb
@@ -25,10 +25,8 @@ jobs:
           script: npm run lint
         - stage: unit test
           script: npm run test:unit
-        # - stage: build
-        #     script:
-        #     - ./scripts/docker_build.sh ${git.GIT_COMMIT}"
-        #     - ./scripts/docker_push.sh ${git.GIT_COMMIT}"
+        - stage: build
+          script: ./scripts/docker_build.sh GIT_COMMIT"
 
 # before_install:
 #     - docker build -t stafsetning-api .
