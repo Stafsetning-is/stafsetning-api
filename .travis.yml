@@ -1,5 +1,3 @@
-sudo: required
-
 # Set the language
 language: node_js
 
