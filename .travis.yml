@@ -30,13 +30,13 @@ jobs:
       - npm install
       - npm run lint
       - npm run test:unit
-    - stage:
+    - stage: build
       script:
       - ./scripts/docker_deploy.sh $IMAGE_NAME $REGISTRY_USER $REGISTRY_PASS $TRAVIS_COMMIT
     # - stage: api test
     # - stage: capacity test
-    - stage: deploy
-      script:
+    # - stage: deploy
+    #   script:
         # TODO: SSH into DigitalOcean
       # - ./scripts/docker_compose_up.sh $TRAVIS_COMMIT $API_URL $ENVIRONMENT
 
