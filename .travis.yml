@@ -1,32 +1,51 @@
+sudo: required
+
 # Set the language
 language: node_js
 
 # Set the node version
 node_js:
-    - "12"
+  - "12"
 
 services:
-    # Use docker command line and mongodb
-    - docker
-    # - mongodb
+  # Use docker command line and mongodb
+  - docker
+  # - mongodb
+
+env:
+  global:
+    - IMAGE_NAME=gabriels17/stafsetning-api
+    - REGISTRY_USER=gabriels17
+    - REGISTRY_PASS=V5bBRHkagn9bqES
+    # - API_URL=some_url
+    # - ENVIRONMENT=prod
+    # - secret: "something long"
 
 jobs:
-    include:
-        - stage: clean, setup, lint, unit test and build
-          script: 
-          - git clean -dfxq
-          - git stash
-          - npm install
-          - npm run lint
-          - npm run test:unit
-          - ./scripts/docker_build.sh $TRAVIS_COMMIT
+  include:
+    - stage: clean, setup, lint, unit test
+      script: 
+      - git clean -dfxq
+      - git stash
+      - npm install
+      - npm run lint
+      - npm run test:unit
+    - stage:
+      script:
+      - ./scripts/docker_deploy.sh $IMAGE_NAME $REGISTRY_USER $REGISTRY_PASS $TRAVIS_COMMIT
+    # - stage: api test
+    # - stage: capacity test
+    - stage: deploy
+      script:
+        # TODO: SSH into DigitalOcean
+      # - ./scripts/docker_compose_up.sh $TRAVIS_COMMIT $API_URL $ENVIRONMENT
 
-# before_install:
-#     - docker build -t stafsetning-api .
+# before_install
+#   - docker build -t stafsetning-api .
 
 # script:
-#     # Run tests
-#     - npm run test
+  # # Run tests
+  # - npm run test
 
 # # deploy:
 # #     # Build Docker container and push to Docker Hub
@@ -36,4 +55,4 @@ jobs:
 # #         branch: master
 
 # after_script:
-#     - docker-compose up
+  # - docker-compose up
