@@ -20,13 +20,16 @@ jobs:
   - stage: build
     script:
     - "./scripts/docker_deploy.sh $IMAGE_NAME $REGISTRY_USER $REGISTRY_PASS $TRAVIS_COMMIT"
-    - stage: deploy
-      deploy:
-        provider: firebase
-        token:
-          secure: X/1q4kZFE/a5JP2MSV/cjA2xyRIe2dQVWUlvjiUqTpzXrWPpzAbLArA+HfIs0OT29vQ3msnee+VXy+JH0SKmNQVxN5MGhQODTk/bk660HlfPhRjUDCwAZmmTFur3nc/j1uCPz2psfoME0bkvUyNJh1Ijnn1YO+Pa+9NJ2bJdFqXgo+HXUayJYsCIrBWSGViT0ili6UjgoslhXzCwhMVj1gISTcYRRGhtieCrmsdlq5G88bbdw5+yKs+2C9lyaXvOBN7c8mPsIM3P3Q7wj/zPEJ51Uv7vgyfR4l8nxj3T4dC76qMpmwOY/wQI8rpVLC4H6ms1mQC7U4FtHweBOTwjtRm5j8ivZQ0wkD0ro8kRTMFwmtN5aG2Cp0db1/USOj8ilqhFRqvwy3zaqIalS6gH0+cd96c7PVu/jCAFo2hB/5SYc/Jce30qgvg4ARZUaPdlGvA+Opop6rpJLiRRzgY+M+42FLIaSNA4gAjafLTWZd0Z5plVOwrlPuBHhAwxE7/p+XQZMOo/ySb5JMCjJEAnP5wZ5se4mBXhw1SDvfCeWyVmWl6sGU1kmOihstf3DGlUxJZK8DgAyOKTlyMTywll3gJlV2/4VF9+gDSl12XSgGNadMfxsq5PJVyTrVB86/2JaOLimSVPHzfe2fswrpmP9dYgseb8j4E94T70pwI5Ez4=
+  - stage: deploy 
+    deploy:
+      skip_cleanup: true
+      provider: script
+      before_script:
+        - npm install firebase-tools -g
+      script:
+        - firebase deploy --only hosting --token "X/1q4kZFE/a5JP2MSV/cjA2xyRIe2dQVWUlvjiUqTpzXrWPpzAbLArA+HfIs0OT29vQ3msnee+VXy+JH0SKmNQVxN5MGhQODTk/bk660HlfPhRjUDCwAZmmTFur3nc/j1uCPz2psfoME0bkvUyNJh1Ijnn1YO+Pa+9NJ2bJdFqXgo+HXUayJYsCIrBWSGViT0ili6UjgoslhXzCwhMVj1gISTcYRRGhtieCrmsdlq5G88bbdw5+yKs+2C9lyaXvOBN7c8mPsIM3P3Q7wj/zPEJ51Uv7vgyfR4l8nxj3T4dC76qMpmwOY/wQI8rpVLC4H6ms1mQC7U4FtHweBOTwjtRm5j8ivZQ0wkD0ro8kRTMFwmtN5aG2Cp0db1/USOj8ilqhFRqvwy3zaqIalS6gH0+cd96c7PVu/jCAFo2hB/5SYc/Jce30qgvg4ARZUaPdlGvA+Opop6rpJLiRRzgY+M+42FLIaSNA4gAjafLTWZd0Z5plVOwrlPuBHhAwxE7/p+XQZMOo/ySb5JMCjJEAnP5wZ5se4mBXhw1SDvfCeWyVmWl6sGU1kmOihstf3DGlUxJZK8DgAyOKTlyMTywll3gJlV2/4VF9+gDSl12XSgGNadMfxsq5PJVyTrVB86/2JaOLimSVPHzfe2fswrpmP9dYgseb8j4E94T70pwI5Ez4="
+      on:
+        branch: master
 notifications:
   slack:
-    if: branch = master
-    on_success: change
-    on_failure: always
+    secure: diuFhAwtl9ZFAqAcYWjF20l1nCTdrP9uKGCg+1AXSZYiNDSSXiI+CFpBrh53xIktS5L71g7QSjCVexNw2YHflRXImdaIH6U2zmLFlGXZ0r9+ygXwnvwMywoiwWkkm1TiHubcsVFHlS6O/0NIVMM2HPRICSW7Tdx+OZfS9KvgWhKcV8GkczZv0+AomLRGF9auqzU9J7w+BR0NwnmVtM6WL13KDhDCDSWYCMrgFKpeu0ketEhCwML6cYOiSQn+e9muc4a/bvklEJ5M7dF9o/98M4dvccDtouRQ7JOM0gqj4bEeeDR1bXpJNmB3Qevb5wsgW4GuGrW/oEKcvqzGYADCDAEEN7zltyM1WeIyvfxZyixgVWsFJGMAmWbsCjefJIs+4BMLCJl4TSYA0N6Y6cYZLGYcbOGJ1I5hzkWm6OtWncaNA4EI+QO5lQuLddurqyi/nRSl2iiD+c8FstFi72xFmvZ/Q8K9HN5S5XCyQAuoKf244tqcw3Z5bhSsVAOiZCmbPxbS5/jI7B91JX0d5/Hbj2Bk0IYG/vLom9zWDLLjLQtZip5hwmbSVh1HzxaMYLny/WN5nt2LEVKOQDknBE2+ojE/m+oqK/GFxWcLtB0o1rSuxUg8/KAWxmIM602s+2rt8V3j1LgUEk73i47bNmXFRiLN+eXXMIR5h6jEzh3LuLc=
