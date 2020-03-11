@@ -4,7 +4,7 @@ type SpellingTypeEvents =
     "onSuccess" |
     "onComplete"
 
-class SpellingExercise{
+class SpellingExercise {
 
     private exerciseParts: string[];
     private typingAt: number;
@@ -23,7 +23,7 @@ class SpellingExercise{
      * @param exerciseParts the parts of the exercise
      */
     private constructor(exerciseParts: string[]) {
-        this.exerciseParts = exerciseParts
+        this.exerciseParts = exerciseParts;
         this.cleanParts();
         this.typingAt = 0;
     }
@@ -35,7 +35,7 @@ class SpellingExercise{
      * @param cb call back to execute on event, will overwrite older calllbacks
      */
     public addEventListener(type: SpellingTypeEvents, cb: () => void) {
-        this[type] = cb
+        this[type] = cb;
     }
 
     /**
@@ -100,7 +100,7 @@ class SpellingExercise{
      * @param exerciseParts array of exercise parts
      */
     public static startExercise(exerciseParts: string[]) {
-        return new SpellingExercise(exerciseParts)
+        return new SpellingExercise(exerciseParts);
     }
 }
 
