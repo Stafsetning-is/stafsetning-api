@@ -1,12 +1,22 @@
 import express from "express";
 import compression from "compression";  // compresses requests
-import session from "express-session";
+//import session from "express-session";
 import bodyParser from "body-parser";
-import mongo from "connect-mongo";
+//import mongo from "connect-mongo";
 import path from "path";
-import mongoose from "mongoose";
-import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+//import auth from "auth.ts";
+//import mongoose from "mongoose";
+//import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+//import * as fb from "firebase/app";
+import "firebase/auth";
+import * as admin from "firebase-admin";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+// const serviceAccount = require("../ServiceAccountKey.json");
+
+// admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccount)
+// });
 
 // Create Express server
 const app = express();
@@ -46,5 +56,23 @@ app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
 
+app.get("/", (req, res) => {
+    res.send("Hello from the API!");
+});
+
+const authorizeUser = (uid: string) => {
+    admin.auth().createCustomToken(uid)
+        .then((customToken) => {
+            return customToken;
+        })
+        .catch((error) => {
+            console.log("Error creating custom token:", error);
+        });
+};
+
+app.post("/signup", (req, res) => {
+    const authToken = authorizeUser(req.body.uid);
+    res.send(authToken);
+});
 
 export default app;
