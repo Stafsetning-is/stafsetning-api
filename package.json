@@ -42,7 +42,7 @@
         "firebase": "^7.10.0",
         "firebase-admin": "^8.9.2",
         "lusca": "^1.6.1",
-        "mongoose": "^5.7.1",
+        "mongoose": "^5.7.5",
         "pug": "^2.0.4",
         "request": "^2.88.0",
         "request-promise": "^4.2.4",
