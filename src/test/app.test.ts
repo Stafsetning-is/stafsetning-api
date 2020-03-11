@@ -9,7 +9,7 @@ describe("GET /random-url", () => {
 });
 
 describe("testing CI", () => {
-    it("should not work", () => {
+    it("should work", () => {
         expect(5).toEqual(3);
     });
 });
