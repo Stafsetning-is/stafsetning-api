@@ -1,14 +1,36 @@
-sudo: false
 language: node_js
 node_js:
-    - "8"
-    - "9"
-    - "10"
+- '12'
 services:
-    - mongodb
-cache:
-    directories:
-        - node_modules
-script:
-    - npm run build
-    - npm run test
+- docker
+env:
+  global:
+  - IMAGE_NAME=gabriels17/stafsetning-api
+  - REGISTRY_USER=gabriels17
+  - secure: eDpLwB8lFgrfNqjAZTRwqsARF9MS1m687tzf0f8lkQzNtSsqx8uR98ZkmsLET5/sdI1fIBqV2IuJ3hycYGYcVhFqkhkeNEYLi4brQY9dLBaUQTduesgGzcBW8bkojac/cO3+N6ACD/yW70uxVJcPwxAPTOeHQiOCNyrnjjuwI86uHaHJY1uR5fADkhemwUgOrK1APBP+0xc4ssNuMnbK7gYvWpCbOaEDze3mVPKvA6SocEip8ZFu+NVL2KU8fe1b56A37hXlXVgH9CF7TfYdczGNw1LkXwoTdnb5LSLyXsvMourei8Ya89GEXz2CyqE9SswLknj8z0AAqk27KEjdRm5EZxwLrIQvjsqZu8OZbEdEElYPepzDCi3Zy9pHWHNGnfvc5tkXOXaqnl+LWfk8yQUiwN4HpIsRBbyBxTP/XhtkddXM6NLfTmBE9Xao1m+fRYGsWrAYxK3RABy11r0LyHyi8PLuIhxPuKfs/0jQ508a8kQR14w8YhFe4wOLK/E1zlIxCzj+364yboFZQpk5L5qU9wVtdsRzL52kKIicx6pu+dkPmo4JY2SkwAQV8eEdT8wAJujML6geFAsKftT+hmAoSYxRoXTOWiDSPV7/plv5TZ8xUNkOgSDKZGKbmEUBd2xL6FLimWw7TfHOocssajpO+KTdt2h3caNxhOMCukY=
+jobs:
+  include:
+  - stage: clean, setup, lint, unit test
+    script:
+    - git clean -dfxq
+    - git stash
+    - npm install
+    - npm run lint
+    - npm run test:unit
+  - stage: build
+    script:
+    - "./scripts/docker_deploy.sh $IMAGE_NAME $REGISTRY_USER $REGISTRY_PASS $TRAVIS_COMMIT"
+  - stage: deploy 
+    deploy:
+      cleanup: true
+      provider: script
+      script:
+        - npm install firebase-tools -g
+        - firebase deploy --only hosting --token "X/1q4kZFE/a5JP2MSV/cjA2xyRIe2dQVWUlvjiUqTpzXrWPpzAbLArA+HfIs0OT29vQ3msnee+VXy+JH0SKmNQVxN5MGhQODTk/bk660HlfPhRjUDCwAZmmTFur3nc/j1uCPz2psfoME0bkvUyNJh1Ijnn1YO+Pa+9NJ2bJdFqXgo+HXUayJYsCIrBWSGViT0ili6UjgoslhXzCwhMVj1gISTcYRRGhtieCrmsdlq5G88bbdw5+yKs+2C9lyaXvOBN7c8mPsIM3P3Q7wj/zPEJ51Uv7vgyfR4l8nxj3T4dC76qMpmwOY/wQI8rpVLC4H6ms1mQC7U4FtHweBOTwjtRm5j8ivZQ0wkD0ro8kRTMFwmtN5aG2Cp0db1/USOj8ilqhFRqvwy3zaqIalS6gH0+cd96c7PVu/jCAFo2hB/5SYc/Jce30qgvg4ARZUaPdlGvA+Opop6rpJLiRRzgY+M+42FLIaSNA4gAjafLTWZd0Z5plVOwrlPuBHhAwxE7/p+XQZMOo/ySb5JMCjJEAnP5wZ5se4mBXhw1SDvfCeWyVmWl6sGU1kmOihstf3DGlUxJZK8DgAyOKTlyMTywll3gJlV2/4VF9+gDSl12XSgGNadMfxsq5PJVyTrVB86/2JaOLimSVPHzfe2fswrpmP9dYgseb8j4E94T70pwI5Ez4="
+      on:
+        branch: master
+notifications:
+  slack:
+    secure: diuFhAwtl9ZFAqAcYWjF20l1nCTdrP9uKGCg+1AXSZYiNDSSXiI+CFpBrh53xIktS5L71g7QSjCVexNw2YHflRXImdaIH6U2zmLFlGXZ0r9+ygXwnvwMywoiwWkkm1TiHubcsVFHlS6O/0NIVMM2HPRICSW7Tdx+OZfS9KvgWhKcV8GkczZv0+AomLRGF9auqzU9J7w+BR0NwnmVtM6WL13KDhDCDSWYCMrgFKpeu0ketEhCwML6cYOiSQn+e9muc4a/bvklEJ5M7dF9o/98M4dvccDtouRQ7JOM0gqj4bEeeDR1bXpJNmB3Qevb5wsgW4GuGrW/oEKcvqzGYADCDAEEN7zltyM1WeIyvfxZyixgVWsFJGMAmWbsCjefJIs+4BMLCJl4TSYA0N6Y6cYZLGYcbOGJ1I5hzkWm6OtWncaNA4EI+QO5lQuLddurqyi/nRSl2iiD+c8FstFi72xFmvZ/Q8K9HN5S5XCyQAuoKf244tqcw3Z5bhSsVAOiZCmbPxbS5/jI7B91JX0d5/Hbj2Bk0IYG/vLom9zWDLLjLQtZip5hwmbSVh1HzxaMYLny/WN5nt2LEVKOQDknBE2+ojE/m+oqK/GFxWcLtB0o1rSuxUg8/KAWxmIM602s+2rt8V3j1LgUEk73i47bNmXFRiLN+eXXMIR5h6jEzh3LuLc=
+    on_success: change
+    on_failure: always
