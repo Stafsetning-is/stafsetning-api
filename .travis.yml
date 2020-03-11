@@ -22,11 +22,10 @@ jobs:
     - "./scripts/docker_deploy.sh $IMAGE_NAME $REGISTRY_USER $REGISTRY_PASS $TRAVIS_COMMIT"
   - stage: deploy 
     deploy:
-      skip_cleanup: true
+      cleanup: true
       provider: script
-      before_script:
-        - npm install firebase-tools -g
       script:
+        - npm install firebase-tools -g
         - firebase deploy --only hosting --token "X/1q4kZFE/a5JP2MSV/cjA2xyRIe2dQVWUlvjiUqTpzXrWPpzAbLArA+HfIs0OT29vQ3msnee+VXy+JH0SKmNQVxN5MGhQODTk/bk660HlfPhRjUDCwAZmmTFur3nc/j1uCPz2psfoME0bkvUyNJh1Ijnn1YO+Pa+9NJ2bJdFqXgo+HXUayJYsCIrBWSGViT0ili6UjgoslhXzCwhMVj1gISTcYRRGhtieCrmsdlq5G88bbdw5+yKs+2C9lyaXvOBN7c8mPsIM3P3Q7wj/zPEJ51Uv7vgyfR4l8nxj3T4dC76qMpmwOY/wQI8rpVLC4H6ms1mQC7U4FtHweBOTwjtRm5j8ivZQ0wkD0ro8kRTMFwmtN5aG2Cp0db1/USOj8ilqhFRqvwy3zaqIalS6gH0+cd96c7PVu/jCAFo2hB/5SYc/Jce30qgvg4ARZUaPdlGvA+Opop6rpJLiRRzgY+M+42FLIaSNA4gAjafLTWZd0Z5plVOwrlPuBHhAwxE7/p+XQZMOo/ySb5JMCjJEAnP5wZ5se4mBXhw1SDvfCeWyVmWl6sGU1kmOihstf3DGlUxJZK8DgAyOKTlyMTywll3gJlV2/4VF9+gDSl12XSgGNadMfxsq5PJVyTrVB86/2JaOLimSVPHzfe2fswrpmP9dYgseb8j4E94T70pwI5Ez4="
       on:
         branch: master
