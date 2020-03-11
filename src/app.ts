@@ -60,6 +60,10 @@ app.get("/", (req, res) => {
     res.send("Hello from the API!");
 });
 
+app.get("/status", (req, res) => {
+    res.send("API is up and running...");
+});
+
 const authorizeUser = (uid: string) => {
     admin.auth().createCustomToken(uid)
         .then((customToken) => {
@@ -73,6 +77,11 @@ const authorizeUser = (uid: string) => {
 app.post("/signup", (req, res) => {
     const authToken = authorizeUser(req.body.uid);
     res.send(authToken);
+});
+
+// Default: Not supported
+app.use("*", (req, res) => {
+    res.status(405).send("Operation not supported.");
 });
 
 export default app;
