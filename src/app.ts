@@ -61,4 +61,8 @@ app.use(
 // connect routes to app
 app.use("/", Router);
 
+app.get("*", (req, res) => {
+    res.status(404).send()
+})
+
 export default app;
