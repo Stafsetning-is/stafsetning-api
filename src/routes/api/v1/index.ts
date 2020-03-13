@@ -1,4 +1,3 @@
-import featuredExercises from "./featured_exercises";
 import exercises from "./exercises"
 import { RouteBuilder } from "../../utils"
 
