@@ -10,6 +10,9 @@ import Router from "./routes"
 import cors from "cors";
 import "firebase/auth";
 
+/**
+ * ATH EKKI NOTA REQUIRE.. thad er onnur lausn en aad nota thad
+ */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 // const serviceAccount = require("../ServiceAccountKey.json");
 
