@@ -4,7 +4,7 @@ import app from "../src/app";
 describe("GET /status", () => {
     it("should return 404", (done) => {
         request(app).get("/status")
-            .expect(200, done);
+            .expect(404, done);
     });
 });
 

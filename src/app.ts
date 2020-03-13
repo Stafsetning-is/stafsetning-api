@@ -22,7 +22,7 @@ admin.initializeApp({
 
 // Create Express server
 const app = express();
-app.use(cors());
+app.use(cors())
 
 // Connect to MongoDB
 const mongoUrl = MONGODB_URI;
@@ -81,15 +81,11 @@ app.post("/signup", (req, res) => {
         });
 });
 
+// connect routes to app
 app.use("/", Router);
 
 app.get("*", (req, res) => {
-    res.status(404).send();
-});
-
-// Default: Not supported
-app.use("*", (req, res) => {
-    res.status(405).send("Operation not supported.");
-});
+    res.status(404).send()
+})
 
 export default app;
