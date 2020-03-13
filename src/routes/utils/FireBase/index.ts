@@ -1,6 +1,10 @@
 import {UserInterface} from "../../../models"
 type Token = string;
 const PLACE_HOLDER_TOKEN = "3agf3r2456siw0a9w2riutu";
+const TEMP_USER = {
+    difficulty: 7,
+    id: "5"
+};
 
 /**
  * Class encapsulates the logic
@@ -18,14 +22,13 @@ export class FireBaseService {
 
     /**
      * Returns the user from its auth token
-     * returns NULL if no user found
+     * throws error if no user found
      * @param token user token
      */
-    public static async getUserFromToken(token: Token): Promise<(UserInterface | null)> {
-        return {
-            difficulty: 7,
-            id: "5"
-        }
+    public static async getUserFromToken(token: Token): Promise<UserInterface> {
+        const user = TEMP_USER;
+        if (!user) throw Error();
+        return user;
     }
 
 
