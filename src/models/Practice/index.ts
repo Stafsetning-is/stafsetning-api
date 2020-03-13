@@ -7,32 +7,37 @@ const practiceSchema = new Schema(
 			type: String,
 			required: true
 		},
-        exercise: {
-            type: Schema.Types.ObjectId,
-            ref: "exercises",
-            required: true
-        },
-		errors: {
+		exercise: {
+			type: Schema.Types.ObjectId,
+			ref: "exercises",
+			required: true
+		},
+		errorInput: {
 			type: [{ charAt: Number, typed: String }],
 			default: []
 		},
 		score: {
 			type: Number,
-            min: 0,
-            max: 1,
-            required: true
+			min: 0,
+			max: 1
 		},
 		exerciseText: {
-            type: String,
-            required: true
+			type: String,
+			required: true
 		},
 		duration: {
-            type: Number,
-            required: true
+			type: Number,
+			required: true
 		}
 	},
 	{ timestamps: true }
 );
+
+practiceSchema.post("save", async function() {
+	const DEDUCTION = 0.05;
+	const score = 1 - this.errorInput.length * DEDUCTION;
+	this.score = score < 0 ? 0 : score;
+});
 
 export const Practices = model<PracticeInterface>(
 	"practices",
@@ -40,4 +45,4 @@ export const Practices = model<PracticeInterface>(
 	"practices"
 );
 
-// export * from "./interface";
+export * from "./interface";

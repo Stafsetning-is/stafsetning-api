@@ -26,7 +26,8 @@ const exerciseSchema = new Schema(
 
 exerciseSchema.statics = statics;
 exerciseSchema.methods = methods;
-exerciseSchema.post("save", async function() {
+exerciseSchema.post("save", async function () {
+	// eslint-disable-next-line @typescript-eslint/no-use-before-define
 	this.number = await Exercises.countDocuments();
 });
 

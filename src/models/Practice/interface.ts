@@ -3,7 +3,7 @@ import { Document } from "mongoose";
 export interface PracticeInterface extends Document {
 	user: UserInterface;
 	exercise: ExerciseInterface;
-	errors: ErrorInfo[];
+	errorInput: ErrorInfo[];
 	score: number;
 	exerciseText: string;
 	duration: number;

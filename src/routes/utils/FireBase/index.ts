@@ -1,5 +1,9 @@
 import { UserInterface } from "../../../models";
 import { Token, AuthResponse, SignupData } from "./interface";
+
+/**
+ * Temporary user data
+ */
 const PLACE_HOLDER_TOKEN = "3agf3r2456siw0a9w2riutu";
 const TEMP_USER = {
 	difficulty: 7,
@@ -33,6 +37,9 @@ export class FireBaseService {
 	 * @param token user token
 	 */
 	public static async getUserFromToken(token: Token): Promise<UserInterface> {
+		/**
+		 * Fill in getUserFromToken @Gabriel
+		 */
 		const user = TEMP_USER;
 		if (!user) throw Error();
 		return user;
