@@ -32,7 +32,8 @@ export class FireBaseService {
 	 * throws error if no user found
 	 * @param token user token
 	 */
-	public static async getUserFromToken(token: Token): Promise<UserInterface> {
+	public static async getUserFromToken(token?: Token): Promise<UserInterface> {
+		if (!token) throw Error();
 		const user = TEMP_USER;
 		if (!user) throw Error();
 		return user;
