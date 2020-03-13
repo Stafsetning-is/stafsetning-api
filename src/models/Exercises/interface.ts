@@ -6,7 +6,7 @@ interface Base {
 
 export interface ExerciseInterface extends Base, Document {
     text: string;
-
+    getRepresentation: () => ExerciseRepr;
 }
 
 export interface ExerciseRepr extends Base { 
