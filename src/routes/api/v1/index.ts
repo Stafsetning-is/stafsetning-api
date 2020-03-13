@@ -1,9 +1,15 @@
-import exercises from "./exercises"
-import { RouteBuilder, auth } from "../../utils"
+import exercises from "./exercises";
+import users from "./users";
+
+import { RouteBuilder, auth } from "../../utils";
 
 export default RouteBuilder.joinRouters([
     {
         route: "/exercises/",
         controller: exercises
     },
-], auth)
+    {
+        route: "/users/",
+        controller: users
+    },
+], auth);
