@@ -22,7 +22,7 @@ import "firebase/auth";
 
 // Create Express server
 const app = express();
-app.use(cors())
+app.use(cors());
 
 // Connect to MongoDB
 const mongoUrl = MONGODB_URI;
@@ -62,7 +62,7 @@ app.use(
 app.use("/", Router);
 
 app.get("*", (req, res) => {
-    res.status(404).send()
-})
+    res.status(404).send();
+});
 
 export default app;

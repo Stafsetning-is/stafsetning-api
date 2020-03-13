@@ -43,6 +43,9 @@ export class FireBaseService {
      * but throws ERROR on unsuccessful attempt
 	 */
 	public static async signUp(data: SignupData): Promise<AuthResponse> {
+		/**
+		 * 
+		 */
         return {
             token: PLACE_HOLDER_TOKEN,
             user: TEMP_USER
