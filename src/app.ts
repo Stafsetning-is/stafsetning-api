@@ -1,16 +1,18 @@
 import express from "express";
 import compression from "compression";  // compresses requests
-//import session from "express-session";
+import session from "express-session";
 import bodyParser from "body-parser";
-//import mongo from "connect-mongo";
+import mongo from "connect-mongo";
 import path from "path";
-//import auth from "auth.ts";
-//import mongoose from "mongoose";
-//import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
-//import * as fb from "firebase/app";
+import mongoose from "mongoose";
+import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+import Router from "./routes"
+import cors from "cors";
 import "firebase/auth";
-import * as admin from "firebase-admin";
 
+/**
+ * ATH EKKI NOTA REQUIRE.. thad er onnur lausn en aad nota thad
+ */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 // const serviceAccount = require("../ServiceAccountKey.json");
 
@@ -20,8 +22,7 @@ import * as admin from "firebase-admin";
 
 // Create Express server
 const app = express();
-/**
- * 
+app.use(cors())
 
 // Connect to MongoDB
 const mongoUrl = MONGODB_URI;
@@ -33,6 +34,8 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUni
 ).catch((err: any) => {
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
 });
+
+// Mongo middleware to express
 app.use(session({
     resave: true,
     saveUninitialized: true,
@@ -42,11 +45,10 @@ app.use(session({
         autoReconnect: true
     })
 }));
- * 
-*/
+
 
 // Express configuration
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 5000);
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -74,10 +76,11 @@ const authorizeUser = (uid: string) => {
         });
 };
 
-app.post("/signup", (req, res) => {
-    const authToken = authorizeUser(req.body.uid);
-    res.send(authToken);
-});
+app.use("/", Router);
+
+app.get("*", (req, res) => {
+    res.status(404).send()
+})
 
 // Default: Not supported
 app.use("*", (req, res) => {
