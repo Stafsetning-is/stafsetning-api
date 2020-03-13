@@ -14,24 +14,24 @@ describe("testing CI", () => {
     });
 });
 
-describe("api/v1", () => {
-    it("POST /api/v1/exercises/ returns 201 on successful post", (done) => {
-        request(app).post("/api/v1/exercises/")
-            .send({
-                difficultRange: {
-                    min: 5,
-                    max: 10
-                },
-                text: "Kalli for ut i bud;;;"
-            })
-            .expect(201, done);
-    })
+// describe("api/v1", () => {
+//     it("POST /api/v1/exercises/ returns 201 on successful post", (done) => {
+//         request(app).post("/api/v1/exercises/")
+//             .send({
+//                 difficultRange: {
+//                     min: 5,
+//                     max: 10
+//                 },
+//                 text: "Kalli for ut i bud;;;"
+//             })
+//             .expect(201, done);
+//     })
 
-    it("POST /api/v1/exercises/ returns 400 on unsuccessful post", (done) => {
-        request(app).post("/api/v1/exercises/")
-            .send({
-                text: "Kalli for ut i bud;;;"
-            })
-            .expect(400, done);
-    })
-})
+//     it("POST /api/v1/exercises/ returns 400 on unsuccessful post", (done) => {
+//         request(app).post("/api/v1/exercises/")
+//             .send({
+//                 text: "Kalli for ut i bud;;;"
+//             })
+//             .expect(400, done);
+//     })
+// })
