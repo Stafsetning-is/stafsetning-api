@@ -6,12 +6,12 @@ import mongo from "connect-mongo";
 import path from "path";
 import mongoose from "mongoose";
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
-
+import Router from "./routes"
+import cors from "cors";
 
 // Create Express server
 const app = express();
-/**
- * 
+app.use(cors())
 
 // Connect to MongoDB
 const mongoUrl = MONGODB_URI;
@@ -32,11 +32,10 @@ app.use(session({
         autoReconnect: true
     })
 }));
- * 
-*/
+
 
 // Express configuration
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 5000);
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -46,5 +45,6 @@ app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
 
+app.use("/", Router);
 
 export default app;
