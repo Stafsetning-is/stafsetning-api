@@ -6,7 +6,7 @@ import mongo from "connect-mongo";
 import path from "path";
 import mongoose from "mongoose";
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
-import Router from "./routes"
+import Router from "./routes";
 import cors from "cors";
 import "firebase/auth";
 
@@ -31,7 +31,7 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUni
     () => {
         console.log("Connected to MongoDB");
     }
-).catch((err: any) => {
+).catch((err: Error) => {
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
 });
 
