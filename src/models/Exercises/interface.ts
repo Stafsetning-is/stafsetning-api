@@ -1,6 +1,9 @@
 import {Document, Model} from "mongoose"
 interface Base {
-    difficultRange: [number, number];
+    difficultRange: {
+        min: number,
+        max: number
+    };
     number: number;
 }
 
@@ -15,5 +18,5 @@ export interface ExerciseRepr extends Base {
 }
 
 export interface ExerciseCollectionInterface extends Model<ExerciseInterface> {
-    getExercisesByDifficulty: Promise<ExerciseRepr[]>;
+    getExercisesByDifficulty: (level: number) => Promise<ExerciseRepr[]>;
 }
