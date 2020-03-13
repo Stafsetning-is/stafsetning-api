@@ -20,7 +20,7 @@ public/css/main.css
 coverage
 
 # API keys and secrets
-# .env
+.env
 
 # Dependency directory
 node_modules
@@ -40,3 +40,4 @@ dist/**/*
 # ignore yarn.lock
 yarn.lock
 ServiceAccountKey.json
+.env
