@@ -1,15 +1,10 @@
 import featuredExercises from "./featured_exercises";
+import exercises from "./exercises"
 import { RouteBuilder } from "../../utils"
 
-export default RouteBuilder.routerForEndpoints([
+export default RouteBuilder.joinRouters([
     {
-        route: "/featured_exercises/",
-        controller: featuredExercises,
-        method: "get"
+        route: "/exercises/",
+        controller: exercises
     },
-    {
-        route: "/some_other_url/",
-        controller: featuredExercises,
-        method: "get"
-    }
 ])
