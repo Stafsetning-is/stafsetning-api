@@ -10,8 +10,8 @@ import * as methods from "./methods";
 const exerciseSchema = new Schema(
 	{
 		difficultRange: {
-			min: Number,
-			max: Number
+			type: {min: Number, max: Number},
+			required: true
 		},
 		number: {
 			type: Number
