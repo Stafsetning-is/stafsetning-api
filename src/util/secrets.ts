@@ -14,7 +14,9 @@ const prod = ENVIRONMENT === "production"; // Anything else is treated as 'dev'
 
 export const SESSION_SECRET = process.env["SESSION_SECRET"];
 export const MONGODB_URI = prod ? process.env["MONGODB_URI"] : process.env["MONGODB_URI_LOCAL"];
-export const FIREBASE_KEY = process.env["FIREBASE_KEY"];
+export const FB_SERVICEACCOUNT_KEY = process.env["FB_SERVICEACCOUNT_KEY"];
+export const FB_API_KEY = process.env["FB_API_KEY"];
+
 
 if (!SESSION_SECRET) {
     logger.error("No client secret. Set SESSION_SECRET environment variable.");
@@ -30,8 +32,12 @@ if (!MONGODB_URI) {
     process.exit(1);
 }
 
-if (!FIREBASE_KEY) {
-    logger.error("No firebase key specified. Set FIREBASE_KEY environment variable.");
+if (!FB_SERVICEACCOUNT_KEY) {
+    logger.error("No Firebase service account key specified. Set FB_SERVICEACCOUNT_KEY environment variable.");
     process.exit(1);
 }
 
+if (!FB_API_KEY) {
+    logger.error("No Firebase api key specified. Set FB_API_KEY environment variable.");
+    process.exit(1);
+}
