@@ -3,7 +3,8 @@ import { Token, AuthResponse, SignupData } from "./interface";
 const PLACE_HOLDER_TOKEN = "3agf3r2456siw0a9w2riutu";
 const TEMP_USER = {
 	difficulty: 7,
-	id: "5"
+	id: "5",
+	name: "Jón Sigurðsson"
 };
 
 /**
