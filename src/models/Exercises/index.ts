@@ -1,4 +1,8 @@
-import { model, Schema, Mongoose, HookNextFunction, Collection } from "mongoose";
+import {
+	model,
+	Schema,
+	Collection
+} from "mongoose";
 import { ExerciseCollectionInterface, ExerciseInterface } from "./interface";
 import * as statics from "./statics";
 import * as methods from "./methods";
@@ -18,16 +22,20 @@ const exerciseSchema = new Schema(
 			}
 		},
 		number: {
-			type: Number,
+			type: Number
+		},
+		text: {
+			type: String,
+			required: true
 		}
 	},
 	{ timestamps: true }
 );
 
-exerciseSchema.statics	 = statics;
+exerciseSchema.statics = statics;
 exerciseSchema.methods = methods;
 exerciseSchema.post("save", async function() {
-	this.number = await Collection.countDocuments();
+	this.number = await Exercises.countDocuments();
 });
 
 export const Exercises = model<ExerciseInterface, ExerciseCollectionInterface>(
@@ -35,7 +43,5 @@ export const Exercises = model<ExerciseInterface, ExerciseCollectionInterface>(
 	exerciseSchema,
 	"exercises"
 );
-
-
 
 export * from "./interface";

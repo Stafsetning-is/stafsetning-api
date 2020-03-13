@@ -7,6 +7,7 @@ export default async (req: Request, res: Response) => {
         const doc = await Exercises.create(req.body);
         res.send(doc);
     } catch (error) {
+        console.log('error', error)
         res.status(400).send(error)
     }
 }
