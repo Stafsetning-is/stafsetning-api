@@ -6,54 +6,36 @@ import "firebase/firestore";
 import * as admin from "firebase-admin";
 import { app } from "../../../../src/auth";
 
-const PLACE_HOLDER_TOKEN = "3agf3r2456siw0a9w2riutu";
-const TEMP_USER = {
-	difficulty: 7,
-	id: "5",
-	name: "Jón Sigurðsson"
-};
-
-admin.initializeApp({
-    credential: admin.credential.cert(FB_SERVICEACCOUNT_KEY)
-});
-
-const auth = app.auth();
-const db = app.firestore();
-
-const createUser = async (username: string, mobile: string, password: string) => {
-
-};
-
-createUser("gabriels17", "+3546996074", "test1234");
-
-
-// const signIn = async(uid: string) => {
-// 	const customToken = admin.auth().createCustomToken(uid)
-// 		.then(cred => {
-// 			return db.collection("users").doc(cred.user.uid);
-// 		});
-// 	await auth.signInWithCustomToken(customToken);
-// 	console.log(user); 
+// const TEMP_USER = {
+// 	difficulty: 7,
+// 	id: "5",
+// 	name: "Jón Sigurðsson"
 // };
-
+admin.initializeApp({
+	credential: admin.credential.cert(FB_SERVICEACCOUNT_KEY)
+});
+const auth = app.auth();
 
 /**
  * Class encapsulates the logic
  * that concernes working with firebase
- *
  */
 export class FireBaseService {
 	/**
 	 * Returns the auth token and user object 
      * but throws ERROR on unsuccessful attempt
 	 */
-	public static async logIn(
-		username: string,
-		password: string
-	): Promise<AuthResponse> {
-        return {
-            token: PLACE_HOLDER_TOKEN,
-            user: TEMP_USER
+	public static async logIn(phoneNumber: string): Promise<AuthResponse> {
+		const user = await admin.auth().getUserByPhoneNumber(phoneNumber);
+		const customToken = await admin.auth().createCustomToken(user.uid);
+		const fbUser = await auth.signInWithCustomToken(customToken);
+		
+		return {
+            token: customToken,
+            user: {
+				name: fbUser.user.displayName,
+				difficulty: 7
+			}
         };
 	}
 
@@ -64,16 +46,19 @@ export class FireBaseService {
 	 * @param token user token
 	 */
 	public static async getUserFromToken(token: Token): Promise<UserInterface> {
-		const user = TEMP_USER;
+		const user = await auth.signInWithCustomToken(token);
 		if (!user) throw Error();
-		return user;
+		return {
+			name: user.user.displayName,
+			difficulty: 7
+		};
     }
 	
 	/**
 	 * Returns the auth token and user object 
      * but throws ERROR on unsuccessful attempt
 	 */
-	public static async signUp({userName, mobile, password1, password2, name}: SignupData): Promise<AuthResponse> {
+	public static async signUp({mobile, password1, password2, name}: SignupData): Promise<AuthResponse> {
 
 		if (password1 !== password2) throw Error();
 		
@@ -83,22 +68,25 @@ export class FireBaseService {
 			displayName: name
 		});
 
-		await db.collection("users").doc(user.uid).set({
-			username: userName
-		});
+		const token = await admin.auth().createCustomToken(user.uid);
 
-		
+		// await db.collection("users").doc(user.uid).set({
+		// 	username: userName
+		// });
 
 		return {
-			token: "asdf",
+			token,
 			user: {
-				id: user.uid,
 				name,
 				difficulty: 7
 			}
 		};
-
 	}
 
-
+	/**
+	 * Method for signing users out
+	 */
+	public static async signOut(): Promise<void> {
+		await auth.signOut();
+	}
 }

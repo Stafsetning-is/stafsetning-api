@@ -9,7 +9,6 @@ export interface AuthResponse {
 export interface SignupData {
     mobile: string;
     name: string;
-    userName: string;
     password1: string;
     password2: string;
     
