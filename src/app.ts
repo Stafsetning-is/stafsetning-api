@@ -22,7 +22,7 @@ admin.initializeApp({
 
 // Create Express server
 const app = express();
-app.use(cors())
+app.use(cors());
 
 // Connect to MongoDB
 const mongoUrl = MONGODB_URI;
@@ -85,7 +85,7 @@ app.post("/signup", (req, res) => {
 app.use("/", Router);
 
 app.get("*", (req, res) => {
-    res.status(404).send()
-})
+    res.status(404).send();
+});
 
 export default app;
