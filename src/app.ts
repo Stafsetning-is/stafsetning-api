@@ -9,9 +9,6 @@ import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 import Router from "./routes";
 import cors from "cors";
 
-/**
- * ATH EKKI NOTA REQUIRE.. thad er onnur lausn en aad nota thad
- */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 
 // Create Express server

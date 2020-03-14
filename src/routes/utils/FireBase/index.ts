@@ -24,6 +24,7 @@ export class FireBaseService {
 	/**
 	 * Returns the auth token and user object 
      * but throws ERROR on unsuccessful attempt
+	 * @param phoneNumber the phone number to use on login
 	 */
 	public static async logIn(phoneNumber: string): Promise<AuthResponse> {
 		const user = await admin.auth().getUserByPhoneNumber(phoneNumber);
@@ -57,6 +58,7 @@ export class FireBaseService {
 	/**
 	 * Returns the auth token and user object 
      * but throws ERROR on unsuccessful attempt
+	 * @param signupData the user data
 	 */
 	public static async signUp({mobile, password1, password2, name}: SignupData): Promise<AuthResponse> {
 
