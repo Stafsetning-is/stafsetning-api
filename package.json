@@ -4,10 +4,10 @@
 	"description": "Stafsetning.is api",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Microsoft/TypeScript-Node-Starter"
+		"url": "https://github.com/Stafsetning-is/stafsetning-api"
 	},
-	"author": "",
-	"license": "",
+	"author": "Stafsetning-is",
+	"license": "MIT",
 	"scripts": {
 		"start": "npm run serve",
 		"dev": "nodemon src/server.ts",
