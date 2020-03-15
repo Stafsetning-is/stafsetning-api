@@ -66,3 +66,5 @@ userSchema.statics = statics;
 userSchema.methods = methods;
 
 export const Users = model<UserInterface, UserCollectionInterface>("users", userSchema, "users");
+
+export * from "./interface";

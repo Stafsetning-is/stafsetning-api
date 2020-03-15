@@ -1,4 +1,4 @@
-import { ExerciseInterface, UserInterface } from "..";
+import { ExerciseInterface, UserInterface } from "../";
 import { Document } from "mongoose";
 export interface PracticeInterface extends Document {
 	user: UserInterface;
