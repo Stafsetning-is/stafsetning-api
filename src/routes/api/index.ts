@@ -1,6 +1,7 @@
-import { RouteBuilder } from "../utils"
+import { RouteBuilder } from "../utils";
 import V1 from "./v1";
 import auth from "./auth";
+import open from "./open";
 
 export default RouteBuilder.joinRouters([
     {
@@ -10,5 +11,9 @@ export default RouteBuilder.joinRouters([
     {
         route: "/auth/",
         controller: auth
+    },
+    {
+        route: "/open/",
+        controller: open
     }
-])
+]);

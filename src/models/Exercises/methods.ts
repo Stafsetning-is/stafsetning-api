@@ -15,6 +15,13 @@ export const getRepresentation = function (): ExerciseRepr {
         difficultRange: exercise.difficultRange,
         number: exercise.number,
         length: text.length,
+<<<<<<< HEAD
         parts
+=======
+        parts,
+        title: parts[0],
+        _id: exercise._id,
+        wordCount: text.split(" ").length
+>>>>>>> dev
     };
 };

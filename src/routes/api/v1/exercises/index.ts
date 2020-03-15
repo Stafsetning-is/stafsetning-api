@@ -1,6 +1,7 @@
 import createNew from "./post.ts";
-import byDifficulty from "./by_difficulty"
-import { RouteBuilder } from "../../../utils"
+import byDifficulty from "./by_difficulty";
+import getById from "./get_by_id";
+import { RouteBuilder } from "../../../utils";
 
 export default RouteBuilder.routerForEndpoints([
     {
@@ -13,5 +14,10 @@ export default RouteBuilder.routerForEndpoints([
         controller: byDifficulty,
         method: "get"
     },
-])
+    {
+        route: "/:id",
+        controller: getById,
+        method: "get"
+    },
+]);
 

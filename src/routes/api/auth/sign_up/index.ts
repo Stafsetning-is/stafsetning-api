@@ -2,17 +2,15 @@ import { FireBaseService } from "../../../utils";
 import { Request, Response } from "express";
 
 /**
- * Route for log in
+ * Route for sign up
  */
 export default async (req: Request, res: Response) => {
-    try {
-		let { phoneNumber } = req.body;
-		if (!phoneNumber.includes("+354")) {
-			phoneNumber = "+354" + phoneNumber;
-		}
-        const response = await FireBaseService.logIn(phoneNumber);
+	try {
+		console.log("req.body", req.body);
+		const response = await FireBaseService.signUp(req.body);
 		res.send(response);
 	} catch (error) {
+		console.log("error", error);
 		res.status(400).send(error);
 	}
 };

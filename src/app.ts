@@ -6,23 +6,14 @@ import mongo from "connect-mongo";
 import path from "path";
 import mongoose from "mongoose";
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
-import Router from "./routes"
+import Router from "./routes";
 import cors from "cors";
-import "firebase/auth";
 
-/**
- * ATH EKKI NOTA REQUIRE.. thad er onnur lausn en aad nota thad
- */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-// const serviceAccount = require("../ServiceAccountKey.json");
-
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount)
-// });
 
 // Create Express server
 const app = express();
-app.use(cors())
+app.use(cors());
 
 // Connect to MongoDB
 const mongoUrl = MONGODB_URI;
@@ -31,7 +22,7 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUni
     () => {
         console.log("Connected to MongoDB");
     }
-).catch((err: any) => {
+).catch((err: Error) => {
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
 });
 
@@ -58,11 +49,27 @@ app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
 
+app.get("/", (req, res) => {
+    res.send("Hello from the API!");
+});
+
+app.get("/status", (req, res) => {
+    res.send("API is up and running...");
+});
+
+app.get("/coffee", (req, res) => {
+    res.status(418).send("You attempted to brew coffee with a teapot.");
+});
+
+// app.post("/signup", (req, res) => {
+    
+// });
+
 // connect routes to app
 app.use("/", Router);
 
 app.get("*", (req, res) => {
-    res.status(404).send()
-})
+    res.status(404).send();
+});
 
 export default app;
