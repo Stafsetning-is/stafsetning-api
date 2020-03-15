@@ -1,8 +1,8 @@
-import {Document, Model} from "mongoose"
+import {Document, Model} from "mongoose";
 interface Base {
     difficultRange: {
-        min: number,
-        max: number
+        min: number;
+        max: number;
     };
     number: number;
 }

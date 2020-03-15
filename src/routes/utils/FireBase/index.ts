@@ -14,18 +14,19 @@ const TEMP_USER = {
 };
 
 admin.initializeApp({
-    credential: admin.credential.cert(FB_SERVICEACCOUNT_KEY)
+	credential: admin.credential.cert(FB_SERVICEACCOUNT_KEY)
 });
 
 const auth = app.auth();
 const db = app.firestore();
 
-const createUser = async (username: string, mobile: string, password: string) => {
-
-};
+const createUser = async (
+	username: string,
+	mobile: string,
+	password: string
+) => {};
 
 createUser("gabriels17", "+3546996074", "test1234");
-
 
 // const signIn = async(uid: string) => {
 // 	const customToken = admin.auth().createCustomToken(uid)
@@ -33,9 +34,8 @@ createUser("gabriels17", "+3546996074", "test1234");
 // 			return db.collection("users").doc(cred.user.uid);
 // 		});
 // 	await auth.signInWithCustomToken(customToken);
-// 	console.log(user); 
+// 	console.log(user);
 // };
-
 
 /**
  * Class encapsulates the logic
@@ -44,19 +44,18 @@ createUser("gabriels17", "+3546996074", "test1234");
  */
 export class FireBaseService {
 	/**
-	 * Returns the auth token and user object 
-     * but throws ERROR on unsuccessful attempt
+	 * Returns the auth token and user object
+	 * but throws ERROR on unsuccessful attempt
 	 */
 	public static async logIn(
 		username: string,
 		password: string
 	): Promise<AuthResponse> {
-        return {
-            token: PLACE_HOLDER_TOKEN,
-            user: TEMP_USER
-        };
+		return {
+			token: PLACE_HOLDER_TOKEN,
+			user: TEMP_USER
+		};
 	}
-
 
 	/**
 	 * Returns the user from its auth token
@@ -64,41 +63,49 @@ export class FireBaseService {
 	 * @param token user token
 	 */
 	public static async getUserFromToken(token: Token): Promise<UserInterface> {
-		const user = TEMP_USER;
+		const { user } = await app.auth().signInWithCustomToken(token);
 		if (!user) throw Error();
-		return user;
-    }
-	
-	/**
-	 * Returns the auth token and user object 
-     * but throws ERROR on unsuccessful attempt
-	 */
-	public static async signUp({userName, mobile, password1, password2, name}: SignupData): Promise<AuthResponse> {
 
-		if (password1 !== password2) throw Error();
+		// vantar map from user -> UserIntervace
 		
+		return TEMP_USER;
+	}
+
+	/**
+	 * Returns the auth token and user object
+	 * but throws ERROR on unsuccessful attempt
+	 */
+	public static async signUp({
+		userName,
+		mobile,
+		password1,
+		password2,
+		name
+	}: SignupData): Promise<AuthResponse> {
+		if (password1 !== password2) throw Error();
+
 		const user = await admin.auth().createUser({
 			phoneNumber: mobile,
 			password: password1,
 			displayName: name
 		});
 
-		await db.collection("users").doc(user.uid).set({
-			username: userName
-		});
+		await db
+			.collection("users")
+			.doc(user.uid)
+			.set({
+				username: userName
+			});
 
-		
+		const token = await admin.auth().createCustomToken(user.uid);
 
 		return {
-			token: "asdf",
+			token: token,
 			user: {
 				id: user.uid,
 				name,
 				difficulty: 7
 			}
 		};
-
 	}
-
-
 }
