@@ -49,7 +49,6 @@ export class FireBaseService {
         };
 	}
 
-
 	/**
 	 * Returns the user from its auth token
 	 * throws error if no user found
@@ -112,6 +111,7 @@ export class FireBaseService {
 	public static async signOut(): Promise<void> {
 		await auth.signOut();
 	}
+}
 
 	private static mobileWithCountryCode(mobileNo: string) {
 		return `+354${mobileNo}`;
