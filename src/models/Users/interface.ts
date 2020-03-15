@@ -1,12 +1,16 @@
-import { Document, Model } from "mongoose";
+import { Document, Model, Types } from "mongoose";
 
-export interface PublicUser {
+interface UserBase {
 	difficulty: number;
 	name: string;
 
 }
+export interface PublicUser extends UserBase {
+	_id: Types.ObjectId;
 
-export interface UserInterface extends Document, PublicUser {
+}
+
+export interface UserInterface extends Document, UserBase {
 	mobile: string;
 	password: string;
 	generateAuthToken: () => Promise<string>;
@@ -14,4 +18,5 @@ export interface UserInterface extends Document, PublicUser {
 
 export interface UserCollectionInterface extends Model<UserInterface> {
 	findByCredentials: (username: string, password: string) => Promise<UserInterface>;
+	register: (data: any) => Promise<PublicUser>;
 }

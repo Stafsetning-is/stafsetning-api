@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import {UserInterface} from "./interface";
+import {UserInterface, UserCollectionInterface} from "./interface";
 import * as methods from "./methods";
 import * as statics from "./statics";
 import bcrypt from "bcryptjs";
@@ -35,13 +35,17 @@ const userSchema = new Schema({
         }
     }],
     type: {
-        type: "String",
+        type: String,
         validate: {
             validator: (value: string) => 
                ["user", "admin"].includes(value)
             ,
             msg: "Invalid user type"
           }
+    },
+    difficulty: {
+        type: Number,
+        required: true
     }
 });
 
@@ -54,4 +58,4 @@ userSchema.pre<UserInterface>("save", async function(next) {
 
 userSchema.statics = statics;
 userSchema.methods = methods;
-export const Users = model("users", userSchema, "users");
+export const Users = model<UserInterface, UserCollectionInterface>("users", userSchema, "users");
