@@ -19,7 +19,9 @@ const otherTest = {
 beforeAll(async (done) => {
     await Exercises.create(testBody);
     await Exercises.create(otherTest);
-    done();
+	done();
+	
+	done();
 });
 
 describe("Getting exercises by user difficulty", () => {

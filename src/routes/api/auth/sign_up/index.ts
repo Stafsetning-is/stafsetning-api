@@ -1,4 +1,4 @@
-import { FireBaseService } from "../../../utils";
+import { Users } from "../../../../models";
 import { Request, Response } from "express";
 
 /**
@@ -6,11 +6,10 @@ import { Request, Response } from "express";
  */
 export default async (req: Request, res: Response) => {
 	try {
-		console.log("req.body", req.body);
-		const response = await FireBaseService.signUp(req.body);
-		res.send(response);
+		const user = await Users.register(req.body);
+		res.send(user);
 	} catch (error) {
 		console.log("error", error);
-		res.status(400).send(error);
+		res.status(400).send({message: "Sign up failed"});
 	}
 };

@@ -1,4 +1,4 @@
-import { RouteBuilder } from "./utils"
+import { RouteBuilder } from "./utils";
 import Api from "./api";
 
 export default RouteBuilder.joinRouters([
@@ -14,4 +14,4 @@ export default RouteBuilder.joinRouters([
         route: "/web_hooks/",
         controller: Api
     }
-])
+]);

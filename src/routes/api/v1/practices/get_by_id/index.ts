@@ -9,7 +9,6 @@ export default async ({ params: { id } }: Request, res: Response) => {
 			.status(200)
 			.send({ ...practice, exercise: exercise.getRepresentation() });
 	} catch (error) {
-		console.log("error", error);
 		res.status(400).send(error);
 	}
 };
