@@ -47,10 +47,10 @@ export class FireBaseService {
 	 * @param token user token
 	 */
 	public static async getUserFromToken(token: Token): Promise<UserInterface> {
-		const user = await auth.signInWithCustomToken(token);
+		const {user} = await auth.signInWithCustomToken(token);
 		if (!user) throw Error();
 		return {
-			name: user.user.displayName,
+			name: user.displayName,
 			difficulty: 7
 		};
     }
@@ -71,10 +71,6 @@ export class FireBaseService {
 		});
 
 		const token = await admin.auth().createCustomToken(user.uid);
-
-		// await db.collection("users").doc(user.uid).set({
-		// 	username: userName
-		// });
 
 		return {
 			token,
