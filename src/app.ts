@@ -9,8 +9,6 @@ import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 import Router from "./routes";
 import cors from "cors";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-
 // Create Express server
 const app = express();
 app.use(cors());
@@ -49,26 +47,22 @@ app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
     res.send("Hello from the API!");
 });
 
-app.get("/status", (req, res) => {
+app.get("/status", (_req, res) => {
     res.send("API is up and running...");
 });
 
-app.get("/coffee", (req, res) => {
+app.get("/coffee", (_req, res) => {
     res.status(418).send("You attempted to brew coffee with a teapot.");
 });
-
-// app.post("/signup", (req, res) => {
-    
-// });
 
 // connect routes to app
 app.use("/", Router);
 
-app.get("*", (req, res) => {
+app.get("*", (_req, res) => {
     res.status(404).send();
 });
 

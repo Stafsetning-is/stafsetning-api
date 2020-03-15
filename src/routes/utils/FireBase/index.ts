@@ -83,6 +83,11 @@ export class FireBaseService {
 	public static async signOut(): Promise<void> {
 		await auth.signOut();
 	}
+
+	/**
+	 * Method to add country code to phone number
+	 * @param mobileNo phone number
+	 */
 	private static mobileWithCountryCode(mobileNo: string) {
 		return `+354${mobileNo}`;
 	}
