@@ -1,5 +1,5 @@
 import post from "./post";
-import { RouteBuilder } from "../../../utils"
+import { RouteBuilder } from "../../../utils";
 
 export default RouteBuilder.routerForEndpoints([
     {
@@ -7,5 +7,5 @@ export default RouteBuilder.routerForEndpoints([
         controller: post,
         method: "post"
     },
-])
+]);
 

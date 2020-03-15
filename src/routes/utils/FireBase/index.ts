@@ -1,17 +1,5 @@
-import { UserInterface } from "../../../models";
+import { UserInterface, PrivateUserInterface } from "../../../models";
 import { Token, AuthResponse, SignupData } from "./interface";
-<<<<<<< HEAD
-
-/**
- * Temporary user data
- */
-const PLACE_HOLDER_TOKEN = "3agf3r2456siw0a9w2riutu";
-const TEMP_USER = {
-	difficulty: 7,
-	id: "5",
-	name: "Jón Sigurðsson"
-};
-=======
 import { FB_SERVICEACCOUNT_KEY } from "../../../util/secrets";
 import "firebase/auth";
 import "firebase/firestore";
@@ -23,7 +11,6 @@ admin.initializeApp({
 });
 
 const auth = app.auth();
->>>>>>> dev
 
 /**
  * Class encapsulates the logic
@@ -54,15 +41,8 @@ export class FireBaseService {
 	 * throws error if no user found
 	 * @param token user token
 	 */
-	public static async getUserFromToken(token: Token): Promise<UserInterface> {
+	public static async getUserFromToken(token: Token): Promise<PrivateUserInterface> {
 		/**
-<<<<<<< HEAD
-		 * Fill in getUserFromToken @Gabriel
-		 */
-		const user = TEMP_USER;
-		if (!user) throw Error();
-		return user;
-=======
 		 * Fae eftirifarandi villu sem tharf ad laga: 
 		 * btw '{"error":{"code":400,"message":"API key not valid. Please pass a valid API key.","errors":[{"message":"API key not valid. Please pass a valid API key.","domain":"global","reason":"badRequest"}],"status":"INVALID_ARGUMENT"}}'
 		 */
@@ -74,9 +54,9 @@ export class FireBaseService {
 		// };
 		return {
 			difficulty: 7,
-			name: "Jón Sigurðsson"
+			name: "Jón Sigurðsson",
+			id: "asdfg"
 		};
->>>>>>> dev
     }
 	
 	/**
@@ -111,8 +91,6 @@ export class FireBaseService {
 	public static async signOut(): Promise<void> {
 		await auth.signOut();
 	}
-}
-
 	private static mobileWithCountryCode(mobileNo: string) {
 		return `+354${mobileNo}`;
 	}

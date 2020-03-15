@@ -12,7 +12,7 @@ const practiceSchema = new Schema(
 			ref: "exercises",
 			required: true
 		},
-		errorInput: {
+		errors: {
 			type: [{ charAt: Number, typed: String }],
 			default: []
 		},
@@ -35,7 +35,7 @@ const practiceSchema = new Schema(
 
 practiceSchema.post("save", async function() {
 	const DEDUCTION = 0.05;
-	const score = 1 - this.errorInput.length * DEDUCTION;
+	const score = 1 - this.errors.length * DEDUCTION;
 	this.score = score < 0 ? 0 : score;
 });
 
