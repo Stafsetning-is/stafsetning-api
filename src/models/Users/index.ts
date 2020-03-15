@@ -1,8 +1,8 @@
 import { model, Schema } from "mongoose";
 import {UserInterface} from "./interface";
+import * as methods from "./methods";
+import * as statics from "./statics";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-
 
 const userSchema = new Schema({
     name: {
@@ -45,8 +45,13 @@ const userSchema = new Schema({
     }
 });
 
-userSchema.pre<UserInterface>("save", function() {
+userSchema.pre<UserInterface>("save", async function(next) {
     this.mobile = this.mobile.replace(/[- ]/g, "");
+    if (this.isModified("password")) 
+        this.password = await bcrypt.hash(this.password, 8);
+    next();
 });
 
+userSchema.statics = statics;
+userSchema.methods = methods;
 export const Users = model("users", userSchema, "users");

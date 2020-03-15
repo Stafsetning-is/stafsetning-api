@@ -17,6 +17,8 @@ export const MONGODB_URI = prod ? process.env["MONGODB_URI"] : process.env["MONG
 export const FB_SERVICEACCOUNT_KEY = process.env["FB_SERVICEACCOUNT_KEY"];
 export const FB_API_KEY = process.env["FB_API_KEY"];
 
+export const USER_PW_HASH_KEY = process.env["USER_PW_HASH_KEY"]; 
+
 
 if (!SESSION_SECRET) {
     logger.error("No client secret. Set SESSION_SECRET environment variable.");
@@ -39,5 +41,10 @@ if (!FB_SERVICEACCOUNT_KEY) {
 
 if (!FB_API_KEY) {
     logger.error("No Firebase api key specified. Set FB_API_KEY environment variable.");
+    process.exit(1);
+}
+
+if (!USER_PW_HASH_KEY) {
+    logger.error("No hashing key in env. Set USER_PW_HASH_KEY environment variable.");
     process.exit(1);
 }
