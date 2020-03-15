@@ -14,7 +14,7 @@ const auth = app.auth();
 
 /**
  * Class encapsulates the logic
- * that concernes working with firebase
+ * that concerns working with firebase
  */
 export class FireBaseService {
 	/**
