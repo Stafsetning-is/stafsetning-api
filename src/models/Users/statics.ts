@@ -1,27 +1,34 @@
 import bcrypt from "bcryptjs";
-import {PublicUser, UserInterface} from "./interface";
+import { AuthData, UserInterface } from "./interface";
 /**
  * Takes in auth details and returns the user
- * @param email email of user
+ * @param username email of user
  * @param password password of user
  */
-export const findByCredentials = async function(email: string, password: string): Promise<PublicUser>{
-    const user = await this.findOne({ email });
-    if (!user) throw new Error("Unable to login");    
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)throw new Error("Unable to login");
-    return {
-        name: user.name,
-        difficulty: user.difficulty,
-        _id: user._id
-    };
+export const findByCredentials = async function(
+	username: string,
+	password: string
+): Promise<AuthData> {
+	const user: UserInterface = await this.findOne({ username });
+	if (!user) throw new Error("Unable to login");
+	const isMatch = await bcrypt.compare(password, user.password);
+	if (!isMatch) throw new Error("Unable to login");
+	const token = await user.generateAuthToken();
+	return {
+		user: user.getPublic(),
+		token: token
+	};
 };
 
-export const register = async function (data: any): Promise<PublicUser> {
-    const user: UserInterface = await this.create(data);
-    return {
-        _id: user._id,
-        name: user.name,
-        difficulty: user.difficulty
-    };
+/**
+ * Creates a user and returns the public data with token
+ * @param data he user data
+ */
+export const register = async function(data: {}): Promise<AuthData> {
+	const user: UserInterface = await this.create(data);
+	const token = await user.generateAuthToken();
+	return {
+		user: user.getPublic(),
+		token
+	};
 };

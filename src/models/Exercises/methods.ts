@@ -21,3 +21,4 @@ export const getRepresentation = function (): ExerciseRepr {
         wordCount: text.split(" ").length
     };
 };
+

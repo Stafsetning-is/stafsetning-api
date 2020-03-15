@@ -17,6 +17,12 @@ const userSchema = new Schema({
         trim: true,
         minlength: 6
     },
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        minlength: 5
+    },
     mobile: {
         type: String,
         required: true,
@@ -58,4 +64,5 @@ userSchema.pre<UserInterface>("save", async function(next) {
 
 userSchema.statics = statics;
 userSchema.methods = methods;
+
 export const Users = model<UserInterface, UserCollectionInterface>("users", userSchema, "users");
