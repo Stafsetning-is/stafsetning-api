@@ -16,34 +16,34 @@ const otherTest = {
 	text: "Kalli for ut i bud;;; til ad kaupa mjolk,;;; handa mommu sinni."
 };
 
-beforeAll( () => {
-    // await Exercises.create(testBody);
-    // await Exercises.create(otherTest);
-	// done();
+beforeAll(async (done) => {
+    await Exercises.create(testBody);
+    await Exercises.create(otherTest);
+	done();
 	
-	// done();
+	done();
 });
 
 describe("Getting exercises by user difficulty", () => {
-	// it("Should return same as difficulty min", async (done) => {
-	// 	const [q1, q2] = await Promise.all([
-	// 		Exercises.getExercisesByDifficulty(5),
-	// 		Exercises.getExercisesByDifficulty(7)
-	// 	]);
-	// 	expect(q1.length).toEqual(1);
-	// 	expect(q2.length).toEqual(2);
-	// 	done();
-	// });
+	it("Should return same as difficulty min", async (done) => {
+		const [q1, q2] = await Promise.all([
+			Exercises.getExercisesByDifficulty(5),
+			Exercises.getExercisesByDifficulty(7)
+		]);
+		expect(q1.length).toEqual(1);
+		expect(q2.length).toEqual(2);
+		done();
+	});
 
-    // it("Should return same as difficulty max", async (done) => {
-	// 	const [q1, q2] = await Promise.all([
-	// 		Exercises.getExercisesByDifficulty(9),
-	// 		Exercises.getExercisesByDifficulty(10)
-	// 	]);
-	// 	expect(q1.length).toEqual(2);
-	// 	expect(q2.length).toEqual(1);
-	// 	done();
-    // });
+    it("Should return same as difficulty max", async (done) => {
+		const [q1, q2] = await Promise.all([
+			Exercises.getExercisesByDifficulty(9),
+			Exercises.getExercisesByDifficulty(10)
+		]);
+		expect(q1.length).toEqual(2);
+		expect(q2.length).toEqual(1);
+		done();
+    });
 
 	it("Should return exercise if its somewhere in between", async (done) => {
 		const q = await Exercises.getExercisesByDifficulty(8);
