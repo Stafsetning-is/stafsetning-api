@@ -1,5 +1,5 @@
 import * as firebase from "firebase/app";
-import { FB_API_KEY } from "./util/secrets";
+import { FB_API_KEY } from "../../../util/secrets";
 
 const firebaseConfig = {
   apiKey: FB_API_KEY,

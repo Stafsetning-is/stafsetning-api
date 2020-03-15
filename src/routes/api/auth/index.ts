@@ -1,5 +1,5 @@
 import logIn from "./log_in";
-import signUp from "./sign-up";
+import signUp from "./sign_up";
 import signOut from "./sign_out";
 import { RouteBuilder } from "../../utils";
 

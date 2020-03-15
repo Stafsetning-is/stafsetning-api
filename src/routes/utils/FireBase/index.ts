@@ -4,16 +4,12 @@ import { FB_SERVICEACCOUNT_KEY } from "../../../util/secrets";
 import "firebase/auth";
 import "firebase/firestore";
 import * as admin from "firebase-admin";
-import { app } from "../../../../src/auth";
+import { app } from "./utils";
 
-// const TEMP_USER = {
-// 	difficulty: 7,
-// 	id: "5",
-// 	name: "Jón Sigurðsson"
-// };
 admin.initializeApp({
 	credential: admin.credential.cert(FB_SERVICEACCOUNT_KEY)
 });
+
 const auth = app.auth();
 
 /**
@@ -26,8 +22,8 @@ export class FireBaseService {
      * but throws ERROR on unsuccessful attempt
 	 * @param phoneNumber the phone number to use on login
 	 */
-	public static async logIn(phoneNumber: string): Promise<AuthResponse> {
-		const user = await admin.auth().getUserByPhoneNumber(phoneNumber);
+	public static async logIn(mobile: string): Promise<AuthResponse> {
+		const user = await admin.auth().getUserByPhoneNumber(FireBaseService.mobileWithCountryCode(mobile));
 		const customToken = await admin.auth().createCustomToken(user.uid);
 		const fbUser = await auth.signInWithCustomToken(customToken);
 		
@@ -47,11 +43,19 @@ export class FireBaseService {
 	 * @param token user token
 	 */
 	public static async getUserFromToken(token: Token): Promise<UserInterface> {
-		const {user} = await auth.signInWithCustomToken(token);
-		if (!user) throw Error();
+		/**
+		 * Fae eftirifarandi villu sem tharf ad laga: 
+		 * btw '{"error":{"code":400,"message":"API key not valid. Please pass a valid API key.","errors":[{"message":"API key not valid. Please pass a valid API key.","domain":"global","reason":"badRequest"}],"status":"INVALID_ARGUMENT"}}'
+		 */
+		// const {user} = await auth.signInWithCustomToken(token);
+		// if (!user) throw Error();
+		// return {
+		// 	name: user.displayName,
+		// 	difficulty: 7
+		// };
 		return {
-			name: user.displayName,
-			difficulty: 7
+			difficulty: 7,
+			name: "Jón Sigurðsson"
 		};
     }
 	
@@ -62,10 +66,10 @@ export class FireBaseService {
 	 */
 	public static async signUp({mobile, password1, password2, name}: SignupData): Promise<AuthResponse> {
 
-		if (password1 !== password2) throw Error();
-		
+		if (password1 !== password2) throw Error("Passwords do not match");
+
 		const user = await admin.auth().createUser({
-			phoneNumber: mobile,
+			phoneNumber: FireBaseService.mobileWithCountryCode(mobile),
 			password: password1,
 			displayName: name
 		});
@@ -86,5 +90,9 @@ export class FireBaseService {
 	 */
 	public static async signOut(): Promise<void> {
 		await auth.signOut();
+	}
+
+	private static mobileWithCountryCode(mobileNo: string) {
+		return `+354${mobileNo}`;
 	}
 }

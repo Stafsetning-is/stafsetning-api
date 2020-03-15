@@ -6,6 +6,8 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
         const token = req.header("Authorization").replace("Bearer ", "");
         req.body.user = await FireBaseService.getUserFromToken(token);
     } catch (error) {
+        console.log("error", error);
+        console.log("Aunauthorized");
         res.status(401).send("Not authorized");
     } finally {
         next();

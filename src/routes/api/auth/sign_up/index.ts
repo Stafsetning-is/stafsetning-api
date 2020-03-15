@@ -6,6 +6,7 @@ import { Request, Response } from "express";
  */
 export default async (req: Request, res: Response) => {
 	try {
+		console.log("req.body", req.body);
 		const response = await FireBaseService.signUp(req.body);
 		res.send(response);
 	} catch (error) {
