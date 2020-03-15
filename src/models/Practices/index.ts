@@ -12,8 +12,8 @@ const practiceSchema = new Schema(
 			ref: "exercises",
 			required: true
 		},
-		errors: {
-			type: [{ charAt: Number, typed: String }],
+		errorItems: {
+			type: [{ charAt: Number, error: String }],
 			default: []
 		},
 		score: {
@@ -21,7 +21,7 @@ const practiceSchema = new Schema(
 			min: 0,
 			max: 1
 		},
-		exerciseText: {
+		exerciseString: {
 			type: String,
 			required: true
 		},
@@ -35,7 +35,7 @@ const practiceSchema = new Schema(
 
 practiceSchema.post("save", async function() {
 	const DEDUCTION = 0.05;
-	const score = 1 - this.errors.length * DEDUCTION;
+	const score = 1 - this.errorItems.length * DEDUCTION;
 	this.score = score < 0 ? 0 : score;
 });
 

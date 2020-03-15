@@ -42,20 +42,12 @@ export class FireBaseService {
 	 * @param token user token
 	 */
 	public static async getUserFromToken(token: Token): Promise<PrivateUserInterface> {
-		/**
-		 * Fae eftirifarandi villu sem tharf ad laga: 
-		 * btw '{"error":{"code":400,"message":"API key not valid. Please pass a valid API key.","errors":[{"message":"API key not valid. Please pass a valid API key.","domain":"global","reason":"badRequest"}],"status":"INVALID_ARGUMENT"}}'
-		 */
-		// const {user} = await auth.signInWithCustomToken(token);
-		// if (!user) throw Error();
-		// return {
-		// 	name: user.displayName,
-		// 	difficulty: 7
-		// };
+		const {user} = await auth.signInWithCustomToken(token);
+		if (!user) throw Error();
 		return {
+			name: user.displayName,
 			difficulty: 7,
-			name: "Jón Sigurðsson",
-			id: "asdfg"
+			id: user.uid
 		};
     }
 	
