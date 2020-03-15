@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 
-mongoose.Promise = Promise;
+const mongoServer = new MongoMemoryServer();
+// mongoose.Promise = Promise;
 
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
@@ -12,14 +13,27 @@ mongoose.set("useUnifiedTopology", true);
  * Setup to connect mongoose to mongo-memory-server
  * for tests
  */
-beforeAll((done) => {
-	const mongoServer = new MongoMemoryServer();
+beforeAll(async (done) => {
+	
+	try {
+		const mongouri = await mongoServer.getUri();
+		await mongoose.connect(mongouri);
+	} catch (error) {
+		
+	} finally {
+		done();
+	}
+});
 
-	mongoServer.getUri().then((mongoUri) => {
-		mongoose.connect(mongoUri);
-		mongoose.connection.once("open", () => {
-            console.log(`MongoDB successfully connected to ${mongoUri}`);
-            done();
-		});
-	});
+afterAll(async (done) => {
+	// Closing the DB connection allows Jest to exit successfully.
+
+	try {
+		await mongoServer.stop();
+		await mongoose.connection.close();
+	} catch (error) {
+		// handle error
+	} finally {
+		done();
+	}
 });
