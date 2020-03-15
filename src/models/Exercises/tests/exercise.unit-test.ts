@@ -44,7 +44,7 @@ describe("Getting exercises by user difficulty", () => {
     });
 
 	it("Should return exercise if its somewhere in between", async (done) => {
-		const q = await Exercises.getExercisesByDifficulty(8)
+		const q = await Exercises.getExercisesByDifficulty(8);
 		expect(q.length).toEqual(2);
         done();
     });
@@ -52,14 +52,14 @@ describe("Getting exercises by user difficulty", () => {
 
 describe("Should get correct representation of exercise", () => {
     it("Should return sentence parts", async (done) => {
-		const [exercise] = await Exercises.getExercisesByDifficulty(8)
+		const [exercise] = await Exercises.getExercisesByDifficulty(8);
         expect(exercise).toHaveProperty("parts");
         done();
-    })
+    });
 
     it("Should not have text property", async (done) => {
-		const [exercise] = await Exercises.getExercisesByDifficulty(8)
+		const [exercise] = await Exercises.getExercisesByDifficulty(8);
         expect(exercise).not.toHaveProperty("text");
         done();
-    })
+    });
 });

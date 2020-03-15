@@ -1,25 +1,20 @@
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 
-mongoose.Promise = Promise;
+let mongoServer: MongoMemoryServer;
 
-mongoose.set("useNewUrlParser", true);
-mongoose.set("useFindAndModify", false);
-mongoose.set("useCreateIndex", true);
-mongoose.set("useUnifiedTopology", true);
+beforeAll(async () => {
+  mongoServer = new MongoMemoryServer();
+  const mongoUri = await mongoServer.getUri();
+  await mongoose.connect(mongoUri, {
+	  useNewUrlParser: true,
+	  useUnifiedTopology: true
+  }, (err) => {
+    if (err) console.error(err);
+  });
+});
 
-/**
- * Setup to connect mongoose to mongo-memory-server
- * for tests
- */
-beforeAll((done) => {
-	const mongoServer = new MongoMemoryServer();
-
-	mongoServer.getUri().then((mongoUri) => {
-		mongoose.connect(mongoUri);
-		mongoose.connection.once("open", () => {
-            console.log(`MongoDB successfully connected to ${mongoUri}`);
-            done();
-		});
-	});
+afterAll(async () => {
+  await mongoose.disconnect();
+  await mongoServer.stop();
 });
