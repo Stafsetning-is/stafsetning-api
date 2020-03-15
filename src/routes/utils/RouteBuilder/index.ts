@@ -28,7 +28,7 @@ export class RouteBuilder{
                 router[endp.method](endp.route, endp.middleware, endp.controller);
             else router[endp.method](endp.route, endp.controller);
         }
-        return router
+        return router;
     }
 
 }
