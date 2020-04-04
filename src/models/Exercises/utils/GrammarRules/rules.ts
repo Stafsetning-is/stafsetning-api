@@ -1,16 +1,20 @@
 import { Rule } from "./interface";
 
-const rules: Rule[] = [
+export const NG_OG_NK = "ng_nk";
+export const KVK_UNN = "kvk_unn";
+
+/**
+ * List of rules that the system uses
+ */
+export const rules: Rule[] = [
 	{
-		regex: /[^\s]*[aeiou](ng|nk)[^\s.,]*/g,
+		regex: /[^\s]*[AEIOUaeiou](ng|nk)[^\s.,]*/g,
 		name: "ng og nk",
-		code: "ng_nk",
+		code: NG_OG_NK,
 	},
 	{
 		regex: /([A-Z]|[Þ])[^. ]*[u](nn)(?=[\s.,])/g,
 		name: "Kvennmannsnöfn sem enda á -unn",
-		code: "kvk_unn",
+		code: KVK_UNN,
 	},
 ];
-
-export default rules;

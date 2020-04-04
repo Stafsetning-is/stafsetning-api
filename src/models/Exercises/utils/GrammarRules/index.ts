@@ -1,7 +1,7 @@
 import { Rule, Exercise, Report } from "./interface";
-import rules from "./rules";
+import { rules } from "./rules";
 
-export default class GrammarRules {
+export class Reporter {
 	private static rules: Rule[] = rules;
 
 	/**
@@ -14,14 +14,14 @@ export default class GrammarRules {
 	public static getReport(exercise: Exercise): Report {
 		const { text } = exercise;
 		const report: Report = {};
-		GrammarRules.rules.forEach(({ name, code, regex }) => {
+		Reporter.rules.forEach(({ name, code, regex }) => {
 			const match = text.match(regex);
-			console.log("match", match);
 			report[code] = {
-				name,
 				count: match ? match.length : 0,
 			};
 		});
 		return report;
 	}
 }
+
+export * from "./rules";

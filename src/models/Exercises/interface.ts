@@ -20,7 +20,6 @@ export interface ExerciseRepr extends Base {
 	wordCount: number;
 	report: {
 		[key: string]: {
-			name: string;
 			count: number;
 		};
 	};

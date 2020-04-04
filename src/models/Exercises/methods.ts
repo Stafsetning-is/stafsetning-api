@@ -1,6 +1,6 @@
 const SPLITTER = ";;;";
 import { ExerciseInterface, ExerciseRepr } from "./interface";
-import GrammarRules from "./utils/GrammarRules";
+import { Reporter } from "./utils/GrammarRules";
 /**
  * returns a representation of the exercise
  * that can be shared with clients, i.e.
@@ -19,6 +19,6 @@ export const getRepresentation = function (): ExerciseRepr {
 		title: parts[0],
 		_id: exercise._id,
 		wordCount: text.split(" ").length,
-		report: GrammarRules.getReport(exercise),
+		report: Reporter.getReport(exercise),
 	};
 };
