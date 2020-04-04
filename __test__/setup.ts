@@ -26,6 +26,7 @@ beforeAll(async (done) => {
 		difficulty: 5,
 	});
 	await Users.ensureIndexes();
+	console.log("signupData", signupData);
 	app.set("testToken", signupData.token);
 	done();
 });
