@@ -101,9 +101,6 @@ export default class AppUtils {
 			res.send("Hello from the API!");
 		});
 
-		app.get("/status", (_req, res) => {
-			res.send("API is up and running...");
-		});
 		return AppUtils;
 	};
 }

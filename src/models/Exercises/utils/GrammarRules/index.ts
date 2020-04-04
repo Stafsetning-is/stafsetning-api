@@ -12,10 +12,9 @@ export class Reporter {
 	 * @param exercise item conforming to exercise interface
 	 */
 	public static getReport(exercise: Exercise): Report {
-		const { text } = exercise;
 		const report: Report = {};
 		Reporter.rules.forEach(({ code, regex }) => {
-			const match = text.match(regex);
+			const match = exercise.text.match(regex);
 			report[code] = {
 				count: match ? match.length : 0,
 			};
