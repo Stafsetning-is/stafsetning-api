@@ -14,7 +14,7 @@ export class Reporter {
 	public static getReport(exercise: Exercise): Report {
 		const { text } = exercise;
 		const report: Report = {};
-		Reporter.rules.forEach(({ name, code, regex }) => {
+		Reporter.rules.forEach(({ code, regex }) => {
 			const match = text.match(regex);
 			report[code] = {
 				count: match ? match.length : 0,
