@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import { Users } from "../src/models";
-
+import app from "../src/app";
 let mongoServer: MongoMemoryServer;
 
-beforeAll(async () => {
+beforeAll(async (done) => {
 	mongoServer = new MongoMemoryServer();
 	const mongoUri = await mongoServer.getUri();
 	await mongoose.connect(
@@ -17,7 +17,7 @@ beforeAll(async () => {
 			if (err) console.error(err);
 		}
 	);
-	await Users.create({
+	const signupData = await Users.register({
 		name: "Pope John Paul II",
 		password: "Password12.3",
 		mobile: "5812345",
@@ -25,6 +25,9 @@ beforeAll(async () => {
 		username: "paulyp",
 		difficulty: 5,
 	});
+	await Users.ensureIndexes();
+	app.set("testToken", signupData.token);
+	done();
 });
 
 afterAll(async () => {
