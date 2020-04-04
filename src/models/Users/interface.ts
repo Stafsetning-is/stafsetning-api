@@ -3,7 +3,6 @@ import { Document, Model, Types } from "mongoose";
 interface UserBase {
 	difficulty: number;
 	name: string;
-
 }
 
 export interface AuthData {
@@ -13,7 +12,6 @@ export interface AuthData {
 
 export interface PublicUser extends UserBase {
 	_id: Types.ObjectId;
-
 }
 
 export interface UserInterface extends Document, UserBase {
@@ -24,6 +22,9 @@ export interface UserInterface extends Document, UserBase {
 }
 
 export interface UserCollectionInterface extends Model<UserInterface> {
-	findByCredentials: (username: string, password: string) => Promise<UserInterface>;
-	register: (data: any) => Promise<PublicUser>;
+	findByCredentials: (
+		username: string,
+		password: string
+	) => Promise<UserInterface>;
+	register: (data: any) => Promise<AuthData>;
 }
