@@ -1,4 +1,4 @@
-import express, { Application, Router } from "express";
+import express, { Application } from "express";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
 import bodyParser from "body-parser";
@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import mongo from "connect-mongo";
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 import cors from "cors";
+import logger from "./util/logger";
 
 /**
  * Utils class that sets up
@@ -77,10 +78,11 @@ export default class AppUtils {
 				useUnifiedTopology: true,
 			})
 			.then(() => {
-				console.log("Connected to MongoDB");
+				logger.log("info", "Connected to MongoDB");
 			})
 			.catch((err: Error) => {
-				console.log(
+				logger.log(
+					"error",
 					"MongoDB connection error. Please make sure MongoDB is running. " +
 						err
 				);
