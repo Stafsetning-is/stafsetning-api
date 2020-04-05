@@ -1,6 +1,6 @@
 import express from "express";
-import Router from "./routes";
-import appUtils from "./appUtils";
+import Router from "../routes";
+import appUtils from "./utils";
 
 // Create Express server
 const app = express();

@@ -6,9 +6,9 @@ import path from "path";
 import session from "express-session";
 import mongoose from "mongoose";
 import mongo from "connect-mongo";
-import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+import { MONGODB_URI, SESSION_SECRET } from "../util/secrets";
 import cors from "cors";
-import logger from "./util/logger";
+import logger from "../util/logger";
 
 /**
  * Utils class that sets up
@@ -23,32 +23,33 @@ export default class AppUtils {
 	 * @param app The Express app
 	 */
 	public static setup(app: Application) {
-		AppUtils.setupMiddleware(app)
-			.startListen(app)
-			.addTestEndpoints(app)
-			.connectMongo();
+		AppUtils.setupMiddleware(app);
+		AppUtils.setPort(app);
+		AppUtils.addTestEndpoints(app);
+		AppUtils.connectMongo();
 	}
 
 	/**
 	 * Adds basic middleware
 	 */
 	private static setupMiddleware = (app: Application) => {
+		// Enable cors
 		app.use(cors());
+
 		// Mongo middleware to express
-		const MongoStore = mongo(session);
 		app.use(
 			session({
 				resave: true,
 				saveUninitialized: true,
 				secret: SESSION_SECRET,
-				store: new MongoStore({
+				store: new (mongo(session))({
 					url: MONGODB_URI,
 					autoReconnect: true,
 				}),
 			})
 		);
 
-		// request rate limits from same ip's
+		// request rate limits from same ip
 		app.use(
 			rateLimit({
 				windowMs: 15 * 60 * 1000,
@@ -56,53 +57,53 @@ export default class AppUtils {
 			})
 		);
 
+		// compression middlewae
 		app.use(compression());
+
+		// use body-parser middleware
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({ extended: true }));
 
+		// set static folder
 		app.use(
 			express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 		);
-		return AppUtils;
 	};
 
 	/**
 	 * Connects to mongo
 	 */
-	private static connectMongo = () => {
-		// Connect to MongoDB
-		mongoose
-			.connect(MONGODB_URI, {
+	private static connectMongo = async () => {
+		try {
+			await mongoose.connect(MONGODB_URI, {
 				useNewUrlParser: true,
 				useCreateIndex: true,
 				useUnifiedTopology: true,
-			})
-			.then(() => {
-				logger.log("info", "Connected to MongoDB");
-			})
-			.catch((err: Error) => {
-				logger.log(
-					"error",
-					"MongoDB connection error. Please make sure MongoDB is running. " +
-						err
-				);
 			});
-		return AppUtils;
+			logger.log("info", "Connected to MongoDB");
+		} catch (error) {
+			logger.log(
+				"error",
+				"MongoDB connection error. Please make sure MongoDB is running. " +
+					error
+			);
+		}
 	};
 
-	/** listens to port */
-	private static startListen = (app: Application) => {
+	/**
+	 * sets port
+	 * */
+	private static setPort = (app: Application) => {
 		// Express configuration
 		app.set("port", process.env.PORT || 5000);
-		return AppUtils;
 	};
 
-	/** adds basic endpoints */
+	/**
+	 * adds basic endpoints
+	 * */
 	private static addTestEndpoints = (app: Application) => {
 		app.get("/", (_req, res) => {
 			res.send("Hello from the API!");
 		});
-
-		return AppUtils;
 	};
 }
