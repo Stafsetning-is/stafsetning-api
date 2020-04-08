@@ -49,7 +49,7 @@ export default class AppUtils {
 			})
 		);
 
-		// request rate limits from same ip
+		// request rate limits from same ip adddress
 		app.use(
 			rateLimit({
 				windowMs: 15 * 60 * 1000,
