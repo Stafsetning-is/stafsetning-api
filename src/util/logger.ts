@@ -11,9 +11,7 @@ const logger = winston.createLogger({
 	format: format.combine(format.timestamp(), format.json()),
 });
 
-if (process.env.NODE_ENV === "test") {
-	logger.silent = true;
-}
+if (process.env.NODE_ENV === "test") logger.silent = true;
 
 if (process.env.NODE_ENV !== "production") {
 	logger.debug("Logging initialized at debug level");
