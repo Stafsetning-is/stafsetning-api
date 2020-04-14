@@ -2,7 +2,7 @@ import logger from "./logger";
 import dotenv from "dotenv";
 import fs from "fs";
 
-if (fs.existsSync(".env")) {
+if (fs.existsSync(".env") || process.env.NODE_ENV === "production") {
 	logger.debug("Using .env file to supply config environment variables");
 	dotenv.config({ path: ".env" });
 } else {
