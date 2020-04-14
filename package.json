@@ -9,7 +9,7 @@
 	"author": "Stafsetning-is",
 	"license": "MIT",
 	"scripts": {
-		"start": "npm run build && npm run serve",
+		"start": "npm install && npm run build && npm run serve",
 		"dev": "nodemon src/server.ts",
 		"build": "npm run build-ts",
 		"serve": "env NODE_ENV=production node dist/src/server.js",
