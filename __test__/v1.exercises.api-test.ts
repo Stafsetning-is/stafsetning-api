@@ -18,4 +18,13 @@ describe("Exercise Routes V1", () => {
 		expect(status).toEqual(200);
 		done();
 	});
+
+	it("POST /api/v1/exercises/complete requires auth", async (done) => {
+		const token = app.get("testToken");
+		const { body, status } = await request(app).post(
+			"/api/v1/exercises/complete"
+		);
+		expect(status).toEqual(401);
+		done();
+	});
 });

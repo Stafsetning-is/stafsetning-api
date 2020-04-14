@@ -8,7 +8,7 @@ describe("Authentication routes", () => {
 			password: "Password12.3",
 			mobile: "8012936",
 			type: "user",
-			username: "johnyd",
+			username: "johnyd2",
 			difficulty: 5,
 		};
 		const { body, status } = await request(app)
@@ -32,7 +32,6 @@ describe("Authentication routes", () => {
 		const { status } = await request(app)
 			.post("/api/auth/sign_up")
 			.send(payload);
-
 		expect(status).toEqual(400);
 		done();
 	});

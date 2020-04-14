@@ -9,6 +9,7 @@ import mongo from "connect-mongo";
 import { MONGODB_URI, SESSION_SECRET } from "../util/secrets";
 import cors from "cors";
 import logger from "../util/logger";
+import { env } from "shelljs";
 
 /**
  * Utils class that sets up
@@ -74,6 +75,7 @@ export default class AppUtils {
 	 * Connects to mongo
 	 */
 	private static connectMongo = async () => {
+		if (env.NODE_ENV === "test") return;
 		try {
 			await mongoose.connect(MONGODB_URI, {
 				useNewUrlParser: true,
