@@ -4,19 +4,19 @@ import getByUser from "./get_by_user";
 import { RouteBuilder } from "../../../utils";
 
 export default RouteBuilder.routerForEndpoints([
-    {
-        route: "/",
-        controller: post,
-        method: "post",
-    },
-    {
-        route: "/:id",
-        controller: getById,
-        method: "get",
-    },
-    {
-        route: "/",
-        controller: getByUser,
-        method: "get",
-    },
+	{
+		route: "/",
+		controller: post,
+		method: "post",
+	},
+	{
+		route: "/:id",
+		controller: getById,
+		method: "get",
+	},
+	{
+		route: "/",
+		controller: getByUser,
+		method: "get",
+	},
 ]);
