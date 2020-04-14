@@ -17,6 +17,7 @@ beforeAll(async (done) => {
 			if (err) console.error(err);
 		}
 	);
+	await Users.ensureIndexes();
 	const signupData = await Users.register({
 		name: "Pope John Paul II",
 		password: "Password12.3",
@@ -25,7 +26,6 @@ beforeAll(async (done) => {
 		username: "paulyp",
 		difficulty: 5,
 	});
-	await Users.ensureIndexes();
 	app.set("testToken", signupData.token);
 	done();
 });
