@@ -50,6 +50,8 @@ const userSchema = new Schema({
 	difficulty: {
 		type: Number,
 		required: true,
+		min: 1,
+		max: 11,
 	},
 });
 
