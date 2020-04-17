@@ -27,4 +27,12 @@ describe("Exercise Routes V1", () => {
 		expect(status).toEqual(401);
 		done();
 	});
+
+	/**
+	 * Vantar
+	 *
+	 * [ ] success case complete exercise
+	 * [ ] fail og success a create
+	 * [ ] fail og success a get by id
+	 */
 });

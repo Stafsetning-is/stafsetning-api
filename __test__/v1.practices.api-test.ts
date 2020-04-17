@@ -10,7 +10,6 @@ describe("Practice Routes V1", () => {
 
 	it("GET /api/v1/practices response with 200 with correct authentication", async (done) => {
 		const token = app.get("testToken");
-		console.log(token);
 		const { body, status } = await request(app)
 			.get("/api/v1/practices")
 			.set({ Authorization: `Bearer ${token}` });
@@ -19,4 +18,11 @@ describe("Practice Routes V1", () => {
 		expect(isArray).toBe(true);
 		done();
 	});
+
+	/**
+	 * Vantar
+	 *
+	 * [ ] fail og success a post
+	 * [ ] fail og success a get by id
+	 */
 });

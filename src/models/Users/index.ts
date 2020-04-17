@@ -53,6 +53,9 @@ const userSchema = new Schema({
 	},
 });
 
+/**
+ * Hashesh password when it's modified
+ */
 userSchema.pre<UserInterface>("save", async function (next) {
 	this.mobile = this.mobile.replace(/[- ]/g, "");
 	if (this.isModified("password"))
