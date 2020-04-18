@@ -4,7 +4,7 @@ import { Users } from "../../../../../models";
  * sets the user as an admin in the system
  */
 export default async (req: Request, res: Response) => {
-	const uid = req.params;
+	const { uid } = req.params;
 	try {
 		if (!uid) throw new Error("User Id not found");
 		const user = await Users.findById(uid);
