@@ -46,6 +46,7 @@ const userSchema = new Schema({
 			validator: (value: string) => ["user", "admin"].includes(value),
 			msg: "Invalid user type",
 		},
+		default: "user",
 	},
 	difficulty: {
 		type: Number,
