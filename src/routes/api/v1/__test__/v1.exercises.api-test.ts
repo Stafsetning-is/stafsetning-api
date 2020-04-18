@@ -63,7 +63,7 @@ describe("Exercise Routes V1", () => {
 	 * Vantar
 	 *
 	 * [ ] success case complete exercise
-	 * [ ] fail og success a create
-	 * [ ] fail og success a get by id
+	 * [ ] faera create
+	 * [x] fail og success a get by id
 	 */
 });
