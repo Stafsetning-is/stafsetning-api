@@ -19,6 +19,7 @@ export interface UserInterface extends Document, UserBase {
 	password: string;
 	generateAuthToken: () => Promise<string>;
 	getPublic: () => PublicUser;
+	type: "user" | "admin";
 }
 
 export interface UserCollectionInterface extends Model<UserInterface> {

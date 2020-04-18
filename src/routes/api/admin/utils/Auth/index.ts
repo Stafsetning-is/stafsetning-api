@@ -9,6 +9,8 @@ import { Users } from "../../../../../models";
  * in the request. It decodes the token
  * and finds the request sender in the user table
  * and attaches user to req.body
+ *
+ * this middleware explicitly checks if req.user is admin
  */
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -19,9 +21,13 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
 			_id: decoded._id,
 		});
 		if (!user) throw new Error("User not found");
+		if (user.type !== "admin")
+			throw new Error("Not authorized for admin routes");
 		req.body.user = user.getPublic();
 		next();
 	} catch (e) {
-		res.status(401).send("Not authorized");
+		res.status(401).send({
+			message: e.message,
+		});
 	}
 };
