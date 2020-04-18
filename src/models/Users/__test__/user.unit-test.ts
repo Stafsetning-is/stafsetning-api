@@ -44,4 +44,17 @@ describe("User creation", () => {
 		expect(create2()).rejects.toEqual(new Error("test"));
 		done();
 	});
+
+	it("Should not allow creation of admins", async (done) => {
+		const user = await Users.create({
+			name: "Tester 5",
+			password: "some password",
+			username: "testington2",
+			mobile: "5810236",
+			difficulty: 10,
+			type: "admin",
+		});
+		expect(user.type).toBe("user");
+		done();
+	});
 });
