@@ -55,14 +55,17 @@ const userSchema = new Schema({
 	},
 });
 
-/**
- * Hashesh password when it's modified
- */
+// Hashesh password when it's modified
 userSchema.pre<UserInterface>("save", async function (next) {
 	this.mobile = this.mobile.replace(/[- ]/g, "");
 	if (this.isModified("password"))
 		this.password = await bcrypt.hash(this.password, 8);
 	next();
+});
+
+// auto converts all new instances to type "user"
+userSchema.pre<UserInterface>("save", async function (next) {
+	if (this.isNew) this.type = "user";
 });
 
 userSchema.statics = statics;
