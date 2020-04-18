@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../src/app";
+import app from "../../../../app";
 
 describe("Open Routes", () => {
 	it("GET /api/open/exercise_sample/", async (done) => {

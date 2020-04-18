@@ -26,6 +26,16 @@ beforeAll(async (done) => {
 		username: "paulyp",
 		difficulty: 5,
 	});
+	const adminSignupData = await Users.register({
+		name: "Admin Pope",
+		password: "Password12.3",
+		mobile: "3959373",
+		type: "user",
+		username: "dungeon master admin",
+		difficulty: 5,
+	});
+	const admin = await Users.findById(adminSignupData.user._id);
+	await admin.makeAdmin();
 	const exercise = await Exercises.create({
 		difficultRange: {
 			min: 0,
@@ -33,7 +43,7 @@ beforeAll(async (done) => {
 		},
 		text: "Kalli fór út í búð;;; til ad kaupa mjólk,;;; handa mömmu sinni.",
 	});
-	const practice = await Practices.create({
+	await Practices.create({
 		duration: 25,
 		exerciseString: "Kalli for ut i bud",
 		exercise: exercise._id,
@@ -44,6 +54,8 @@ beforeAll(async (done) => {
 		user: signupData.user._id,
 	});
 	app.set("testToken", signupData.token);
+	app.set("userId", signupData.user._id);
+	app.set("adminTestToken", adminSignupData.token);
 	done();
 });
 
