@@ -66,6 +66,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 // auto converts all new instances to type "user"
 userSchema.pre<UserInterface>("save", async function (next) {
 	if (this.isNew) this.type = "user";
+	next();
 });
 
 userSchema.statics = statics;
