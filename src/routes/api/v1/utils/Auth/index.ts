@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
-import { USER_PW_HASH_KEY } from "../../../util/secrets";
-import { Users } from "../../../models";
+import { USER_PW_HASH_KEY } from "../../../../../util/secrets";
+import { Users } from "../../../../../models";
 
 /**
  * Express middle ware that requires
