@@ -56,6 +56,7 @@ beforeAll(async (done) => {
 	app.set("testToken", signupData.token);
 	app.set("userId", signupData.user._id);
 	app.set("adminTestToken", adminSignupData.token);
+	app.set("exerciseId", exercise._id);
 	done();
 });
 
