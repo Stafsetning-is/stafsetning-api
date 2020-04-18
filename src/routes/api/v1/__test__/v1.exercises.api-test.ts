@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../src/app";
+import app from "../../../../app";
 
 describe("Exercise Routes V1", () => {
 	it("GET /api/v1/exercises/by_difficulty/ requires auth", async (done) => {
