@@ -1,4 +1,18 @@
-import { Users } from "../index";
+import { Users, UserInterface } from "../index";
+
+// user to be accessed through tests
+let user: UserInterface;
+
+beforeAll(async (done) => {
+	user = await Users.create({
+		name: "Tester 5",
+		password: "some password",
+		username: "testington7",
+		mobile: "5830234",
+		difficulty: 4,
+	});
+	done();
+});
 
 describe("User creation", () => {
 	it("Should hash password when created", async (done) => {
@@ -56,5 +70,23 @@ describe("User creation", () => {
 		});
 		expect(user.type).toBe("user");
 		done();
+	});
+});
+
+describe("User methods", () => {
+	it("should upgrade priveledges on .makeAdmin()", async (done) => {
+		await user.makeAdmin();
+		const found = await Users.findById(user._id);
+		expect(found.type).toBe("admin");
+		done();
+	});
+
+	it("should generate token", async () => {
+		const token = await user.generateAuthToken();
+		const found = await Users.findOne({
+			_id: user._id,
+			"tokens.token": token,
+		});
+		expect(found._id.toString()).toBe(user._id.toString());
 	});
 });

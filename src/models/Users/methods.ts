@@ -22,3 +22,8 @@ export const getPublic = function (): PublicUser {
 		difficulty: this.difficulty,
 	};
 };
+
+export const makeAdmin = async function () {
+	this.type = "admin";
+	await this.save();
+};
