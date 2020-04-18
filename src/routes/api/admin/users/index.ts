@@ -1,5 +1,5 @@
 import makeAdmin from "./make_admin";
-import { RouteBuilder } from "../../utils";
+import { RouteBuilder } from "../../../utils";
 
 export default RouteBuilder.routerForEndpoints([
 	{
