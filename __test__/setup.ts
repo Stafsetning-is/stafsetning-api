@@ -33,7 +33,7 @@ beforeAll(async (done) => {
 		},
 		text: "Kalli fór út í búð;;; til ad kaupa mjólk,;;; handa mömmu sinni.",
 	});
-	const practice = await Practices.create({
+	await Practices.create({
 		duration: 25,
 		exerciseString: "Kalli for ut i bud",
 		exercise: exercise._id,
