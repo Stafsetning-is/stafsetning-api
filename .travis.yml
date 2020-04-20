@@ -14,10 +14,12 @@ branches:
 #   - secure: eDpLwB8lFgrfNqjAZTRwqsARF9MS1m687tzf0f8lkQzNtSsqx8uR98ZkmsLET5/sdI1fIBqV2IuJ3hycYGYcVhFqkhkeNEYLi4brQY9dLBaUQTduesgGzcBW8bkojac/cO3+N6ACD/yW70uxVJcPwxAPTOeHQiOCNyrnjjuwI86uHaHJY1uR5fADkhemwUgOrK1APBP+0xc4ssNuMnbK7gYvWpCbOaEDze3mVPKvA6SocEip8ZFu+NVL2KU8fe1b56A37hXlXVgH9CF7TfYdczGNw1LkXwoTdnb5LSLyXsvMourei8Ya89GEXz2CyqE9SswLknj8z0AAqk27KEjdRm5EZxwLrIQvjsqZu8OZbEdEElYPepzDCi3Zy9pHWHNGnfvc5tkXOXaqnl+LWfk8yQUiwN4HpIsRBbyBxTP/XhtkddXM6NLfTmBE9Xao1m+fRYGsWrAYxK3RABy11r0LyHyi8PLuIhxPuKfs/0jQ508a8kQR14w8YhFe4wOLK/E1zlIxCzj+364yboFZQpk5L5qU9wVtdsRzL52kKIicx6pu+dkPmo4JY2SkwAQV8eEdT8wAJujML6geFAsKftT+hmAoSYxRoXTOWiDSPV7/plv5TZ8xUNkOgSDKZGKbmEUBd2xL6FLimWw7TfHOocssajpO+KTdt2h3caNxhOMCukY=
 script:
   - npm run lint
-  - echo $NODE_ENV bla
   - npm run test
   # run capacity tests
   # Deploy
+
+after_failure:
+  - cat /home/travis/.npm/_logs/2020-04-18T20_57_56_144Z-debug.log
 
 # jobs:
 #   include:
