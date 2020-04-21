@@ -28,13 +28,13 @@ describe("Auth routes", () => {
         done();
     });
 
-    it("GET /api/v1/users/change_difficulty responds with 200 with correct token", async (done) => {
-        const token = app.get("testToken");
-        const { body } = await request(app)
-            .get("/api/v1/users/change_difficulty")
-            .set({ Authorization: `Bearer ${token}` });
-        expect(body).toHaveProperty("_id");
-        expect(body).toHaveProperty("difficulty");
-        done();
-    });
+    // it("GET /api/v1/users/change_difficulty responds with 200 with correct token", async (done) => {
+    //     const token = app.get("testToken");
+    //     const { body } = await request(app)
+    //         .get("/api/v1/users/change_difficulty")
+    //         .set({ Authorization: `Bearer ${token}` });
+    //     expect(body).toHaveProperty("_id");
+    //     expect(body).toHaveProperty("difficulty");
+    //     done();
+    // });
 });
