@@ -9,7 +9,6 @@ import mongo from "connect-mongo";
 import { MONGODB_URI, SESSION_SECRET } from "../util/secrets";
 import cors from "cors";
 import logger from "../util/logger";
-import { env } from "shelljs";
 
 /**
  * Utils class that sets up
@@ -34,6 +33,7 @@ export default class AppUtils {
 	 * Adds basic middleware
 	 */
 	private static setupMiddleware = (app: Application) => {
+		if (process.env.NODE_ENV === "test") return;
 		// Enable cors
 		app.use(cors());
 
