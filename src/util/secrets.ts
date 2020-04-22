@@ -4,8 +4,8 @@ import fs from "fs";
 
 export const ENVIRONMENT = process.env.NODE_ENV;
 const prod = ENVIRONMENT === "production"; // Anything else is treated as 'dev'
+const test = ENVIRONMENT === "test";
 
-console.log("HI");
 if (fs.existsSync(".env") || ["production", "test"].includes(ENVIRONMENT)) {
 	logger.debug("Using .env file to supply config environment variables");
 	dotenv.config({ path: ".env" });
@@ -19,7 +19,9 @@ export const SESSION_SECRET = process.env["SESSION_SECRET"];
 export const MONGODB_URI = prod
 	? process.env["MONGODB_URI"]
 	: process.env["MONGODB_URI_LOCAL"];
-export const USER_PW_HASH_KEY = process.env["USER_PW_HASH_KEY"];
+export const USER_PW_HASH_KEY = test
+	? "testingkey"
+	: process.env["USER_PW_HASH_KEY"];
 
 if (!SESSION_SECRET) {
 	logger.error("No client secret. Set SESSION_SECRET environment variable.");
