@@ -15,6 +15,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
 		const token = req.header("Authorization").replace("Bearer ", "");
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const decoded: any = jwt.verify(token, USER_PW_HASH_KEY);
+		console.log("decoded", decoded);
 		const user = await Users.findOne({
 			_id: decoded._id,
 		});
@@ -22,6 +23,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
 		req.body.user = user.getPublic();
 		next();
 	} catch (e) {
+		console.log("e", e);
 		res.status(401).send("Not authorized");
 	}
 };
