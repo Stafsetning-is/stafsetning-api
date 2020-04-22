@@ -13,10 +13,13 @@ export class Reporter {
 	 */
 	public static getReport(exercise: Exercise): Report {
 		const report: Report = {};
-		Reporter.rules.forEach(({ code, regex }) => {
+		Reporter.rules.forEach(({ code, regex, name }) => {
 			const match = exercise.text.match(regex);
+			if (!match) return;
+			const count = match ? match.length : 0;
 			report[code] = {
-				count: match ? match.length : 0,
+				count: count,
+				name: name,
 			};
 		});
 		return report;

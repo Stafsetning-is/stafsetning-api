@@ -9,7 +9,6 @@ import mongo from "connect-mongo";
 import { MONGODB_URI, SESSION_SECRET } from "../util/secrets";
 import cors from "cors";
 import logger from "../util/logger";
-import { env } from "shelljs";
 
 /**
  * Utils class that sets up
@@ -37,19 +36,6 @@ export default class AppUtils {
 		// Enable cors
 		app.use(cors());
 
-		// Mongo middleware to express
-		app.use(
-			session({
-				resave: true,
-				saveUninitialized: true,
-				secret: SESSION_SECRET,
-				store: new (mongo(session))({
-					url: MONGODB_URI,
-					autoReconnect: true,
-				}),
-			})
-		);
-
 		// request rate limits from same ip adddress
 		app.use(
 			rateLimit({
@@ -69,13 +55,29 @@ export default class AppUtils {
 		app.use(
 			express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 		);
+
+		// do not execute the below during test
+		if (process.env.NODE_ENV === "test") return;
+
+		// Mongo middleware to express
+		app.use(
+			session({
+				resave: true,
+				saveUninitialized: true,
+				secret: SESSION_SECRET,
+				store: new (mongo(session))({
+					url: MONGODB_URI,
+					autoReconnect: true,
+				}),
+			})
+		);
 	};
 
 	/**
 	 * Connects to mongo
 	 */
 	private static connectMongo = async () => {
-		if (env.NODE_ENV === "test") return;
+		if (process.env.NODE_ENV === "test") return;
 		try {
 			await mongoose.connect(MONGODB_URI, {
 				useNewUrlParser: true,

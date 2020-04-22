@@ -8,9 +8,7 @@ describe("Automatic grammar rule reporter", () => {
 				"Steinunn taladi við Þórunn. Ingunn átti gullfisk sem hét Iðunn, og hann var étinn af kettinum Gíslunn ",
 		};
 		const report = Reporter.getReport(exercise);
-		expect(report).toHaveProperty(KVK_UNN, {
-			count: 5,
-		});
+		expect(report[KVK_UNN]).toHaveProperty("count", 5);
 	});
 
 	// testing ng and nk rules
@@ -20,9 +18,7 @@ describe("Automatic grammar rule reporter", () => {
 				"Ungi drengurinn fór í bankann. Hann var svangur. Dagurinn var langur",
 		};
 		const report = Reporter.getReport(exercise);
-		expect(report).toHaveProperty(NG_OG_NK, {
-			count: 5,
-		});
+		expect(report[NG_OG_NK]).toHaveProperty("count", 5);
 	});
 
 	// testing capital letters in names
@@ -31,8 +27,6 @@ describe("Automatic grammar rule reporter", () => {
 			text: "Langaði Nönnu að hanga.",
 		};
 		const report = Reporter.getReport(exercise);
-		expect(report).toHaveProperty(STOR_NAFN, {
-			count: 1,
-		});
+		expect(report[STOR_NAFN]).toHaveProperty("count", 1);
 	});
 });
