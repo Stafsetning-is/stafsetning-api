@@ -75,7 +75,7 @@ export default class AppUtils {
 	 * Connects to mongo
 	 */
 	private static connectMongo = async () => {
-		if (env.NODE_ENV === "test") return;
+		if (process.env.NODE_ENV === "test") return;
 		try {
 			await mongoose.connect(MONGODB_URI, {
 				useNewUrlParser: true,
