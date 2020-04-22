@@ -28,24 +28,16 @@ describe("Auth routes", () => {
         done();
     });
 
-    // it("POST /api/v1/users/change_difficulty responds with 200 with correct token", async (done) => {
-    //     const token = app.get("testToken");
-    //     let userDiff = { difficulty: 5 };
-    //     const { body, status } = await request(app)
-    //         .post("/api/v1/users/change_difficulty")
-    //         .send(userDiff)
-    //         .set({ Authorization: `Bearer ${token}` });
-    //     expect(body).toHaveProperty("difficulty");
-    //     expect(status).toEqual(200);
-    //     done();
-    // });
+    // it("POST /api/v1/users/change_difficulty should respond with 200 OK ", async (done) => {
+    //      const mockUser = {
+    //     difficulty: "8"
+    //   };
 
-    it("POST /api/v1/users/change_difficulty should not allow difficulty zero", async (done) => {
-        const token = app.get("testToken");
-        const { body, status } = await request(app)
-            .post("/api/v1/users/change_difficulty")
-            .set({ Authorization: `Bearer ${token}` });
-        expect(status).toEqual(400);
-        done();
-    });
+    //     const { _id } = (await request(app).post("/api/v1/users/change_difficulty").send(mockUser)).body;
+    //     const { status, body } = await request(app).patch(`/api/v1/users/change_difficulty${_id}`).send({
+    //       difficulty: "8",
+    //     });
+
+    //     expect(status).toBe(200);
+    //     expect(body.name).toBe("8");
 });
