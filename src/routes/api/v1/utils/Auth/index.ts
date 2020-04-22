@@ -23,6 +23,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
 		req.body.user = user.getPublic();
 		next();
 	} catch (e) {
+		console.log(req.method);
 		console.log("e", e);
 		res.status(401).send("Not authorized");
 	}
