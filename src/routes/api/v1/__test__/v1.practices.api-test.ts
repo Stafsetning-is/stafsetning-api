@@ -10,6 +10,7 @@ describe("Practice Routes V1", () => {
 
 	it("GET /api/v1/practices response with 200 with correct authentication", async (done) => {
 		const token = app.get("testToken");
+		console.log("token", token);
 		const { body, status } = await request(app)
 			.get("/api/v1/practices")
 			.set({ Authorization: `Bearer ${token}` });

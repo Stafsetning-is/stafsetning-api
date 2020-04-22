@@ -55,7 +55,7 @@ beforeAll(async (done) => {
 		],
 		user: signupData.user._id,
 	});
-	console.log(4);
+	console.log("signupData.token", signupData.token);
 	app.set("testToken", signupData.token);
 	app.set("userId", signupData.user._id);
 	app.set("adminTestToken", adminSignupData.token);
