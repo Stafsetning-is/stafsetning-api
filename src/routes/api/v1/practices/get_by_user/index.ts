@@ -10,7 +10,7 @@ export default async (req: Request, res: Response) => {
             const exercise = doc.exercise;
             exercise.completed = true;
             exercise.practice = doc._id;
-            return exercise;
+            return exercise.getRepresentation();
         });
         res.send(exercises);
     } catch (error) {
