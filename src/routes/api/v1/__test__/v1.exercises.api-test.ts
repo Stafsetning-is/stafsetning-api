@@ -64,6 +64,5 @@ describe("Exercise Routes V1", () => {
 	 *
 	 * [ ] success case complete exercise
 	 * [ ] faera create
-	 * [x] fail og success a get by id
 	 */
 });
