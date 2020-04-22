@@ -2,13 +2,16 @@ import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import { Users, Practices, Exercises } from "../src/models";
 import app from "../src/app";
-import { exec } from "child_process";
+
 let mongoServer: MongoMemoryServer;
 
 beforeAll(async (done) => {
 	mongoServer = new MongoMemoryServer();
-	const mongoUri = await mongoServer.getUri();
-	exec(`echo ${mongoUri}`);
+
+	const mongoUri =
+		process.env.NODE_ENV === "test"
+			? "mongodb://localhost:27017/stafs-api"
+			: await mongoServer.getUri();
 	await mongoose.connect(
 		mongoUri,
 		{
