@@ -1,4 +1,4 @@
-import {Document, Model} from "mongoose";
+import { Document, Model, Types } from "mongoose";
 interface Base {
     difficultRange: {
         min: number;
@@ -10,14 +10,21 @@ interface Base {
 export interface ExerciseInterface extends Base, Document {
     text: string;
     getRepresentation: () => ExerciseRepr;
+    completed?: boolean;
+    practice: Types.ObjectId;
 }
 
-export interface ExerciseRepr extends Base { 
+export interface ExerciseRepr extends Base {
     length: number;
     parts: string[];
     title: string;
-    _id: any;
+    _id: Types.ObjectId;
     wordCount: number;
+    report: {
+        [key: string]: {
+            count: number;
+        };
+    };
 }
 
 export interface ExerciseCollectionInterface extends Model<ExerciseInterface> {

@@ -1,6 +1,7 @@
 import {
 	model,
 	Schema,
+	Types,
 	//Collection
 } from "mongoose";
 import { ExerciseCollectionInterface, ExerciseInterface } from "./interface";
@@ -10,23 +11,25 @@ import * as methods from "./methods";
 const exerciseSchema = new Schema(
 	{
 		difficultRange: {
-			type: {min: Number, max: Number},
-			required: true
+			type: { min: Number, max: Number },
+			required: true,
 		},
 		number: {
-			type: Number
+			type: Number,
 		},
 		text: {
 			type: String,
-			required: true
-		}
+			required: true,
+		},
+		practice: { type: Schema.Types.ObjectId },
+		completed: { type: Boolean },
 	},
 	{ timestamps: true }
 );
 
 exerciseSchema.statics = statics;
 exerciseSchema.methods = methods;
-exerciseSchema.post("save", async function () {
+exerciseSchema.post<ExerciseInterface>("save", async function () {
 	// eslint-disable-next-line @typescript-eslint/no-use-before-define
 	this.number = await Exercises.countDocuments();
 });

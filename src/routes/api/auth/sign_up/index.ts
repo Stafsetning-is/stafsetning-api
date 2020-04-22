@@ -6,10 +6,11 @@ import { Request, Response } from "express";
  */
 export default async (req: Request, res: Response) => {
 	try {
+		console.log("req.body", req.body);
 		const user = await Users.register(req.body);
-		res.send(user);
+		res.status(201).send(user);
 	} catch (error) {
-		console.log("error", error);
-		res.status(400).send({message: "Sign up failed"});
+		console.log("SIGNUP ROUTE", error);
+		res.status(400).send({ message: "Sign up failed" });
 	}
 };

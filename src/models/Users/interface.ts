@@ -3,7 +3,7 @@ import { Document, Model, Types } from "mongoose";
 interface UserBase {
 	difficulty: number;
 	name: string;
-
+	type: "user" | "admin";
 }
 
 export interface AuthData {
@@ -13,7 +13,6 @@ export interface AuthData {
 
 export interface PublicUser extends UserBase {
 	_id: Types.ObjectId;
-
 }
 
 export interface UserInterface extends Document, UserBase {
@@ -21,9 +20,13 @@ export interface UserInterface extends Document, UserBase {
 	password: string;
 	generateAuthToken: () => Promise<string>;
 	getPublic: () => PublicUser;
+	makeAdmin: () => Promise<void>;
 }
 
 export interface UserCollectionInterface extends Model<UserInterface> {
-	findByCredentials: (username: string, password: string) => Promise<UserInterface>;
-	register: (data: any) => Promise<PublicUser>;
+	findByCredentials: (
+		username: string,
+		password: string
+	) => Promise<UserInterface>;
+	register: (data: any) => Promise<AuthData>;
 }
