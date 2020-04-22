@@ -6,12 +6,19 @@ export const ENVIRONMENT = process.env.NODE_ENV;
 const prod = ENVIRONMENT === "production"; // Anything else is treated as 'dev'
 const test = ENVIRONMENT === "test";
 
-if (fs.existsSync(".env") || ["production", "test"].includes(ENVIRONMENT)) {
+const exitProcess = () => {
+	if (test) return;
+	process.exit(1);
+};
+
+if (fs.existsSync(".env")) {
 	logger.debug("Using .env file to supply config environment variables");
 	dotenv.config({ path: ".env" });
+} else if (prod) {
+	logger.debug("Using heroku config variables to supply environment variables");
 } else {
 	logger.error("You must create an .env file.");
-	process.exit(1);
+	exitProcess();
 }
 
 // Switched MONGODB_URI_LOCAL with MONGODB_URI
@@ -25,7 +32,7 @@ export const USER_PW_HASH_KEY = test
 
 if (!SESSION_SECRET) {
 	logger.error("No client secret. Set SESSION_SECRET environment variable.");
-	process.exit(1);
+	exitProcess();
 }
 
 if (!MONGODB_URI) {
@@ -38,12 +45,12 @@ if (!MONGODB_URI) {
 			"No mongo connection string. Set MONGODB_URI_LOCAL environment variable."
 		);
 	}
-	process.exit(1);
+	exitProcess();
 }
 
 if (!USER_PW_HASH_KEY) {
 	logger.error(
 		"No hashing key in env. Set USER_PW_HASH_KEY environment variable."
 	);
-	process.exit(1);
+	exitProcess();
 }
