@@ -5,6 +5,7 @@ import fs from "fs";
 export const ENVIRONMENT = process.env.NODE_ENV;
 const prod = ENVIRONMENT === "production"; // Anything else is treated as 'dev'
 
+console.log("HI");
 if (fs.existsSync(".env") || ["production", "test"].includes(ENVIRONMENT)) {
 	logger.debug("Using .env file to supply config environment variables");
 	dotenv.config({ path: ".env" });
