@@ -40,15 +40,12 @@ describe("Auth routes", () => {
     //     done();
     // });
 
-    // it("POST /api/v1/users/change_difficulty should not allow difficulty zero", async (done) => {
-    //     const token = app.get("testToken");
-    //     let userDiff = { difficulty: 0 };
-    //     const { body, status } = await request(app)
-    //         .post("/api/v1/users/change_difficulty")
-    //         .send(userDiff)
-    //         .set({ Authorization: `Bearer ${token}` });
-    //     // expect(body).toHaveProperty("difficulty");
-    //     expect(body).toEqual(400);
-    //     done();
-    // });
+    it("POST /api/v1/users/change_difficulty should not allow difficulty zero", async (done) => {
+        const token = app.get("testToken");
+        const { body, status } = await request(app)
+            .post("/api/v1/users/change_difficulty")
+            .set({ Authorization: `Bearer ${token}` });
+        expect(status).toEqual(400);
+        done();
+    });
 });

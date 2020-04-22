@@ -134,7 +134,7 @@ describe("User methods", () => {
         expect(user.difficulty).toBe(5);
         await update2();
         expect(user.difficulty).toBe(1);
-        console.log(user.difficulty);
+
         done();
     });
 });
