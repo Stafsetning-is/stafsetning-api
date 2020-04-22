@@ -2,11 +2,13 @@ import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import { Users, Practices, Exercises } from "../src/models";
 import app from "../src/app";
+import { exec } from "child_process";
 let mongoServer: MongoMemoryServer;
 
 beforeAll(async (done) => {
 	mongoServer = new MongoMemoryServer();
 	const mongoUri = await mongoServer.getUri();
+	exec(`echo ${mongoUri}`);
 	await mongoose.connect(
 		mongoUri,
 		{
