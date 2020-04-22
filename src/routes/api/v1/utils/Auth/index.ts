@@ -20,6 +20,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
 			_id: decoded._id,
 		});
 		if (!user) throw new Error("User not found");
+		if (!req.body) req.body = {};
 		req.body.user = user.getPublic();
 		next();
 	} catch (e) {
