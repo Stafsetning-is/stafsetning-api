@@ -5,17 +5,9 @@ import app from "../src/app";
 
 let mongoServer: MongoMemoryServer;
 
-const getMongoUri = async () => {
-	if (process.env.NODE_ENV === "test")
-		return "mongodb://localhost:27017/stafs-api";
-	else {
-		mongoServer = new MongoMemoryServer();
-		return await mongoServer.getUri();
-	}
-};
-
 beforeAll(async (done) => {
-	const mongoUri = await getMongoUri();
+	mongoServer = new MongoMemoryServer();
+	const mongoUri = await mongoServer.getUri();
 
 	await mongoose.connect(
 		mongoUri,
