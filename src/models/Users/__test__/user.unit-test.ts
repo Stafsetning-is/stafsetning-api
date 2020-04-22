@@ -91,32 +91,6 @@ describe("User methods", () => {
         done();
     });
 
-    // it("should not allow changing difficulty to out of range", async () => {
-    //     const updateLower = async () => {
-    //         try {
-    //             await Users.findOneAndUpdate(
-    //                 { _id: user._id },
-    //                 { difficulty: 0 }
-    //             );
-    //         } catch (error) {
-    //             throw Error("test");
-    //         }
-    //     };
-    //     const updateHiger = async () => {
-    //         try {
-    //             await Users.findOneAndUpdate(
-    //                 { _id: user._id },
-    //                 { difficulty: 11 }
-    //             );
-    //         } catch (error) {
-    //             // console.log(user.difficulty);
-    //             throw Error("test");
-    //         }
-    //     };
-    //     expect(updateLower()).rejects.toEqual(new Error("test"));
-    //     expect(updateHiger()).rejects.toEqual(new Error("test"));
-    // });
-
     it("should not update difficulty value", async (done) => {
         const update1 = async () => {
             try {
@@ -136,6 +110,31 @@ describe("User methods", () => {
         };
         await expect(update1()).rejects.toEqual(new Error("test"));
         await expect(update2()).rejects.toEqual(new Error("test"));
+        done();
+    });
+
+    it("should update difficulty value", async (done) => {
+        const update1 = async () => {
+            try {
+                user.difficulty = 5;
+                await user.save();
+            } catch (error) {
+                throw Error("test");
+            }
+        };
+        const update2 = async () => {
+            try {
+                user.difficulty = 1;
+                await user.save();
+            } catch (error) {
+                throw Error("test");
+            }
+        };
+        await update1();
+        expect(user.difficulty).toBe(5);
+        await update2();
+        expect(user.difficulty).toBe(1);
+        console.log(user.difficulty);
         done();
     });
 });
