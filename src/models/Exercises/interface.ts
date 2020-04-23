@@ -6,7 +6,6 @@ interface Base {
 	};
 	number: number;
 	completed?: boolean;
-	practice: Types.ObjectId;
 }
 
 export interface ExerciseInterface extends Base, Document {
@@ -30,6 +29,7 @@ export interface ExerciseRepr extends Base {
 
 export interface FinishedExerciseRepr extends ExerciseRepr {
 	score: number;
+	practice: Types.ObjectId;
 }
 
 export interface ExerciseCollectionInterface extends Model<ExerciseInterface> {

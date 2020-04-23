@@ -1,7 +1,6 @@
 import {
 	ExerciseCollectionInterface,
 	ExerciseRepr,
-	ExerciseInterface,
 	FinishedExerciseRepr,
 } from "./interface";
 import { Types } from "mongoose";
@@ -29,7 +28,6 @@ export const getExercisesByDifficulty = async function (
  * highest score for each
  * @param uid User id
  */
-
 export const getCompletedExercises = async function (
 	uid: Types.ObjectId
 ): Promise<FinishedExerciseRepr[]> {
@@ -47,9 +45,9 @@ export const getCompletedExercises = async function (
 
 		// filter by unique exercise Id - keeps the highest score only
 		exercises.forEach((doc) => {
-			const { _id } = doc;
-			if (!exerciseDict[_id]) exerciseDict[_id] = doc;
-			if (doc.score > exerciseDict[_id].score) exerciseDict[_id] = doc;
+			const key = doc._id.toString();
+			if (!exerciseDict[key]) exerciseDict[key] = doc;
+			if (doc.score > exerciseDict[key].score) exerciseDict[key] = doc;
 		});
 
 		// maps dict to array

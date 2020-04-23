@@ -7,6 +7,7 @@ export const toExercise = function (
 		...this.exercise.getRepresentation(),
 		completed: true,
 		score: this.getScore(),
+		practice: this._id,
 	};
 };
 
