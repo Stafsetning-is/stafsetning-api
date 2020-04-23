@@ -1,5 +1,6 @@
 import auth from "./auth";
 import changeDifficulty from "./change_difficulty";
+import getDifficulty from "./get_difficulty";
 import { RouteBuilder } from "../../../utils";
 
 export default RouteBuilder.routerForEndpoints([
@@ -12,5 +13,11 @@ export default RouteBuilder.routerForEndpoints([
         route: "/change_difficulty/",
         controller: changeDifficulty,
         method: "post",
+    },
+
+    {
+        route: "/get_difficulty/",
+        controller: getDifficulty,
+        method: "get",
     },
 ]);
