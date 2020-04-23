@@ -1,5 +1,9 @@
 import { model, Schema } from "mongoose";
-import { SavedExercisesInterface } from "./interface";
+import {
+	SavedExercisesInterface,
+	SavedExercisesCollectionInterface,
+} from "./interface";
+import * as statics from "./statics";
 
 const savedExercisesSchema = new Schema(
 	{
@@ -17,13 +21,14 @@ const savedExercisesSchema = new Schema(
 	{ timestamps: true }
 );
 
+savedExercisesSchema.statics = statics;
+
 // sets one-to-many relationship between the two
 savedExercisesSchema.index({ user: 1, exercise: 1 }, { unique: true });
 
-export const SavedExercises = model<SavedExercisesInterface>(
-	"savedexercises",
-	savedExercisesSchema,
-	"savedexercises"
-);
+export const SavedExercises = model<
+	SavedExercisesInterface,
+	SavedExercisesCollectionInterface
+>("savedexercises", savedExercisesSchema, "savedexercises");
 
 export * from "./interface";
