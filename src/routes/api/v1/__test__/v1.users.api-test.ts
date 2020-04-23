@@ -76,7 +76,7 @@ describe("Auth routes", () => {
 	it("POST /api/v1/users/exercise/:id/unsave responds with 400 when given inupt values", async (done) => {
 		const token = app.get("testToken");
 		const { status } = await request(app)
-			.post("/api/v1/users/exercise/1234/unsave")
+			.post("/api/v1/users/exercises/1234/unsave")
 			.set({ Authorization: `Bearer ${token}` });
 		expect(status).toEqual(400);
 		done();
