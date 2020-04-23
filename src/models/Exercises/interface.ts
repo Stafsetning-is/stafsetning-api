@@ -25,6 +25,7 @@ export interface ExerciseRepr extends Base {
 			name: string;
 		};
 	};
+	saved?: boolean;
 }
 
 export interface FinishedExerciseRepr extends ExerciseRepr {

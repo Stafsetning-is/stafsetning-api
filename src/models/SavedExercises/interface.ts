@@ -1,10 +1,11 @@
 import { Types, Document, Model } from "mongoose";
+import { ExerciseInterface, ExerciseRepr } from "../Exercises";
 
 export type StringOrObjectId = string | Types.ObjectId;
 
 export interface SavedExercisesInterface extends Document {
 	user: Types.ObjectId;
-	exercise: Types.ObjectId;
+	exercise: ExerciseInterface;
 }
 
 export interface SavedExercisesCollectionInterface
@@ -17,4 +18,5 @@ export interface SavedExercisesCollectionInterface
 		user: StringOrObjectId,
 		exercise: StringOrObjectId
 	) => Promise<void>;
+	getExercisesSavedByUser: (user: StringOrObjectId) => Promise<ExerciseRepr[]>;
 }
