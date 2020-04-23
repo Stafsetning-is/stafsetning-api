@@ -4,6 +4,7 @@ import {
 	SavedExercisesCollectionInterface,
 } from "./interface";
 import { SavedExercises } from "../";
+import { ExerciseRepr } from "../";
 
 // helper function to verify objectId
 const verifyObjectId = (objectId: StringOrObjectId) => {
@@ -52,4 +53,17 @@ export const deleteSave = async function (
 	} catch (error) {
 		throw new Error("Can't find saved exercise");
 	}
+};
+
+/**
+ * gets exercises that user has saved
+ * @param this is just a type decleration for this, has no outside effect
+ * @param user user id
+ */
+export const getExercisesSavedByUser = async function (
+	this: SavedExercisesCollectionInterface,
+	user: StringOrObjectId
+): Promise<ExerciseRepr[]> {
+	const docs = await this.find({ user }).populate("exercise");
+	return docs.map((doc) => doc.exercise.getRepresentation());
 };
