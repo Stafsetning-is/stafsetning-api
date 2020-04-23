@@ -35,7 +35,7 @@ export interface FinishedExerciseRepr extends ExerciseRepr {
 export interface ExerciseCollectionInterface extends Model<ExerciseInterface> {
 	getExercisesByDifficulty: (level: number) => Promise<ExerciseRepr[]>;
 	getCompletedExercises: (
-		uid: string,
+		uid: Types.ObjectId,
 		removeRef?: boolean
 	) => Promise<FinishedExerciseRepr[]>;
 }
