@@ -14,7 +14,7 @@ const verifyObjectId = (objectId: StringOrObjectId) => {
 
 /**
  * creates savedExercise document
- * @param this is just ta type decleration for this, has no outside effect
+ * @param this is just a type declaration for this, has no outside effect
  * @param user the user wishing to save
  * @param exercise exercise to save for user
  */
@@ -34,8 +34,8 @@ export const createNew = async function (
 };
 
 /**
- * deletes and saved exercise
- * @param this is just ta type decleration for this, has no outside effect
+ * deletes a saved exercise
+ * @param this is just a type declaration for this, has no outside effect
  * @param user the user wishing to unsave
  * @param exercise exercise to unsave for user
  */
