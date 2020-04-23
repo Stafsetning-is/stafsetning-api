@@ -18,7 +18,7 @@ export interface ExerciseRepr extends Base {
 	length: number;
 	parts: string[];
 	title: string;
-	_id: string;
+	_id: Types.ObjectId;
 	wordCount: number;
 	report: {
 		[key: string]: {
