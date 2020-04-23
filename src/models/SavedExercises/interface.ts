@@ -18,4 +18,7 @@ export interface SavedExercisesCollectionInterface
 		user: StringOrObjectId,
 		exercise: StringOrObjectId
 	) => Promise<void>;
+	getExercisesSavedByUser: (
+		user: StringOrObjectId
+	) => Promise<SavedExercisesInterface>;
 }
