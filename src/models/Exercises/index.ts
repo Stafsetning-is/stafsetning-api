@@ -1,9 +1,4 @@
-import {
-	model,
-	Schema,
-	Types,
-	//Collection
-} from "mongoose";
+import { model, Schema } from "mongoose";
 import { ExerciseCollectionInterface, ExerciseInterface } from "./interface";
 import * as statics from "./statics";
 import * as methods from "./methods";
