@@ -28,46 +28,46 @@ describe("Auth routes", () => {
 		done();
 	});
 
-	it("POST /api/v1/users/exercise/:id/save requires auth", async (done) => {
+	it("POST /api/v1/users/exercises/:id/save requires auth", async (done) => {
 		const { status } = await request(app).post(
-			"/api/v1/users/exercise/1234/save"
+			"/api/v1/users/exercises/1234/save"
 		);
 		expect(status).toEqual(401);
 		done();
 	});
 
-	it("POST /api/v1/users/exercise/:id/save responds with 201 with correct auth", async (done) => {
+	it("POST /api/v1/users/exercises/:id/save responds with 201 with correct auth", async (done) => {
 		const token = app.get("testToken");
 		const exerciseId = app.get("exerciseId");
 		const { status } = await request(app)
-			.post(`/api/v1/users/exercise/${exerciseId}/unsave`)
+			.post(`/api/v1/users/exercises/${exerciseId}/save`)
 			.set({ Authorization: `Bearer ${token}` });
 		expect(status).toEqual(201);
 		done();
 	});
 
-	it("POST /api/v1/users/exercise/:id/save responds with 400 when given inupt values", async (done) => {
+	it("POST /api/v1/users/exercises/:id/save responds with 400 when given invalid inupt values", async (done) => {
 		const token = app.get("testToken");
 		const { status } = await request(app)
-			.post("/api/v1/users/exercise/1234/unsave")
+			.post("/api/v1/users/exercises/1234/save")
 			.set({ Authorization: `Bearer ${token}` });
 		expect(status).toEqual(400);
 		done();
 	});
 
-	it("POST /api/v1/users/exercise/:id/unsave requires auth", async (done) => {
+	it("POST /api/v1/users/exercises/:id/unsave requires auth", async (done) => {
 		const { status } = await request(app).post(
-			"/api/v1/users/exercise/1234/save"
+			"/api/v1/users/exercises/1234/unsave"
 		);
 		expect(status).toEqual(401);
 		done();
 	});
 
-	it("POST /api/v1/users/exercise/:id/unsave responds with 200 with correct auth", async (done) => {
+	it("POST /api/v1/users/exercises/:id/unsave responds with 200 with correct auth", async (done) => {
 		const token = app.get("testToken");
 		const exerciseId = app.get("exerciseId");
 		const { status } = await request(app)
-			.post(`/api/v1/users/exercise/${exerciseId}/unsave`)
+			.post(`/api/v1/users/exercises/${exerciseId}/unsave`)
 			.set({ Authorization: `Bearer ${token}` });
 		expect(status).toEqual(201);
 		done();

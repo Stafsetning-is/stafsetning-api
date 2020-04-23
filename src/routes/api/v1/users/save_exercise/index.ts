@@ -7,7 +7,7 @@ export default async (req: Request, res: Response) => {
 	try {
 		const { id } = req.params;
 		const doc = await SavedExercises.createNew(req.body.user._id, id);
-		res.send(doc);
+		res.status(201).send(doc);
 	} catch (error) {
 		res.status(400).send({ message: error.message });
 	}
