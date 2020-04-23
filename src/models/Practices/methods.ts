@@ -6,6 +6,12 @@ export const toExercise = function (
 	return {
 		...this.exercise.getRepresentation(),
 		completed: true,
-		score: this.score,
+		score: this.getScore(),
 	};
+};
+
+export const getScore = function (this: PracticeInterface) {
+	const DEDUCTION = 0.05;
+	const score = 1 - this.errorItems.length * DEDUCTION;
+	return score < 0 ? 0 : score;
 };

@@ -41,7 +41,7 @@ export const getCompletedExercises = async function (
 		const practices = await Practices.find({
 			user: uid,
 		}).populate("exercise");
-
+		console.log("practices", practices);
 		// maps practices to exercise representation with score
 		const exercises = practices.map((doc) => doc.toExercise());
 

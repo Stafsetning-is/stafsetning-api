@@ -36,12 +36,6 @@ const practiceSchema = new Schema(
 
 practiceSchema.methods = methods;
 
-practiceSchema.post("save", async function () {
-	const DEDUCTION = 0.05;
-	const score = 1 - this.errorItems.length * DEDUCTION;
-	this.score = score < 0 ? 0 : score;
-});
-
 export const Practices = model<PracticeInterface>(
 	"practices",
 	practiceSchema,
