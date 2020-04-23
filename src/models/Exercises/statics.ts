@@ -27,32 +27,34 @@ export const getExercisesByDifficulty = async function (
  * takes in an user id and gets all finished exercised with the
  * highest score for each
  * @param uid User id
+ * @param removePracticeRefereence should practice's _id be removed from object;
  */
 export const getCompletedExercises = async function (
-	uid: Types.ObjectId
+	uid: Types.ObjectId,
+	removePracticeReference?: boolean
 ): Promise<FinishedExerciseRepr[]> {
 	// dict to insert practices by _id to sort by uniquieness of exercise
 	const exerciseDict: { [key: string]: FinishedExerciseRepr } = {};
 
-	try {
-		// finds all practices for user
-		const practices = await Practices.find({
-			user: uid,
-		}).populate("exercise");
-		console.log("practices", practices);
-		// maps practices to exercise representation with score
-		const exercises = practices.map((doc) => doc.toExercise());
+	// finds all practices for user
+	const practices = await Practices.find({
+		user: uid,
+	}).populate("exercise");
 
-		// filter by unique exercise Id - keeps the highest score only
-		exercises.forEach((doc) => {
-			const key = doc._id.toString();
-			if (!exerciseDict[key]) exerciseDict[key] = doc;
-			if (doc.score > exerciseDict[key].score) exerciseDict[key] = doc;
-		});
+	// maps practices to exercise representation with score
+	const exercises = practices.map((doc) => {
+		const exercise = doc.toExercise();
+		if (removePracticeReference) exercise.practice = undefined;
+		return exercise;
+	});
 
-		// maps dict to array
-		return Object.keys(exerciseDict).map((key) => exerciseDict[key]);
-	} catch (error) {
-		throw new Error("Failure to get completed exercises by user id");
-	}
+	// filter by unique exercise Id - keeps the highest score only
+	exercises.forEach((doc) => {
+		const key = doc._id.toString();
+		if (!exerciseDict[key]) exerciseDict[key] = doc;
+		if (doc.score > exerciseDict[key].score) exerciseDict[key] = doc;
+	});
+
+	// maps dict to array
+	return Object.keys(exerciseDict).map((key) => exerciseDict[key]);
 };

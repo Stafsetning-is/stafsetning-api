@@ -29,10 +29,13 @@ export interface ExerciseRepr extends Base {
 
 export interface FinishedExerciseRepr extends ExerciseRepr {
 	score: number;
-	practice: Types.ObjectId;
+	practice?: Types.ObjectId;
 }
 
 export interface ExerciseCollectionInterface extends Model<ExerciseInterface> {
 	getExercisesByDifficulty: (level: number) => Promise<ExerciseRepr[]>;
-	getCompletedExercises: (uid: string) => Promise<FinishedExerciseRepr[]>;
+	getCompletedExercises: (
+		uid: string,
+		removeRef?: boolean
+	) => Promise<FinishedExerciseRepr[]>;
 }

@@ -6,7 +6,7 @@ export default async (req: Request, res: Response) => {
 		const { difficulty, _id } = req.body.user;
 		const [all, finished] = await Promise.all([
 			Exercises.getExercisesByDifficulty(difficulty),
-			Exercises.getCompletedExercises(_id),
+			Exercises.getCompletedExercises(_id, true),
 		]);
 		const dict = [...all, ...finished].reduce<ExerciseReprDict>(
 			(prev, curr) => {
