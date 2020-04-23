@@ -1,6 +1,6 @@
-import { Types } from "mongoose";
+import { Types, Document } from "mongoose";
 
-export interface SavedExercisesInterface {
+export interface SavedExercisesInterface extends Document {
 	user: Types.ObjectId;
 	exercise: Types.ObjectId;
 }

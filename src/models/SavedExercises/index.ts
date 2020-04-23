@@ -1,30 +1,29 @@
 import { model, Schema } from "mongoose";
 import { SavedExercisesInterface } from "./interface";
 
-const exerciseSchema = new Schema(
+const savedExercisesSchema = new Schema(
 	{
 		user: {
-			type: { min: Number, max: Number },
+			type: Schema.Types.ObjectId,
 			required: true,
+			ref: "users",
 		},
 		exercise: {
-			type: Number,
+			type: Schema.Types.ObjectId,
+			required: true,
+			ref: "exercises",
 		},
 	},
 	{ timestamps: true }
 );
 
-exerciseSchema.statics = statics;
-exerciseSchema.methods = methods;
-exerciseSchema.post<ExerciseInterface>("save", async function () {
-	// eslint-disable-next-line @typescript-eslint/no-use-before-define
-	this.number = await Exercises.countDocuments();
-});
+// sets one-to-many relationship between the two
+savedExercisesSchema.index({ user: 1, exercise: 1 }, { unique: true });
 
-export const Exercises = model<SavedExercisesInterface>(
-	"exercises",
-	exerciseSchema,
-	"exercises"
+export const SavedExercises = model<SavedExercisesInterface>(
+	"savedexercises",
+	savedExercisesSchema,
+	"savedexercises"
 );
 
 export * from "./interface";
