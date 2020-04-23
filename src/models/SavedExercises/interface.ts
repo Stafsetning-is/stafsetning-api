@@ -13,4 +13,8 @@ export interface SavedExercisesCollectionInterface
 		user: StringOrObjectId,
 		exercise: StringOrObjectId
 	) => Promise<SavedExercisesInterface>;
+	deleteSave: (
+		user: StringOrObjectId,
+		exercise: StringOrObjectId
+	) => Promise<void>;
 }
