@@ -22,12 +22,12 @@ export default RouteBuilder.routerForEndpoints([
 		method: "get",
 	},
 	{
-		route: "/exercise/:id/save",
-		controller: getDifficulty,
+		route: "/exercises/:id/save",
+		controller: saveExercise,
 		method: "post",
 	},
 	{
-		route: "/exercise/:id/unsave",
+		route: "/exercises/:id/unsave",
 		controller: getDifficulty,
 		method: "post",
 	},
