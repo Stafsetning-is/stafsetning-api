@@ -5,19 +5,13 @@ import * as methods from "./methods";
 
 const exerciseSchema = new Schema(
 	{
-		difficultRange: {
+		user: {
 			type: { min: Number, max: Number },
 			required: true,
 		},
-		number: {
+		exercise: {
 			type: Number,
 		},
-		text: {
-			type: String,
-			required: true,
-		},
-		practice: { type: Schema.Types.ObjectId },
-		completed: { type: Boolean },
 	},
 	{ timestamps: true }
 );
