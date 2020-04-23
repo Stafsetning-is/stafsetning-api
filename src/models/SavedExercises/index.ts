@@ -1,7 +1,5 @@
 import { model, Schema } from "mongoose";
-import { ExerciseCollectionInterface, ExerciseInterface } from "./interface";
-import * as statics from "./statics";
-import * as methods from "./methods";
+import { SavedExercisesInterface } from "./interface";
 
 const exerciseSchema = new Schema(
 	{
@@ -23,7 +21,7 @@ exerciseSchema.post<ExerciseInterface>("save", async function () {
 	this.number = await Exercises.countDocuments();
 });
 
-export const Exercises = model<ExerciseInterface, ExerciseCollectionInterface>(
+export const Exercises = model<SavedExercisesInterface>(
 	"exercises",
 	exerciseSchema,
 	"exercises"
