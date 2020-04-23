@@ -1,6 +1,6 @@
 import { Types, Document, Model } from "mongoose";
 
-type StringOrObjectId = string | Types.ObjectId;
+export type StringOrObjectId = string | Types.ObjectId;
 
 export interface SavedExercisesInterface extends Document {
 	user: Types.ObjectId;
