@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Users } from "../../../../../models";
 /**
  * This method finds user by id and updates difficulty
  */
