@@ -33,7 +33,7 @@ export const createNew = async function (
 };
 
 /**
- * deletes and saved exercise
+ * deletes a SavedExercise
  * @param this is just ta type decleration for this, has no outside effect
  * @param user the user wishing to unsave
  * @param exercise exercise to unsave for user
