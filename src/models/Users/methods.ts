@@ -20,6 +20,7 @@ export const getPublic = function (): PublicUser {
 		_id: this._id,
 		name: this.name,
 		difficulty: this.difficulty,
+		type: this.type,
 	};
 };
 

@@ -7,6 +7,7 @@ export interface Rule {
 export interface Report {
 	[key: string]: {
 		count: number;
+		name: string;
 	};
 }
 
