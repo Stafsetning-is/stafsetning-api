@@ -7,19 +7,20 @@ import { Reporter } from "./utils/GrammarRules";
  * that can be shared with clients, i.e.
  * text is replaced with sentence parts and so on
  */
-export const getRepresentation = function (): ExerciseRepr {
-	// eslint-disable-next-line @typescript-eslint/no-this-alias
-	const self: ExerciseInterface = this;
-	const text = self.text.replace(/;;;/g, "");
-	const parts = self.text.split(SPLITTER);
+export const getRepresentation = function (
+	this: ExerciseInterface
+): ExerciseRepr {
+	const text = this.text.replace(/;;;/g, "");
+	const parts = this.text.split(SPLITTER);
 	return {
-		difficultRange: self.difficultRange,
-		number: self.number,
+		difficultRange: this.difficultRange,
+		number: this.number,
 		length: text.length,
 		parts,
 		title: parts[0],
-		_id: self._id,
+		_id: this._id,
 		wordCount: text.split(" ").length,
-		report: Reporter.getReport(self),
+		report: Reporter.getReport(this),
+		completed: false,
 	};
 };
