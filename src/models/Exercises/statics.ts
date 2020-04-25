@@ -19,6 +19,8 @@ export const getExercisesByDifficulty = async function (
 	const found = await Exercises.find({
 		"difficultRange.min": { $lte: level },
 		"difficultRange.max": { $gte: level },
+		published: true,
+		deleted: false,
 	});
 	return found.map((exercise) => exercise.getRepresentation());
 };
