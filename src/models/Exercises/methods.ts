@@ -4,8 +4,7 @@ import {
 	AdminExerciseRepr,
 } from "./interface";
 import { Reporter } from "./utils/GrammarRules";
-
-const SPLITTER = ";;;";
+import { PART_SPLITTER } from "./utils";
 
 /**
  * returns a representation of the exercise
@@ -49,12 +48,12 @@ export const getAdminRepresentation = function (
 
 // returns the exercise text
 export const getText = function (this: ExerciseInterface) {
-	return this.text.replace(`/${SPLITTER}/g`, "");
+	return this.text.replace(`/${PART_SPLITTER}/g`, "");
 };
 
 // returns the exercise parts as array of strings
 export const getTextParts = function (this: ExerciseInterface) {
-	return this.text.split(SPLITTER);
+	return this.text.split(PART_SPLITTER);
 };
 
 // returns the word count of the exercise
