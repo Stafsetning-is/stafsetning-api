@@ -27,6 +27,11 @@ export const getExercisesByDifficulty = async function (
 	return found.map((exercise) => exercise.getRepresentation());
 };
 
+
+/**
+ * Static method that creates an exercise
+ * @param data admin exercise interace
+ */
 export const create = async function (
 	this: ExerciseCollectionInterface,
 	data: AdminExerciseRepr
