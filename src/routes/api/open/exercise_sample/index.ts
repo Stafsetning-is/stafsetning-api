@@ -1,7 +1,7 @@
 import { Exercises } from "../../../../models";
 import { Request, Response } from "express";
 
-const DOCUMENT_COUNT;
+const DOCUMENT_COUNT = 20;
 
 export default async (req: Request, res: Response) => {
 	const docs = await Exercises.find({
