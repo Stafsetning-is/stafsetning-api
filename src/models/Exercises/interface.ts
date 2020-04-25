@@ -11,6 +11,8 @@ interface Base {
 
 export interface ExerciseInterface extends Base, Document {
 	text: string;
+	published: boolean;
+	removed: boolean;
 	getRepresentation: () => ExerciseRepr;
 	getText: () => string;
 	getTextParts: () => string[];
@@ -18,8 +20,6 @@ export interface ExerciseInterface extends Base, Document {
 	getGrammarReport: () => Report;
 	getTitle: () => string;
 	getCharacterCount: () => number;
-	published: boolean;
-	removed: boolean;
 }
 
 export interface ExerciseRepr extends Base {
