@@ -30,6 +30,13 @@ export interface ExerciseRepr extends Base {
 	saved?: boolean;
 }
 
+export interface AdminExerciseRepr extends Base {
+	parts: string[];
+	fileName: string;
+	title: string;
+	_id: Types.ObjectId;
+}
+
 export interface FinishedExerciseRepr extends ExerciseRepr {
 	score: number;
 	practice?: Types.ObjectId;
