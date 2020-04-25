@@ -12,11 +12,10 @@ import { Practices } from "../";
  * @param level the difficulty level
  */
 export const getExercisesByDifficulty = async function (
+	this: ExerciseCollectionInterface,
 	level: number
 ): Promise<ExerciseRepr[]> {
-	// eslint-disable-next-line @typescript-eslint/no-this-alias
-	const Exercises: ExerciseCollectionInterface = this;
-	const found = await Exercises.find({
+	const found = await this.find({
 		"difficultRange.min": { $lte: level },
 		"difficultRange.max": { $gte: level },
 		published: true,
