@@ -26,6 +26,10 @@ const exerciseSchema = new Schema(
 			default: false,
 			type: Boolean,
 		},
+		fileName: {
+			required: true,
+			type: String,
+		},
 	},
 	{ timestamps: true }
 );
