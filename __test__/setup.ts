@@ -44,7 +44,11 @@ beforeAll(async (done) => {
 			min: 0,
 			max: 0,
 		},
-		text: "Kalli fór út í búð;;; til ad kaupa mjólk,;;; handa mömmu sinni.",
+		parts: [
+			"Kalli for ut i bud", "til ad kaupa mjolk,", "handa mommu sinni."
+		],
+		owner: "507f1f77bcf86cd799439011",
+		fileName: "test",
 	});
 	await Practices.create({
 		duration: 25,

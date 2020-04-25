@@ -27,7 +27,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
 		next();
 	} catch (e) {
 		res.status(401).send({
-			message: e.message,
+			message: "Not authorized",
 		});
 	}
 };
