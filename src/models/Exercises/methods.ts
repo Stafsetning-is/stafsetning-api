@@ -24,7 +24,7 @@ export const getRepresentation = function (
 		title: this.getTitle(),
 		wordCount: this.getWordCount(),
 		report: this.getGrammarReport(),
-		parts: this.getTextParts(),
+		parts: this.getTextParts()
 	};
 };
 
@@ -35,10 +35,11 @@ export const getRepresentation = function (
 export const getAdminRepresentation = function (
 	this: ExerciseInterface
 ): AdminExerciseRepr {
-	const { _id, difficultRange, number, fileName } = this;
+	const { _id, difficultRange, number, fileName, published } = this;
 	return {
 		_id,
 		difficultRange,
+		published,
 		number,
 		fileName,
 		title: this.getTitle(),
