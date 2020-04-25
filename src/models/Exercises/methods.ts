@@ -29,26 +29,32 @@ export const getRepresentation = function (
 	};
 };
 
+// returns the exercise text
 export const getText = function (this: ExerciseInterface) {
-	return this.text.replace(/;;;/g, "");
+	return this.text.replace(`/${SPLITTER}/g`, "");
 };
 
+// returns the exercise parts as array of strings
 export const getTextParts = function (this: ExerciseInterface) {
 	return this.text.split(SPLITTER);
 };
 
+// returns the word count of the exercise
 export const getWordCount = function (this: ExerciseInterface) {
 	return this.getText().split(" ").length;
 };
 
+// returns the grammarReport of the exercise
 export const getGrammarReport = function (this: ExerciseInterface) {
 	return Reporter.getReport(this);
 };
 
+// gets the title of the exercise
 export const getTitle = function (this: ExerciseInterface) {
 	return this.getTextParts()[0];
 };
 
+// calculates character count
 export const getCharacterCount = function (this: ExerciseInterface) {
 	return this.getText().length;
 };
