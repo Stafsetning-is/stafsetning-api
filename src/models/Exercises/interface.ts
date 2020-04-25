@@ -1,4 +1,5 @@
 import { Document, Model, Types } from "mongoose";
+import { Report } from "./utils/GrammarRules/interface";
 interface Base {
 	difficultRange: {
 		min: number;
@@ -12,6 +13,11 @@ export interface ExerciseInterface extends Base, Document {
 	text: string;
 	getRepresentation: () => ExerciseRepr;
 	getText: () => string;
+	getTextParts: () => string[];
+	getWordCount: () => number;
+	getGrammarReport: () => Report;
+	getTitle: () => string;
+	getCharacterCount: () => number;
 	published: boolean;
 	removed: boolean;
 }
