@@ -15,25 +15,18 @@ const SPLITTER = ";;;";
 export const getRepresentation = function (
 	this: ExerciseInterface
 ): ExerciseRepr {
-	const text = this.getText();
-	const parts = 
+	const { _id, number, difficultRange } = this;
 	return {
-		difficultRange: this.difficultRange,
-		number: this.number,
-		length: text.length,
-		parts,
-		title: parts[0],
-		_id: this._id,
-		wordCount: text.split(" ").length,
-		report: Reporter.getReport(this),
+		_id,
+		number,
+		difficultRange,
 		completed: false,
+		length: this.getCharacterCount(),
+		title: this.getTitle(),
+		wordCount: this.getWordCount(),
+		report: this.getGrammarReport(),
+		parts: this.getTextParts(),
 	};
-};
-
-export const getAdminReppresentation = function (
-	this: ExerciseInterface
-): AdminExerciseRepr {
-	return;
 };
 
 export const getText = function (this: ExerciseInterface) {
@@ -42,4 +35,20 @@ export const getText = function (this: ExerciseInterface) {
 
 export const getTextParts = function (this: ExerciseInterface) {
 	return this.text.split(SPLITTER);
-}
+};
+
+export const getWordCount = function (this: ExerciseInterface) {
+	return this.getText().split(" ").length;
+};
+
+export const getGrammarReport = function (this: ExerciseInterface) {
+	return Reporter.getReport(this);
+};
+
+export const getTitle = function (this: ExerciseInterface) {
+	return this.getTextParts()[0];
+};
+
+export const getCharacterCount = function (this: ExerciseInterface) {
+	return this.getText().length;
+};
