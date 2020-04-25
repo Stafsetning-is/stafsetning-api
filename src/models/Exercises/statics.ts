@@ -23,11 +23,10 @@ export const getExercisesByDifficulty = async function (
 		"difficultRange.min": { $lte: level },
 		"difficultRange.max": { $gte: level },
 		published: true,
-		deleted: false,
+		removed: false,
 	});
 	return found.map((exercise) => exercise.getRepresentation());
 };
-
 
 /**
  * Static method that creates an exercise
@@ -42,7 +41,6 @@ export const create = async function (
 	return await exercise.save();
 };
 
-
 /**
  * Static method that updates an exercise
  * @param data admin exercise interace
@@ -52,16 +50,20 @@ export const updateFile = async function (
 	this: ExerciseCollectionInterface,
 	data: AdminExerciseRepr
 ): Promise<ExerciseInterface> {
-	return await Exercises.findByIdAndUpdate(data._id, {
-		$set: {
-			fileName: data.fileName,
-			text: data.parts.join(PART_SPLITTER),
-			published: false,
-			difficultRange: data.difficultRange
+	return await Exercises.findByIdAndUpdate(
+		data._id,
+		{
+			$set: {
+				fileName: data.fileName,
+				text: data.parts.join(PART_SPLITTER),
+				published: false,
+				difficultRange: data.difficultRange,
+			},
+		},
+		{
+			new: true,
 		}
-	}, {
-		new: true
-	});
+	);
 };
 
 /**
