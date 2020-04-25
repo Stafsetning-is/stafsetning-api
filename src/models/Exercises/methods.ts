@@ -1,6 +1,11 @@
-const SPLITTER = ";;;";
-import { ExerciseRepr, ExerciseInterface } from "./interface";
+import {
+	ExerciseRepr,
+	ExerciseInterface,
+	AdminExerciseRepr,
+} from "./interface";
 import { Reporter } from "./utils/GrammarRules";
+
+const SPLITTER = ";;;";
 
 /**
  * returns a representation of the exercise
@@ -10,8 +15,8 @@ import { Reporter } from "./utils/GrammarRules";
 export const getRepresentation = function (
 	this: ExerciseInterface
 ): ExerciseRepr {
-	const text = this.text.replace(/;;;/g, "");
-	const parts = this.text.split(SPLITTER);
+	const text = this.getText();
+	const parts = 
 	return {
 		difficultRange: this.difficultRange,
 		number: this.number,
@@ -24,3 +29,17 @@ export const getRepresentation = function (
 		completed: false,
 	};
 };
+
+export const getAdminReppresentation = function (
+	this: ExerciseInterface
+): AdminExerciseRepr {
+	return;
+};
+
+export const getText = function (this: ExerciseInterface) {
+	return this.text.replace(/;;;/g, "");
+};
+
+export const getTextParts = function (this: ExerciseInterface) {
+	return this.text.split(SPLITTER);
+}
