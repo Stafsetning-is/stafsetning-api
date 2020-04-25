@@ -2,9 +2,12 @@ import {
 	ExerciseCollectionInterface,
 	ExerciseRepr,
 	FinishedExerciseRepr,
+	AdminExerciseRepr,
+	ExerciseInterface,
 } from "./interface";
 import { Types } from "mongoose";
 import { Practices } from "../";
+import { PART_SPLITTER } from "./utils";
 
 /**
  * Gets all exercises that fits an users
@@ -22,6 +25,15 @@ export const getExercisesByDifficulty = async function (
 		deleted: false,
 	});
 	return found.map((exercise) => exercise.getRepresentation());
+};
+
+export const create = async function (
+	this: ExerciseCollectionInterface,
+	data: AdminExerciseRepr
+): Promise<ExerciseInterface> {
+	const exercise = new this(data);
+	exercise.text = data.parts.join(PART_SPLITTER);
+	return await exercise.save();
 };
 
 /**
