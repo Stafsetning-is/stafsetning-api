@@ -18,6 +18,14 @@ const exerciseSchema = new Schema(
 		},
 		practice: { type: Schema.Types.ObjectId },
 		completed: { type: Boolean },
+		published: {
+			default: false,
+			type: Boolean,
+		},
+		removed: {
+			default: false,
+			type: Boolean,
+		},
 	},
 	{ timestamps: true }
 );
