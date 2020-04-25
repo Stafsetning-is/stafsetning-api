@@ -13,7 +13,9 @@ export interface ExerciseInterface extends Base, Document {
 	text: string;
 	published: boolean;
 	removed: boolean;
+	fileName: string;
 	getRepresentation: () => ExerciseRepr;
+	getAdminRepresentation: () => AdminExerciseRepr;
 	getText: () => string;
 	getTextParts: () => string[];
 	getWordCount: () => number;

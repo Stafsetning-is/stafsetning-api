@@ -29,6 +29,10 @@ export const getRepresentation = function (
 	};
 };
 
+/**
+ * Returns an interface of the resource
+ * fitting for admins that are working with it
+ */
 export const getAdminRepresentation = function (
 	this: ExerciseInterface
 ): AdminExerciseRepr {
