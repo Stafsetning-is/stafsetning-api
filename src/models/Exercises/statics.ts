@@ -42,8 +42,8 @@ export const getCompletedExercises = async function (
 	}).populate("exercise");
 
 	// maps practices to exercise representation with score
-	const exercises = practices.map((doc) => {
-		const exercise = doc.toExercise();
+	const exercises = practices.map((practice) => {
+		const exercise = practice.toExercise();
 		if (removePracticeReference) exercise.practice = undefined;
 		return exercise;
 	});
