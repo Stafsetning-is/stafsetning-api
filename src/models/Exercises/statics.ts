@@ -8,6 +8,7 @@ import {
 import { Types } from "mongoose";
 import { Practices } from "../";
 import { PART_SPLITTER } from "./utils";
+import { Exercises } from ".";
 
 /**
  * Gets all exercises that fits an users
@@ -39,6 +40,28 @@ export const create = async function (
 	const exercise = new this(data);
 	exercise.text = data.parts.join(PART_SPLITTER);
 	return await exercise.save();
+};
+
+
+/**
+ * Static method that updates an exercise
+ * @param data admin exercise interace
+ */
+
+export const update = async function (
+	this: ExerciseCollectionInterface,
+	data: AdminExerciseRepr
+): Promise<ExerciseInterface> {
+	return await Exercises.findByIdAndUpdate(data._id, {
+		$set: {
+			fileName: data.fileName,
+			text: data.parts.join(PART_SPLITTER),
+			published: false,
+			difficultRange: data.difficultRange
+		}
+	}, {
+		new: true
+	});
 };
 
 /**
