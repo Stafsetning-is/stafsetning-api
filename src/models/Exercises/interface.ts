@@ -11,6 +11,7 @@ interface Base {
 export interface ExerciseInterface extends Base, Document {
 	text: string;
 	getRepresentation: () => ExerciseRepr;
+	getText: () => string;
 	published: boolean;
 	removed: boolean;
 }
