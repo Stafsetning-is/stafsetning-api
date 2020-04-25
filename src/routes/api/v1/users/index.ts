@@ -3,6 +3,7 @@ import changeDifficulty from "./change_difficulty";
 import getDifficulty from "./get_difficulty";
 import saveExercise from "./save_exercise";
 import unsaveExercise from "./unsave_exercise";
+import getSaved from "./get_saved";
 import { RouteBuilder } from "../../../utils";
 
 export default RouteBuilder.routerForEndpoints([
@@ -32,4 +33,9 @@ export default RouteBuilder.routerForEndpoints([
 		controller: unsaveExercise,
 		method: "post",
 	},
+	{
+		route: "/exercises/saved/",
+		controller: getSaved,
+		method: "get"
+	}
 ]);
