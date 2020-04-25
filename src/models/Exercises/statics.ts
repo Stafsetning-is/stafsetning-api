@@ -48,7 +48,7 @@ export const create = async function (
  * @param data admin exercise interace
  */
 
-export const update = async function (
+export const updateFile = async function (
 	this: ExerciseCollectionInterface,
 	data: AdminExerciseRepr
 ): Promise<ExerciseInterface> {
