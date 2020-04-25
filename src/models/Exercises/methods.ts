@@ -29,6 +29,20 @@ export const getRepresentation = function (
 	};
 };
 
+export const getAdminRepresentation = function (
+	this: ExerciseInterface
+): AdminExerciseRepr {
+	const { _id, difficultRange, number, fileName } = this;
+	return {
+		_id,
+		difficultRange,
+		number,
+		fileName,
+		title: this.getTitle(),
+		parts: this.getTextParts(),
+	};
+};
+
 // returns the exercise text
 export const getText = function (this: ExerciseInterface) {
 	return this.text.replace(`/${SPLITTER}/g`, "");
