@@ -30,6 +30,10 @@ const exerciseSchema = new Schema(
 			required: true,
 			type: String,
 		},
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: "users",
+		},
 	},
 	{ timestamps: true }
 );
