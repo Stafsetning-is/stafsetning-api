@@ -44,6 +44,7 @@ export interface AdminExerciseRepr extends Base {
 	fileName: string;
 	title: string;
 	_id: Types.ObjectId;
+	published: boolean;
 }
 
 export interface FinishedExerciseRepr extends ExerciseRepr {
@@ -57,4 +58,5 @@ export interface ExerciseCollectionInterface extends Model<ExerciseInterface> {
 		uid: Types.ObjectId,
 		removeRef?: boolean
 	) => Promise<FinishedExerciseRepr[]>;
+	updateFile: (data: any) => Promise<ExerciseInterface>;
 }
