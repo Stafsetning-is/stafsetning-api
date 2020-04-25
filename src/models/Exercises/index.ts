@@ -32,15 +32,24 @@ const exerciseSchema = new Schema(
 
 exerciseSchema.statics = statics;
 exerciseSchema.methods = methods;
-exerciseSchema.post<ExerciseInterface>("save", async function () {
-	// eslint-disable-next-line @typescript-eslint/no-use-before-define
-	this.number = await Exercises.countDocuments();
-});
 
 export const Exercises = model<ExerciseInterface, ExerciseCollectionInterface>(
 	"exercises",
 	exerciseSchema,
 	"exercises"
 );
+
+// adds incrementing counter
+exerciseSchema.post<ExerciseInterface>("save", async function () {
+	this.number = await Exercises.countDocuments();
+});
+
+// sets default values to properties
+exerciseSchema.pre<ExerciseInterface>("save", async function () {
+	if (this.isNew) {
+		this.removed = false;
+		this.published = false;
+	}
+});
 
 export * from "./interface";
