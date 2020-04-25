@@ -4,8 +4,6 @@ node_js:
 branches:
   only:
     - master
-    - dev
-    - gabriels17-travis-config
 # services:
 # - docker
 # env:
