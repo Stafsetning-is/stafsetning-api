@@ -1,7 +1,19 @@
 import { Request, Response } from "express";
+import { Exercises } from "../../../../../models";
 
+/**
+ * This route saves exercises for an admin
+ */
 export default async (req: Request, res: Response) => {
 	try {
-		res.send("hallo");
-	} catch (error) {}
+		const doc = await Exercises.create({
+			...req.body,
+			owner: req.body.user._id,
+		});
+		res.send(doc.getAdminRepresentation());
+	} catch (error) {
+		res.status(400).send({
+			message: "Unable to save exercise",
+		});
+	}
 };
