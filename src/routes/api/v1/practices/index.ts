@@ -10,11 +10,6 @@ export default RouteBuilder.routerForEndpoints([
 		method: "post",
 	},
 	{
-		route: "/:id",
-		controller: getById,
-		method: "get",
-	},
-	{
 		route: "/",
 		controller: getByUser,
 		method: "get",
