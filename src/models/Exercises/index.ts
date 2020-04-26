@@ -48,6 +48,9 @@ export const Exercises = model<ExerciseInterface, ExerciseCollectionInterface>(
 	"exercises"
 );
 
+// sets one-to-many relationship between the two
+exerciseSchema.index({ fileName: 1, owner: 1 }, { unique: true });
+
 // adds incrementing counter
 exerciseSchema.post<ExerciseInterface>("save", async function () {
 	this.number = await Exercises.countDocuments();
