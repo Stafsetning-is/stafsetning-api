@@ -1,15 +1,9 @@
-import createNew from "./create";
 import byDifficulty from "./by_difficulty";
 import getById from "./get_by_id";
 import complete from "./complete";
 import { RouteBuilder } from "../../../utils";
 
 export default RouteBuilder.routerForEndpoints([
-	{
-		route: "/",
-		controller: createNew,
-		method: "post",
-	},
 	{
 		route: "/by_difficulty/",
 		controller: byDifficulty,

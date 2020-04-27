@@ -5,7 +5,11 @@ const testBody = {
 		min: 5,
 		max: 10,
 	},
-	text: "Kalli for ut i bud;;; til ad kaupa mjolk,;;; handa mommu sinni.",
+	parts: ["Kalli for ut i bud", "til ad kaupa mjolk,", "handa mommu sinni."],
+	owner: "507f1f77bcf86cd799439011",
+	fileName: "test",
+	published: true,
+	deleted: false,
 };
 
 const otherTest = {
@@ -13,14 +17,19 @@ const otherTest = {
 		min: 7,
 		max: 9,
 	},
-	text: "Kalli for ut i bud;;; til ad kaupa mjolk,;;; handa mommu sinni.",
+	parts: ["Kalli for ut i bud", "til ad kaupa mjolk,", "handa mommu sinni."],
+	owner: "507f1f77bcf86cd799439011",
+	fileName: "test",
+	published: true,
+	deleted: false,
 };
 
 beforeAll(async (done) => {
-	await Exercises.create(testBody);
-	await Exercises.create(otherTest);
-	done();
-
+	const data = await Promise.all([
+		Exercises.create(testBody),
+		Exercises.create(otherTest),
+	]);
+	console.log("data", data);
 	done();
 });
 

@@ -18,21 +18,50 @@ const exerciseSchema = new Schema(
 		},
 		practice: { type: Schema.Types.ObjectId },
 		completed: { type: Boolean },
+		published: {
+			default: false,
+			type: Boolean,
+		},
+		removed: {
+			default: false,
+			type: Boolean,
+		},
+		fileName: {
+			required: true,
+			type: String,
+		},
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: "users",
+			required: true,
+		},
 	},
 	{ timestamps: true }
 );
 
 exerciseSchema.statics = statics;
 exerciseSchema.methods = methods;
-exerciseSchema.post<ExerciseInterface>("save", async function () {
-	// eslint-disable-next-line @typescript-eslint/no-use-before-define
-	this.number = await Exercises.countDocuments();
-});
 
 export const Exercises = model<ExerciseInterface, ExerciseCollectionInterface>(
 	"exercises",
 	exerciseSchema,
 	"exercises"
 );
+
+// sets one-to-many relationship between the two
+exerciseSchema.index({ fileName: 1, owner: 1 }, { unique: true });
+
+// adds incrementing counter
+exerciseSchema.post<ExerciseInterface>("save", async function () {
+	this.number = await Exercises.countDocuments();
+});
+
+// sets default values to properties
+exerciseSchema.pre<ExerciseInterface>("save", async function () {
+	if (this.isNew) {
+		this.removed = false;
+		this.published = false;
+	}
+});
 
 export * from "./interface";
