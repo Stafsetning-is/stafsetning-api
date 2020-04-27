@@ -11,17 +11,18 @@ import { Users } from "../../../../../models";
  * and attaches user to req.body
  */
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const token = req.header("Authorization").replace("Bearer ", "");
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const decoded: any = jwt.verify(token, USER_PW_HASH_KEY);
-		const user = await Users.findOne({
-			_id: decoded._id,
-		});
-		if (!user) throw new Error("User not found");
-		req.body.user = user.getPublic();
-		next();
-	} catch (e) {
-		res.status(401).send("Not authorized");
-	}
+    try {
+        const token = req.header("Authorization").replace("Bearer ", "");
+        const decoded: any = jwt.verify(token, USER_PW_HASH_KEY);
+        const user = await Users.findOne({
+            _id: decoded._id,
+        });
+        if (!user) throw new Error("User not found");
+        req.body.user = user.getPublic();
+        next();
+    } catch (e) {
+        console.log("hell", e);
+
+        res.status(401).send("Not authorized");
+    }
 };
