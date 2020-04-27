@@ -32,6 +32,7 @@
 		"@types/bcryptjs": "^2.4.2",
 		"@types/cors": "^2.8.6",
 		"@types/express-rate-limit": "^5.0.0",
+		"@types/express-session": "^1.17.0",
 		"@types/jsonwebtoken": "^8.3.8",
 		"async": "^3.1.0",
 		"bcrypt-nodejs": "^0.0.3",
