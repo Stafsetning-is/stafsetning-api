@@ -2,9 +2,13 @@ import {
 	ExerciseCollectionInterface,
 	ExerciseRepr,
 	FinishedExerciseRepr,
+	AdminExerciseRepr,
+	ExerciseInterface,
 } from "./interface";
 import { Types } from "mongoose";
 import { Practices } from "../";
+import { PART_SPLITTER } from "./utils";
+import { Exercises } from ".";
 
 /**
  * Gets all exercises that fits an users
@@ -12,15 +16,54 @@ import { Practices } from "../";
  * @param level the difficulty level
  */
 export const getExercisesByDifficulty = async function (
+	this: ExerciseCollectionInterface,
 	level: number
 ): Promise<ExerciseRepr[]> {
-	// eslint-disable-next-line @typescript-eslint/no-this-alias
-	const Exercises: ExerciseCollectionInterface = this;
-	const found = await Exercises.find({
+	const found = await this.find({
 		"difficultRange.min": { $lte: level },
 		"difficultRange.max": { $gte: level },
+		published: true,
+		removed: false,
 	});
 	return found.map((exercise) => exercise.getRepresentation());
+};
+
+/**
+ * Static method that creates an exercise
+ * @param data admin exercise interace
+ */
+export const create = async function (
+	this: ExerciseCollectionInterface,
+	data: AdminExerciseRepr
+): Promise<ExerciseInterface> {
+	const exercise = new this(data);
+	exercise.text = data.parts.join(PART_SPLITTER);
+	return await exercise.save();
+};
+
+/**
+ * Static method that updates an exercise
+ * @param data admin exercise interace
+ */
+
+export const updateFile = async function (
+	this: ExerciseCollectionInterface,
+	data: AdminExerciseRepr
+): Promise<ExerciseInterface> {
+	return await Exercises.findByIdAndUpdate(
+		data._id,
+		{
+			$set: {
+				fileName: data.fileName,
+				text: data.parts.join(PART_SPLITTER),
+				published: false,
+				difficultRange: data.difficultRange,
+			},
+		},
+		{
+			new: true,
+		}
+	);
 };
 
 /**
@@ -42,8 +85,8 @@ export const getCompletedExercises = async function (
 	}).populate("exercise");
 
 	// maps practices to exercise representation with score
-	const exercises = practices.map((doc) => {
-		const exercise = doc.toExercise();
+	const exercises = practices.map((practice) => {
+		const exercise = practice.toExercise();
 		if (removePracticeReference) exercise.practice = undefined;
 		return exercise;
 	});
