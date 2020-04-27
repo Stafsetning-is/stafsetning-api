@@ -35,28 +35,29 @@ describe("Practice Routes V1", () => {
 	it("POST /api/v1/exercises/complete success case", async (done) => {
 		const token = app.get("testToken");
 		const practice = {
-			"errorItems": [
+			errorItems: [
 				{
-					"error": "i",
-					"charAt": 10
+					error: "i",
+					charAt: 10,
 				},
 				{
-					"error": " ",
-					"charAt": 37
+					error: " ",
+					charAt: 37,
 				},
 				{
-					"error": " ",
-					"charAt": 57
-				}
+					error: " ",
+					charAt: 57,
+				},
 			],
-			"exerciseString": "Kalli for ut i bud til ad kaupa mjolk, handa mommu sinni.",
-			"duration": 69,
-			"exercise": "5e6b67a89c03d049cb2b9943"
+			exerciseString:
+				"Kalli for ut i bud til ad kaupa mjolk, handa mommu sinni.",
+			duration: 69,
+			exercise: "5e6b67a89c03d049cb2b9943",
 		};
 		const { body, status } = await request(app)
 			.post("/api/v1/exercises/complete")
 			.set({ Authorization: `Bearer ${token}` })
-			.send(practice)
+			.send(practice);
 		expect(status).toEqual(201);
 		expect(Object.keys(body).length).toEqual(9);
 		expect(body).toHaveProperty("_id");
@@ -64,7 +65,10 @@ describe("Practice Routes V1", () => {
 		expect(Object.keys(body.errorItems).length).toEqual(3);
 		expect(body.errorItems[0]).toHaveProperty("error");
 		expect(body.errorItems[0]).toHaveProperty("charAt");
-		expect(body).toHaveProperty("exerciseString", "Kalli for ut i bud til ad kaupa mjolk, handa mommu sinni.");
+		expect(body).toHaveProperty(
+			"exerciseString",
+			"Kalli for ut i bud til ad kaupa mjolk, handa mommu sinni."
+		);
 		expect(body).toHaveProperty("duration", 69);
 		expect(body).toHaveProperty("exercise");
 		expect(body).toHaveProperty("user");
@@ -74,21 +78,21 @@ describe("Practice Routes V1", () => {
 	it("POST /api/v1/exercise/complete failure case", async (done) => {
 		const token = app.get("testToken");
 		const practice = {
-			"errorItems": [
+			errorItems: [
 				{
-					"error": "i",
-					"charAt": 10
+					error: "i",
+					charAt: 10,
 				},
 				{
-					"error": " ",
-					"charAt": 37
+					error: " ",
+					charAt: 37,
 				},
 				{
-					"error": " ",
-					"charAt": 57
-				}
+					error: " ",
+					charAt: 57,
+				},
 			],
-			"exercise": "5e6b67a89c03d049cb2b9943"
+			exercise: "5e6b67a89c03d049cb2b9943",
 		};
 		const { status } = await request(app)
 			.post("/api/v1/exercises/complete")

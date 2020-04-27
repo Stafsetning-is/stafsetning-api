@@ -1,6 +1,7 @@
 import post from "./post";
 import getByUser from "./get_by_user";
 import getRandom from "./get_random";
+import getById from "./get_by_id";
 import { RouteBuilder } from "../../../utils";
 
 export default RouteBuilder.routerForEndpoints([
@@ -10,6 +11,11 @@ export default RouteBuilder.routerForEndpoints([
 		method: "post",
 	},
 	{
+		route: "/:id",
+		controller: getById,
+		method: "get",
+	},
+	{
 		route: "/",
 		controller: getByUser,
 		method: "get",
@@ -17,6 +23,6 @@ export default RouteBuilder.routerForEndpoints([
 	{
 		route: "/:id/proverb",
 		controller: getRandom,
-		method: "get"
-	}
+		method: "get",
+	},
 ]);
