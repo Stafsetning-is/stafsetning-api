@@ -14,17 +14,18 @@ import { PART_SPLITTER } from "./utils";
 export const getRepresentation = function (
 	this: ExerciseInterface
 ): ExerciseRepr {
-	const { _id, number, difficultRange } = this;
+	const { _id, number, difficultRange, counter } = this;
 	return {
 		_id,
 		number,
 		difficultRange,
+		counter: counter ? counter : 0,
 		completed: false,
 		length: this.getCharacterCount(),
 		title: this.getTitle(),
 		wordCount: this.getWordCount(),
 		report: this.getGrammarReport(),
-		parts: this.getTextParts()
+		parts: this.getTextParts(),
 	};
 };
 
@@ -35,13 +36,14 @@ export const getRepresentation = function (
 export const getAdminRepresentation = function (
 	this: ExerciseInterface
 ): AdminExerciseRepr {
-	const { _id, difficultRange, number, fileName, published } = this;
+	const { _id, difficultRange, number, fileName, published, counter } = this;
 	return {
 		_id,
 		difficultRange,
 		published,
 		number,
 		fileName,
+		counter: counter ? counter : 0,
 		title: this.getTitle(),
 		parts: this.getTextParts(),
 	};
