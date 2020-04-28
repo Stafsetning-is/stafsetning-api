@@ -35,6 +35,10 @@ const exerciseSchema = new Schema(
 			ref: "users",
 			required: true,
 		},
+		counter: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{ timestamps: true }
 );
@@ -61,6 +65,7 @@ exerciseSchema.pre<ExerciseInterface>("save", async function () {
 	if (this.isNew) {
 		this.removed = false;
 		this.published = false;
+		this.counter = 0;
 	}
 });
 
