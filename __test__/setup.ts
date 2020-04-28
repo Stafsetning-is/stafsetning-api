@@ -8,7 +8,6 @@ let mongoServer: MongoMemoryServer;
 beforeAll(async (done) => {
     mongoServer = new MongoMemoryServer();
     const mongoUri = await mongoServer.getUri();
-
     await mongoose.connect(
         mongoUri,
         {
