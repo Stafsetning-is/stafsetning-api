@@ -7,6 +7,7 @@ interface Base {
 	};
 	number: number;
 	completed?: boolean;
+	owner: Types.ObjectId;
 }
 
 // Muna breytti í any

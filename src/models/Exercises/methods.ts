@@ -14,11 +14,12 @@ import { PART_SPLITTER } from "./utils";
 export const getRepresentation = function (
 	this: ExerciseInterface
 ): ExerciseRepr {
-	const { _id, number, difficultRange, counter } = this;
+	const { _id, number, difficultRange, counter, owner } = this;
 	return {
 		_id,
 		number,
 		difficultRange,
+		owner,
 		counter: counter ? counter : 0,
 		completed: false,
 		length: this.getCharacterCount(),
@@ -36,13 +37,22 @@ export const getRepresentation = function (
 export const getAdminRepresentation = function (
 	this: ExerciseInterface
 ): AdminExerciseRepr {
-	const { _id, difficultRange, number, fileName, published, counter } = this;
+	const {
+		_id,
+		difficultRange,
+		number,
+		fileName,
+		published,
+		counter,
+		owner,
+	} = this;
 	return {
 		_id,
 		difficultRange,
 		published,
 		number,
 		fileName,
+		owner,
 		counter: counter ? counter : 0,
 		title: this.getTitle(),
 		parts: this.getTextParts(),
