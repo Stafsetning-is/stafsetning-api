@@ -18,6 +18,7 @@ export default async (req: Request, res: Response) => {
             await user.save();
             res.send("password successfully changed");
         }
+        console.log(user.password);
         throw new Error("wrong password");
     } catch (error) {
         res.status(400).send({ message: error.message });
