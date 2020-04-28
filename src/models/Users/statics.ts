@@ -5,7 +5,7 @@ import { AuthData, UserInterface } from "./interface";
  * @param username email of user
  * @param password password of user
  */
-export const findByCredentials = async function(
+export const findByCredentials = async function (
 	username: string,
 	password: string
 ): Promise<AuthData> {
@@ -16,7 +16,7 @@ export const findByCredentials = async function(
 	const token = await user.generateAuthToken();
 	return {
 		user: user.getPublic(),
-		token: token
+		token: token,
 	};
 };
 
@@ -24,11 +24,11 @@ export const findByCredentials = async function(
  * Creates a user and returns the public data with token
  * @param data he user data
  */
-export const register = async function(data: {}): Promise<AuthData> {
+export const register = async function (data: {}): Promise<AuthData> {
 	const user: UserInterface = await this.create(data);
 	const token = await user.generateAuthToken();
 	return {
 		user: user.getPublic(),
-		token
+		token,
 	};
 };

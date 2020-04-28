@@ -3,7 +3,7 @@ import { UserInterface, UserCollectionInterface } from "./interface";
 import * as methods from "./methods";
 import * as statics from "./statics";
 import bcrypt from "bcryptjs";
-import { USER_TYPES, UserType } from "./utils";
+import { USER_TYPES, UserType, USER_TYPE_USER } from "./utils";
 
 const userSchema = new Schema({
 	name: {
@@ -47,7 +47,7 @@ const userSchema = new Schema({
 			validator: (value: UserType) => USER_TYPES.includes(value),
 			msg: "Invalid user type",
 		},
-		default: "user",
+		default: USER_TYPE_USER,
 	},
 	difficulty: {
 		type: Number,
@@ -65,7 +65,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 
 // auto converts all new instances to type "user"
 userSchema.pre<UserInterface>("save", async function (next) {
-	if (this.isNew) this.type = "user";
+	if (this.isNew) this.type = USER_TYPE_USER;
 	next();
 });
 
@@ -87,3 +87,4 @@ export const Users = model<UserInterface, UserCollectionInterface>(
 );
 
 export * from "./interface";
+export * from "./utils";
