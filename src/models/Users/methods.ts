@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { USER_PW_HASH_KEY } from "../../util/secrets";
-import { PublicUser } from "./interface";
+import { PublicUser, UserInterface } from "./interface";
 /**
  * Generates an auth token for a certain user
  */
@@ -24,7 +24,20 @@ export const getPublic = function (): PublicUser {
 	};
 };
 
-export const makeAdmin = async function () {
+/**
+ * Changes user to admin type
+ */
+export const makeAdmin = async function (this: UserInterface) {
 	this.type = "admin";
 	await this.save();
+};
+
+/**
+ * set user type to pending-admin-inviite
+ */
+export const requestAdminPriveledges = async function (this: UserInterface) {
+	this.type = "pending-admin-invite";
+	console.log("this.type", this.type);
+	await this.save();
+	return this.getPublic();
 };

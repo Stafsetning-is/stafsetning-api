@@ -1,15 +1,14 @@
 import {
-	SavedExercisesInterface,
-	StringOrObjectId,
-	SavedExercisesCollectionInterface,
+    SavedExercisesInterface,
+    StringOrObjectId,
+    SavedExercisesCollectionInterface,
 } from "./interface";
-import { SavedExercises } from "../";
-import { ExerciseRepr } from "../";
+import { SavedExercises, ExerciseRepr } from "../";
 
 // helper function to verify objectId
 const verifyObjectId = (objectId: StringOrObjectId) => {
-	if (!objectId.toString().match(/^[0-9a-fA-F]{24}$/))
-		throw Error(`${objectId} is not valid`);
+    if (!objectId.toString().match(/^[0-9a-fA-F]{24}$/))
+        throw Error(`${objectId} is not valid`);
 };
 
 /**
@@ -19,18 +18,18 @@ const verifyObjectId = (objectId: StringOrObjectId) => {
  * @param exercise exercise to save for user
  */
 export const createNew = async function (
-	this: SavedExercisesCollectionInterface,
-	user: StringOrObjectId,
-	exercise: StringOrObjectId
+    this: SavedExercisesCollectionInterface,
+    user: StringOrObjectId,
+    exercise: StringOrObjectId
 ): Promise<SavedExercisesInterface> {
-	// verifies inputs
-	[user, exercise].forEach((input) => verifyObjectId(input));
+    // verifies inputs
+    [user, exercise].forEach((input) => verifyObjectId(input));
 
-	try {
-		return await SavedExercises.create({ user, exercise });
-	} catch (error) {
-		throw new Error("Can't save this exercise twice for same user");
-	}
+    try {
+        return await SavedExercises.create({ user, exercise });
+    } catch (error) {
+        throw new Error("Can't save this exercise twice for same user");
+    }
 };
 
 /**
@@ -40,19 +39,19 @@ export const createNew = async function (
  * @param exercise exercise to unsave for user
  */
 export const deleteSave = async function (
-	this: SavedExercisesCollectionInterface,
-	user: StringOrObjectId,
-	exercise: StringOrObjectId
+    this: SavedExercisesCollectionInterface,
+    user: StringOrObjectId,
+    exercise: any
 ) {
-	// verifies inputs
-	[user, exercise].forEach((input) => verifyObjectId(input));
+    // verifies inputs
+    [user, exercise].forEach((input) => verifyObjectId(input));
 
-	try {
-		const doc = await SavedExercises.findOneAndDelete({ user, exercise });
-		if (!doc) throw Error();
-	} catch (error) {
-		throw new Error("Can't find saved exercise");
-	}
+    try {
+        const doc = await SavedExercises.findOneAndDelete({ user, exercise });
+        if (!doc) throw Error();
+    } catch (error) {
+        throw new Error("Can't find saved exercise");
+    }
 };
 
 /**
@@ -61,9 +60,9 @@ export const deleteSave = async function (
  * @param user user id
  */
 export const getExercisesSavedByUser = async function (
-	this: SavedExercisesCollectionInterface,
-	user: StringOrObjectId
+    this: SavedExercisesCollectionInterface,
+    user: StringOrObjectId
 ): Promise<ExerciseRepr[]> {
-	const docs = await this.find({ user }).populate("exercise");
-	return docs.map((doc) => doc.exercise.getRepresentation());
+    const docs = await this.find({ user }).populate("exercise");
+    return docs.map((doc) => doc.exercise.getRepresentation());
 };
