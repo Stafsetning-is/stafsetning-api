@@ -17,7 +17,7 @@ export default RouteBuilder.joinRouters(
 		{
 			route: "/users/",
 			controller: users,
-		},
+		}
 	],
 	auth
 );
