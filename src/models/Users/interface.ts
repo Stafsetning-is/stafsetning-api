@@ -1,9 +1,10 @@
 import { Document, Model, Types } from "mongoose";
+import { UserType } from "./utils";
 
 interface UserBase {
 	difficulty: number;
 	name: string;
-	type: "user" | "admin";
+	type: UserType;
 }
 
 export interface AuthData {
@@ -21,6 +22,7 @@ export interface UserInterface extends Document, UserBase {
 	generateAuthToken: () => Promise<string>;
 	getPublic: () => PublicUser;
 	makeAdmin: () => Promise<void>;
+	requestAdminPriveledges: () => Promise<PublicUser>;
 }
 
 export interface UserCollectionInterface extends Model<UserInterface> {
