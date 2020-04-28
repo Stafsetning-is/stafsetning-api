@@ -3,10 +3,7 @@ import changeDifficulty from "./change_difficulty";
 import getDifficulty from "./get_difficulty";
 import saveExercise from "./save_exercise";
 import unsaveExercise from "./unsave_exercise";
-<<<<<<< HEAD
 import savedExercises from "./saved_exercises";
-=======
->>>>>>> e87e8502f8459385ab349a145ffa312aa397535d
 import changePassword from "./change_password";
 import { RouteBuilder } from "../../../utils";
 
