@@ -17,6 +17,11 @@ export interface PublicUser extends UserBase {
 	_id: Types.ObjectId;
 }
 
+export interface MinimizedUser {
+	username: string;
+	_id: string;
+}
+
 export interface UserInterface extends Document, UserBase {
 	mobile: string;
 	password: string;
@@ -25,6 +30,7 @@ export interface UserInterface extends Document, UserBase {
 	makeAdmin: () => Promise<void>;
 	requestAdminPriveledges: () => Promise<PublicUser>;
 	hashString: (text: string) => Promise<string>;
+	getMinimized: () => MinimizedUser;
 }
 
 export interface UserCollectionInterface extends Model<UserInterface> {
