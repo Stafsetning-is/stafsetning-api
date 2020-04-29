@@ -1,11 +1,6 @@
 import { MinimizedUser } from "../../models";
 
-export type IncomingEvents =
-	| "log-in"
-	| "start-exercise"
-	| "leave-exercise"
-	| "log-out"
-	| "complete-exercise";
+export type IncomingEvents = "log-in" | "finish-exercise";
 
 export type OutgoingEvents = "change-points";
 
@@ -20,3 +15,10 @@ export interface UserData {
 }
 
 export type ConnectedUsersMap = { [key: string]: ConnectedUser };
+
+export type UsersInExercises = { [key: string]: ConnectedUsersMap };
+
+export interface StartExercise {
+	exercise: string;
+	_id: string;
+}
