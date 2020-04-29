@@ -51,6 +51,7 @@
 		"mongoose": "^5.7.5",
 		"request": "^2.88.0",
 		"request-promise": "^4.2.4",
+		"socket.io": "^2.3.0",
 		"typescript": "^3.6.3",
 		"winston": "^3.2.1"
 	},
