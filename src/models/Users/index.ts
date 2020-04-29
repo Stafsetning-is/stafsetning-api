@@ -2,7 +2,6 @@ import { model, Schema } from "mongoose";
 import { UserInterface, UserCollectionInterface } from "./interface";
 import * as methods from "./methods";
 import * as statics from "./statics";
-import bcrypt from "bcryptjs";
 import { USER_TYPES, UserType, USER_TYPE_USER } from "./utils";
 
 const userSchema = new Schema({
@@ -59,7 +58,7 @@ const userSchema = new Schema({
 userSchema.pre<UserInterface>("save", async function (next) {
 	this.mobile = this.mobile.replace(/[- ]/g, "");
 	if (this.isModified("password"))
-		this.password = await bcrypt.hash(this.password, 8);
+		this.password = await this.hashString(this.password);
 	next();
 });
 

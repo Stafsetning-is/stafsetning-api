@@ -5,6 +5,7 @@ interface UserBase {
 	difficulty: number;
 	name: string;
 	type: UserType;
+	username: string;
 }
 
 export interface AuthData {
@@ -16,6 +17,11 @@ export interface PublicUser extends UserBase {
 	_id: Types.ObjectId;
 }
 
+export interface MinimizedUser {
+	username: string;
+	_id: string;
+}
+
 export interface UserInterface extends Document, UserBase {
 	mobile: string;
 	password: string;
@@ -23,12 +29,11 @@ export interface UserInterface extends Document, UserBase {
 	getPublic: () => PublicUser;
 	makeAdmin: () => Promise<void>;
 	requestAdminPriveledges: () => Promise<PublicUser>;
+	hashString: (text: string) => Promise<string>;
+	getMinimized: () => MinimizedUser;
 }
 
 export interface UserCollectionInterface extends Model<UserInterface> {
-	findByCredentials: (
-		username: string,
-		password: string
-	) => Promise<UserInterface>;
+	findByCredentials: (username: string, password: string) => Promise<AuthData>;
 	register: (data: any) => Promise<AuthData>;
 }

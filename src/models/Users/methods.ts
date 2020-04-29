@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { USER_PW_HASH_KEY } from "../../util/secrets";
-import { PublicUser, UserInterface } from "./interface";
+import { PublicUser, UserInterface, MinimizedUser } from "./interface";
+import bcrypt from "bcryptjs";
 /**
  * Generates an auth token for a certain user
  */
@@ -15,13 +16,18 @@ export const generateAuthToken = async function () {
  * Get public representation
  * of the user
  */
-export const getPublic = function (): PublicUser {
+export const getPublic = function (this: UserInterface): PublicUser {
 	return {
 		_id: this._id,
 		name: this.name,
 		difficulty: this.difficulty,
 		type: this.type,
+		username: this.username,
 	};
+};
+
+export const getMinimized = function (this: UserInterface): MinimizedUser {
+	return { username: this.username, _id: this._id.toString() };
 };
 
 /**
@@ -37,7 +43,13 @@ export const makeAdmin = async function (this: UserInterface) {
  */
 export const requestAdminPriveledges = async function (this: UserInterface) {
 	this.type = "pending-admin-invite";
-	console.log("this.type", this.type);
 	await this.save();
 	return this.getPublic();
+};
+
+export const hashString = async function async(
+	this: UserInterface,
+	text: string
+) {
+	return await bcrypt.hash(text, 8);
 };
