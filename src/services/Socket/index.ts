@@ -97,6 +97,7 @@ class Socket {
 	}
 
 	private handleNewConnection = (socket: SocketType) => {
+		this.io.emit("current-users", this.getConnectedUsers());
 		socket.on("log-in", (data: UserData) => {
 			this.handleIncoming("log-in", data);
 		});
