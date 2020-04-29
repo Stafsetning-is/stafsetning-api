@@ -32,3 +32,6 @@ export const register = async function (data: {}): Promise<AuthData> {
 		token,
 	};
 };
+
+// default number of points gained per exercise
+export const POINTS_PER_EXERCISE = 10;

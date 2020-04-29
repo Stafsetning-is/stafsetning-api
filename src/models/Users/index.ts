@@ -52,6 +52,10 @@ const userSchema = new Schema({
 		type: Number,
 		required: true,
 	},
+	points: {
+		type: Number,
+		default: 10,
+	},
 });
 
 // Hashes password when it's modified

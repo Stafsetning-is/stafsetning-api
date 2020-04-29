@@ -6,6 +6,7 @@ interface UserBase {
 	name: string;
 	type: UserType;
 	username: string;
+	points: number;
 }
 
 export interface AuthData {
@@ -36,4 +37,5 @@ export interface UserInterface extends Document, UserBase {
 export interface UserCollectionInterface extends Model<UserInterface> {
 	findByCredentials: (username: string, password: string) => Promise<AuthData>;
 	register: (data: any) => Promise<AuthData>;
+	POINTS_PER_EXERCISE: number;
 }
