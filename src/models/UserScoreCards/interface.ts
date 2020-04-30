@@ -17,6 +17,7 @@ export interface ScoreCard {
 	lastLoggedIn: Date;
 	created: Date;
 	intervals: IntervalScoreCards;
+	lastScore: number;
 }
 
 export interface IntervalScoreCards {
