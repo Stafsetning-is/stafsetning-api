@@ -23,6 +23,10 @@ export interface MinimizedUser {
 	_id: string;
 }
 
+export interface DecodedToken {
+	_id: string;
+}
+
 export interface UserInterface extends Document, UserBase {
 	mobile: string;
 	password: string;
@@ -37,5 +41,6 @@ export interface UserInterface extends Document, UserBase {
 export interface UserCollectionInterface extends Model<UserInterface> {
 	findByCredentials: (username: string, password: string) => Promise<AuthData>;
 	register: (data: any) => Promise<AuthData>;
+	findByToken: (token: string) => Promise<UserInterface>;
 	POINTS_PER_EXERCISE: number;
 }

@@ -1,5 +1,13 @@
 import bcrypt from "bcryptjs";
-import { AuthData, UserInterface } from "./interface";
+import {
+	AuthData,
+	UserInterface,
+	UserCollectionInterface,
+	DecodedToken,
+} from "./interface";
+import * as jwt from "jsonwebtoken";
+import { USER_PW_HASH_KEY } from "../../util/secrets";
+import { UserScoreCards } from "../";
 /**
  * Takes in auth details and returns the user
  * @param username email of user
@@ -31,6 +39,24 @@ export const register = async function (data: {}): Promise<AuthData> {
 		user: user.getPublic(),
 		token,
 	};
+};
+
+/**
+ * Takes in a token and finds the user belingong to that token
+ * this static also logs the user authentication
+ * to user score card
+ * @param token possible users token
+ */
+export const findByToken = async function (
+	this: UserCollectionInterface,
+	token: string
+) {
+	const decoded = jwt.verify(token, USER_PW_HASH_KEY);
+	if (typeof decoded === "string") throw Error("Invalid token");
+	const user = await this.findById((decoded as DecodedToken)._id);
+	if (!user) throw new Error("User not found");
+	UserScoreCards.logActivity(user._id);
+	return user;
 };
 
 // default number of points gained per exercise
