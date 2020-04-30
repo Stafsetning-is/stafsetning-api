@@ -5,7 +5,7 @@ import {
 	UserData,
 	ConnectedUser,
 } from "./interface";
-import { Users, MinimizedUser } from "../../models";
+import { Users, MinimizedUser, UserTrophies } from "../../models";
 import {
 	SESSION_LENGTH,
 	EVENTS,
@@ -14,6 +14,8 @@ import {
 	CURRENT_USERS,
 	CONNECT,
 	UPDATE_POINTS,
+	TROPHY_EMIT_TIMEOUT_MS,
+	NEW_TROPHY,
 } from "./utils";
 
 class Socket {
@@ -116,6 +118,10 @@ class Socket {
 			{ new: true }
 		);
 		socket.emit(UPDATE_POINTS, user.points);
+		setTimeout(async () => {
+			const trophy = await UserTrophies.handOutTrophyToUser(userId);
+			if (trophy) socket.emit(NEW_TROPHY, trophy);
+		}, TROPHY_EMIT_TIMEOUT_MS);
 	}
 
 	private async handleIncoming(

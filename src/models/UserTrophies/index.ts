@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
-import { UserTrophiesInterface } from "./interface";
+import { UserTrophiesInterface, UserTrophiesCollection } from "./interface";
+import * as statics from "./statics";
 
 const userTrophiesSchema = new Schema(
 	{
@@ -21,13 +22,14 @@ const userTrophiesSchema = new Schema(
 	{ timestamps: true }
 );
 
-// sets one-to-many relationship between the two
-userTrophiesSchema.index({ user: 1, exercise: 1 }, { unique: true });
+userTrophiesSchema.statics = statics;
 
-export const UserTrophies = model<UserTrophiesInterface>(
-	"usertrophies",
-	userTrophiesSchema,
-	"usertrophies"
-);
+// sets one-to-many relationship between the two
+userTrophiesSchema.index({ user: 1, trophy: 1 }, { unique: true });
+
+export const UserTrophies = model<
+	UserTrophiesInterface,
+	UserTrophiesCollection
+>("usertrophies", userTrophiesSchema, "usertrophies");
 
 export * from "./interface";
