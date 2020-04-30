@@ -6,7 +6,10 @@ import { UserTrophies } from "../../../../../models";
  */
 export default async (req: Request, res: Response) => {
 	try {
-		res.send("hello");
+		const userTrophies = await UserTrophies.find({
+			user: req.body.user._id,
+		}).populate("trophy");
+		res.send(userTrophies.map((item) => item.trophy));
 	} catch (error) {
 		res.status(400).send(error);
 	}
