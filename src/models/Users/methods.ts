@@ -23,6 +23,7 @@ export const getPublic = function (this: UserInterface): PublicUser {
 		difficulty: this.difficulty,
 		type: this.type,
 		username: this.username,
+		points: this.points ? this.points : 10,
 	};
 };
 

@@ -1,9 +1,9 @@
-import { ExerciseInterface, UserInterface } from "../";
+import { ExerciseInterface } from "../";
 import { Document } from "mongoose";
 import { FinishedExerciseRepr } from "../Exercises";
 
 export interface PracticeInterface extends Document {
-	user: UserInterface;
+	user: string;
 	exercise: ExerciseInterface;
 	errorItems: ErrorInfo[];
 	score: number;
@@ -11,6 +11,7 @@ export interface PracticeInterface extends Document {
 	duration: number;
 	toExercise: () => FinishedExerciseRepr;
 	getScore: () => number;
+	createdAt: Date;
 }
 
 export interface ErrorInfo {

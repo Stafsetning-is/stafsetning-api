@@ -3,6 +3,7 @@ import { UserInterface, UserCollectionInterface } from "./interface";
 import * as methods from "./methods";
 import * as statics from "./statics";
 import { USER_TYPES, UserType, USER_TYPE_USER } from "./utils";
+import { UserScoreCards } from "../";
 
 const userSchema = new Schema({
 	name: {
@@ -52,6 +53,10 @@ const userSchema = new Schema({
 		type: Number,
 		required: true,
 	},
+	points: {
+		type: Number,
+		default: 10,
+	},
 });
 
 // Hashes password when it's modified
@@ -74,6 +79,14 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	else if (this.difficulty > 11)
 		throw new Error("Difficulty must be lower than 12");
 	next();
+});
+
+userSchema.post<UserInterface>("init", async function (doc) {
+	try {
+		await UserScoreCards.create({ user: doc._id });
+	} catch (error) {
+		// error creating scoreCard
+	}
 });
 
 userSchema.statics = statics;
