@@ -24,12 +24,14 @@ export const allocateNewTrophiesToUser = async function (
 		return Rules.reviewObject(scoreCard, trophy.rules);
 	});
 
-	const promises = newTrophies.map((item) =>
-		UserTrophies.create({
+	console.log("newTrophies", newTrophies);
+	const promises = newTrophies.map((item) => {
+		console.log("item", item._id);
+		return UserTrophies.create({
 			trophy: item._id,
 			user: userId,
-		})
-	);
+		});
+	});
 
 	await Promise.all(promises);
 

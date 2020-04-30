@@ -41,8 +41,11 @@ export const generateScoreCard = async function (
 		this.findOne({ user: userId }).lean(),
 	]);
 
+	const mostRecent = practices[practices.length - 1];
+
 	return {
 		...scoreCard,
+		lastScore: mostRecent.getScore(),
 		intervals: {
 			today: aggregatePractices(practices, DAY),
 			thisWeek: aggregatePractices(practices, WEEK),
