@@ -6,7 +6,7 @@ import { UserTrophies } from "../../../../../models";
  */
 export default async (req: Request, res: Response) => {
 	try {
-		res.send(req.body.user);
+		res.send("hello");
 	} catch (error) {
 		res.status(400).send(error);
 	}
