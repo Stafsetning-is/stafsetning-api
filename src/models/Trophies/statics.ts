@@ -24,9 +24,7 @@ export const allocateNewTrophiesToUser = async function (
 		return Rules.reviewObject(scoreCard, trophy.rules);
 	});
 
-	console.log("newTrophies", newTrophies);
 	const promises = newTrophies.map((item) => {
-		console.log("item", item._id);
 		return UserTrophies.create({
 			trophy: item._id,
 			user: userId,

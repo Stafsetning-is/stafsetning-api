@@ -6,11 +6,12 @@ export const handOutTrophyToUser = async function (
 	userId: string
 ) {
 	try {
-		const userTrophy = await this.findOne({ user: userId, seen: false });
+		const userTrophy = await this.findOneAndUpdate(
+			{ user: userId, seen: false },
+			{ $set: { seen: true } }
+		);
 		if (!userTrophy) throw new Error("Trophy not found");
-		return await Trophies.findByIdAndUpdate(userTrophy.trophy, {
-			$set: { seen: true },
-		}).lean();
+		return await Trophies.findById(userTrophy.trophy).lean();
 	} catch (error) {
 		// no trophy found
 	}
