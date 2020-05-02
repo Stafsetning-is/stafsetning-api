@@ -6,3 +6,4 @@ export * from "./UserScoreCards";
 export * from "./Rules";
 export * from "./Trophies";
 export * from "./UserTrophies";
+export * from "./UserPreferences";
