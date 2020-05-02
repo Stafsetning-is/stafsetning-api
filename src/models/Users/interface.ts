@@ -1,5 +1,6 @@
 import { Document, Model, Types } from "mongoose";
 import { UserType } from "./utils";
+import { UserPreferencesInterface } from "../";
 
 interface UserBase {
 	difficulty: number;
@@ -16,6 +17,7 @@ export interface AuthData {
 
 export interface PublicUser extends UserBase {
 	_id: Types.ObjectId;
+	preferences: UserPreferencesInterface;
 }
 
 export interface MinimizedUser {
@@ -31,7 +33,7 @@ export interface UserInterface extends Document, UserBase {
 	mobile: string;
 	password: string;
 	generateAuthToken: () => Promise<string>;
-	getPublic: () => PublicUser;
+	getPublic: () => Promise<PublicUser>;
 	makeAdmin: () => Promise<void>;
 	requestAdminPriveledges: () => Promise<PublicUser>;
 	hashString: (text: string) => Promise<string>;

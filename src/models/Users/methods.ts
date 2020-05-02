@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { USER_PW_HASH_KEY } from "../../util/secrets";
-import { PublicUser, UserInterface, MinimizedUser } from "./interface";
+import { PublicUser, UserInterface, MinimizedUser, UserPreferences } from "../";
 import bcrypt from "bcryptjs";
 /**
  * Generates an auth token for a certain user
@@ -16,7 +16,9 @@ export const generateAuthToken = async function () {
  * Get public representation
  * of the user
  */
-export const getPublic = function (this: UserInterface): PublicUser {
+export const getPublic = async function (
+	this: UserInterface
+): Promise<PublicUser> {
 	return {
 		_id: this._id,
 		name: this.name,
@@ -24,6 +26,7 @@ export const getPublic = function (this: UserInterface): PublicUser {
 		type: this.type,
 		username: this.username,
 		points: this.points ? this.points : 10,
+		preferences: await UserPreferences.getPreferencesByUser(this._id),
 	};
 };
 
