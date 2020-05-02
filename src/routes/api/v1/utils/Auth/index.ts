@@ -15,7 +15,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
 		if (!header.includes("Bearer")) throw new Error("Bearer token missing");
 		const token = header.replace("Bearer ", "");
 		const user = await Users.findByToken(token);
-		req.body.user = user.getPublic();
+		req.body.user = await user.getPublic();
 		next();
 	} catch (e) {
 		console.log("e", e);

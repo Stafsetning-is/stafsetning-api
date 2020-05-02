@@ -1,10 +1,10 @@
 import auth from "./auth";
 import changeDifficulty from "./change_difficulty";
-import getDifficulty from "./get_difficulty";
 import saveExercise from "./save_exercise";
 import unsaveExercise from "./unsave_exercise";
 import savedExercises from "./saved_exercises";
 import changePassword from "./change_password";
+import editPreferences from "./edit_preferences";
 import getTrophies from "./get_trophies";
 import { RouteBuilder } from "../../../utils";
 
@@ -15,14 +15,9 @@ export default RouteBuilder.routerForEndpoints([
 		method: "get",
 	},
 	{
-		route: "/change_difficulty/",
+		route: "/diffculty/",
 		controller: changeDifficulty,
 		method: "post",
-	},
-	{
-		route: "/get_difficulty/",
-		controller: getDifficulty,
-		method: "get",
 	},
 	{
 		route: "/exercises/:id/save",
@@ -40,7 +35,7 @@ export default RouteBuilder.routerForEndpoints([
 		method: "get",
 	},
 	{
-		route: "/change_password/",
+		route: "/password/",
 		controller: changePassword,
 		method: "post",
 	},
@@ -48,5 +43,10 @@ export default RouteBuilder.routerForEndpoints([
 		route: "/trophies/",
 		controller: getTrophies,
 		method: "get",
+	},
+	{
+		route: "/preferences/",
+		controller: editPreferences,
+		method: "post",
 	},
 ]);
