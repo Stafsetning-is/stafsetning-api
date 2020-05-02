@@ -4,12 +4,16 @@ import { Users } from "../../../../../models";
  * This method finds user by id and updates difficulty
  */
 export default async (req: Request, res: Response) => {
+	const { _id } = req.body.user;
+	delete req.body.user;
 	try {
-		if (req.body.difficulty === undefined)
-			throw new Error("Difficulty missing in request body");
-		const user = await Users.findById(req.body.user._id);
-		user.difficulty = req.body.difficulty;
-		await user.save();
+		const user = await Users.findByIdAndUpdate(
+			_id,
+			{
+				$set: { difficulty: req.body.difficulty },
+			},
+			{ new: true }
+		);
 		res.send(await user.getPublic());
 	} catch (error) {
 		res.status(400).send({ message: error.message });

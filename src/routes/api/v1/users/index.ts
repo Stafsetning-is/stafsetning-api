@@ -15,7 +15,7 @@ export default RouteBuilder.routerForEndpoints([
 		method: "get",
 	},
 	{
-		route: "/diffculty/",
+		route: "/difficulty",
 		controller: changeDifficulty,
 		method: "post",
 	},
