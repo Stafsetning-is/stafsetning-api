@@ -13,6 +13,7 @@ const makeIcon = async (
 		256,
 		256
 	).create(uniqueKey);
+
 	return await uploadFile(`${method.charAt(0)}-${uniqueKey}`, buffer);
 };
 
