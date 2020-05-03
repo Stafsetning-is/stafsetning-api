@@ -34,4 +34,4 @@ export const DEF_BG_COLOR: BackgroundColor = "#F8F8F8";
 export const DEF_FONT_SIZE: FontSize = 32;
 export const MAX_PREVIEW_TTL = 15;
 export const MIN_PREVIEW_TTL = 2.5;
-export const DEF_PREVIEW_TTL = 5000;
+export const DEF_PREVIEW_TTL = 4;
