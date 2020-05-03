@@ -36,7 +36,7 @@ const userSchema = new Schema({
 		unique: true,
 		validate: {
 			validator: (value: string) => value.length === 7,
-			msg: "Invalid user type",
+			msg: "Invalid mobile number",
 		},
 	},
 	tokens: [
