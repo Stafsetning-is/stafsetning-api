@@ -11,7 +11,7 @@
 	"scripts": {
 		"start": "npm run build && npm run serve",
 		"dev": "nodemon src/server.ts",
-		"build": "npm run build-ts",
+		"build": "npm run build-ts && echo 'build done'",
 		"serve": "env NODE_ENV=production node dist/src/server.js",
 		"watch-node": "nodemon dist/server.js",
 		"watch": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run watch-node\"",
