@@ -2,9 +2,15 @@ import { model, Schema } from "mongoose";
 import { UserInterface, UserCollectionInterface } from "./interface";
 import * as methods from "./methods";
 import * as statics from "./statics";
-import { USER_TYPES, UserType, USER_TYPE_USER } from "./utils";
+import {
+	USER_TYPES,
+	UserType,
+	USER_TYPE_USER,
+	GENDER_TYPES,
+	GenderType,
+} from "./utils";
 import { UserScoreCards } from "../";
-
+import { getImageURLbyUser } from "../../services";
 const userSchema = new Schema({
 	name: {
 		type: String,
@@ -57,6 +63,22 @@ const userSchema = new Schema({
 		type: Number,
 		default: 10,
 	},
+	avatars: {
+		female: {
+			type: String,
+		},
+		male: {
+			type: String,
+		},
+	},
+	gender: {
+		type: String,
+		validate: {
+			validator: (value: GenderType) =>
+				!value || GENDER_TYPES.includes(value),
+			msg: "Invalid gender type",
+		},
+	},
 });
 
 // Hashes password when it's modified
@@ -75,7 +97,8 @@ userSchema.pre<UserInterface>("save", async function (next) {
 
 // Validates min and max difficulty
 userSchema.pre<UserInterface>("save", async function (next) {
-	if (this.difficulty < 1) throw new Error("Difficulty must be higher than 0");
+	if (this.difficulty < 1)
+		throw new Error("Difficulty must be higher than 0");
 	else if (this.difficulty > 11)
 		throw new Error("Difficulty must be lower than 12");
 	next();
@@ -87,6 +110,14 @@ userSchema.post<UserInterface>("init", async function (doc) {
 	} catch (error) {
 		// error creating scoreCard
 	}
+});
+
+// gets avatars for both genders
+userSchema.pre<UserInterface>("save", async function (next) {
+	if (this.isNew) {
+		this.avatars = await getImageURLbyUser(this);
+	}
+	next();
 });
 
 userSchema.statics = statics;

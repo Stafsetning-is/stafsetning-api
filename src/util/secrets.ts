@@ -15,7 +15,9 @@ if (fs.existsSync(".env")) {
 	logger.debug("Using .env file to supply config environment variables");
 	dotenv.config({ path: ".env" });
 } else if (prod) {
-	logger.debug("Using heroku config variables to supply environment variables");
+	logger.debug(
+		"Using heroku config variables to supply environment variables"
+	);
 } else {
 	logger.error("You must create an .env file.");
 	exitProcess();
@@ -34,6 +36,9 @@ if (!SESSION_SECRET) {
 	logger.error("No client secret. Set SESSION_SECRET environment variable.");
 	exitProcess();
 }
+export const S3_ACCESS_KEY = process.env["S3_ACCESS_KEY"];
+export const S3_SECRET_KEY = process.env["S3_SECRET_KEY"];
+export const AVATAR_BUCKET_NAME = process.env["AVATAR_BUCKET_NAME"];
 
 if (!MONGODB_URI) {
 	if (prod) {
@@ -51,6 +56,27 @@ if (!MONGODB_URI) {
 if (!USER_PW_HASH_KEY) {
 	logger.error(
 		"No hashing key in env. Set USER_PW_HASH_KEY environment variable."
+	);
+	exitProcess();
+}
+
+if (!S3_ACCESS_KEY) {
+	logger.error(
+		"No amazon s3 access key in env. Set S3_ACCESS_KEY environment variable."
+	);
+	exitProcess();
+}
+
+if (!S3_SECRET_KEY) {
+	logger.error(
+		"No amazon s3 secret key in env. Set S3_SECRET_KEY environment variable."
+	);
+	exitProcess();
+}
+
+if (!AVATAR_BUCKET_NAME) {
+	logger.error(
+		"No amazon s3 bucket name for avatrs in env. Set AVATAR_BUCKET_NAME environment variable."
 	);
 	exitProcess();
 }

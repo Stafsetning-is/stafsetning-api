@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { USER_PW_HASH_KEY } from "../../util/secrets";
 import { PublicUser, UserInterface, MinimizedUser, UserPreferences } from "../";
 import bcrypt from "bcryptjs";
+import { DEFAULT_GENDER } from "./utils";
 /**
  * Generates an auth token for a certain user
  */
@@ -26,6 +27,7 @@ export const getPublic = async function (
 		type: this.type,
 		username: this.username,
 		points: this.points ? this.points : 10,
+		avatar: this.getAvatar(),
 		preferences: await UserPreferences.getPreferencesByUser(this._id),
 	};
 };
@@ -51,9 +53,11 @@ export const requestAdminPriveledges = async function (this: UserInterface) {
 	return this.getPublic();
 };
 
-export const hashString = async function async(
-	this: UserInterface,
-	text: string
-) {
+export const hashString = async function (this: UserInterface, text: string) {
 	return await bcrypt.hash(text, 8);
+};
+
+export const getAvatar = function (this: UserInterface) {
+	if (!this.gender) return this.avatars[DEFAULT_GENDER];
+	return this.avatars[this.gender];
 };

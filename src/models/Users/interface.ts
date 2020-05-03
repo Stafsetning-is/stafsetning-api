@@ -1,5 +1,5 @@
 import { Document, Model, Types } from "mongoose";
-import { UserType } from "./utils";
+import { UserType, GenderType } from "./utils";
 import { UserPreferencesInterface } from "../";
 
 interface UserBase {
@@ -18,6 +18,7 @@ export interface AuthData {
 export interface PublicUser extends UserBase {
 	_id: Types.ObjectId;
 	preferences: UserPreferencesInterface;
+	avatar: string;
 }
 
 export interface MinimizedUser {
@@ -38,10 +39,19 @@ export interface UserInterface extends Document, UserBase {
 	requestAdminPriveledges: () => Promise<PublicUser>;
 	hashString: (text: string) => Promise<string>;
 	getMinimized: () => MinimizedUser;
+	getAvatar: () => string;
+	avatars: {
+		male: string;
+		female: string;
+	};
+	gender?: GenderType;
 }
 
 export interface UserCollectionInterface extends Model<UserInterface> {
-	findByCredentials: (username: string, password: string) => Promise<AuthData>;
+	findByCredentials: (
+		username: string,
+		password: string
+	) => Promise<AuthData>;
 	register: (data: any) => Promise<AuthData>;
 	findByToken: (token: string) => Promise<UserInterface>;
 	POINTS_PER_EXERCISE: number;
