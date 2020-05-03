@@ -21,6 +21,5 @@ export const getImageURLbyUser = async ({ _id }: UserInterface) => {
 		makeIcon(_id.toString(), "male8bit"),
 		makeIcon(_id.toString(), "female8bit"),
 	]);
-
 	return { male, female };
 };
