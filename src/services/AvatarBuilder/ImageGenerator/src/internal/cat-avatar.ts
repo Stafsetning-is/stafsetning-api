@@ -9,6 +9,6 @@ const GROUPS = [
 
 export class CatImageBuilder extends GroupImageBuilder {
 	constructor() {
-		super(path.join(__dirname, "/assets/cat"), GROUPS);
+		super(path.join("assets/cat"), GROUPS);
 	}
 }

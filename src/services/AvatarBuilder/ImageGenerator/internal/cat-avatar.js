@@ -14,7 +14,7 @@ const GROUPS = [
 ];
 class CatImageBuilder extends core_avatar_1.GroupImageBuilder {
 	constructor() {
-		super(path_1.default.join(__dirname, "/assets/cat"), GROUPS);
+		super(path_1.default.join("assets/cat"), GROUPS);
 	}
 }
 exports.CatImageBuilder = CatImageBuilder;

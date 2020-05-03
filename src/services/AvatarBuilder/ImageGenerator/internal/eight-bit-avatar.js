@@ -10,7 +10,7 @@ const core_avatar_1 = require("./core-avatar");
 const GROUPS = [["background", "face", "clothes", "hair", "eye", "mouth"]];
 class EightBitImageBuilder extends core_avatar_1.GroupImageBuilder {
 	constructor(sexe) {
-		super(path_1.default.join(__dirname, "/assets/8bit", sexe), GROUPS);
+		super(path_1.default.join("assets/8bit", sexe), GROUPS);
 	}
 }
 exports.EightBitImageBuilder = EightBitImageBuilder;

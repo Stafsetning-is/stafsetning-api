@@ -5,7 +5,7 @@ const GROUPS = [["background", "face", "clothes", "hair", "eye", "mouth"]];
 
 export class EightBitImageBuilder extends GroupImageBuilder {
 	constructor(sexe: "female" | "male") {
-		super(path.join(__dirname, "/assets/8bit", sexe), GROUPS);
+		super(path.join("assets/8bit", sexe), GROUPS);
 	}
 }
 
