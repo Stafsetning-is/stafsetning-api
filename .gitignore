@@ -35,9 +35,7 @@ bower_components
 .DS_Store
 Thumbs.db
 
-# Image files
-*.jpg
-*.png
+
 
 # Ignore built ts files
 dist/**/*

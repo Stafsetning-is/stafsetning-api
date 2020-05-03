@@ -13,10 +13,5 @@
 			"*": ["node_modules/*", "src/types/*"]
 		}
 	},
-	"include": ["src/**/*", "__test__/**/*"],
-	"linterOptions": {
-		"exclude": [
-			"src/services/AvatarBuilder/ImageGenerator/src/internal/identicon-avatar.ts"
-		]
-	}
+	"include": ["src/**/*", "__test__/**/*"]
 }
