@@ -8,6 +8,7 @@ interface UserBase {
 	type: UserType;
 	username: string;
 	points: number;
+	gender?: GenderType;
 }
 
 export interface AuthData {
@@ -45,7 +46,6 @@ export interface UserInterface extends Document, UserBase {
 		male: string;
 		female: string;
 	};
-	gender?: GenderType;
 }
 
 export interface UserCollectionInterface extends Model<UserInterface> {

@@ -26,6 +26,7 @@ export const getPublic = async function (
 		difficulty: this.difficulty,
 		type: this.type,
 		username: this.username,
+		gender: this.gender,
 		points: this.points ? this.points : 10,
 		avatar: this.getAvatar(),
 		preferences: await UserPreferences.getPreferencesByUser(this._id),
