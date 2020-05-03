@@ -33,7 +33,11 @@ export const getPublic = async function (
 };
 
 export const getMinimized = function (this: UserInterface): MinimizedUser {
-	return { username: this.username, _id: this._id.toString() };
+	return {
+		username: this.username,
+		_id: this._id.toString(),
+		avatar: this.getAvatar(),
+	};
 };
 
 /**

@@ -24,6 +24,7 @@ export interface PublicUser extends UserBase {
 export interface MinimizedUser {
 	username: string;
 	_id: string;
+	avatar: string;
 }
 
 export interface DecodedToken {
