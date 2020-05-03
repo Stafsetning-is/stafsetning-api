@@ -1,4 +1,4 @@
-import Avatar from "./ImageGenerator/lib";
+import Avatar from "./ImageGenerator/src";
 import { UserInterface } from "../../models";
 import { uploadFile } from "../";
 

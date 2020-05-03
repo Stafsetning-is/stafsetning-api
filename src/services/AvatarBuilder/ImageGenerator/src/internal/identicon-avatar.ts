@@ -1,5 +1,6 @@
-import {Canvas, createCanvas} from 'canvas';
-import {IAvatarBuilder, IImageBuilder, IRandom} from '../common';
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
+import { Canvas, createCanvas } from "canvas";
+import { IAvatarBuilder, IImageBuilder, IRandom } from "../common";
 
 const CENTER_PATCH_TYPES = [0, 4, 8, 15];
 const PATCH_GRIDS = 5;
@@ -22,12 +23,42 @@ const patch11 = [10, 14, 22];
 const patch12 = [20, 12, 24];
 const patch13 = [10, 2, 12];
 const patch14 = [0, 2, 10];
-const PATCH_TYPES = [patch0, patch1, patch2,
-  patch3, patch4, patch5, patch6, patch7, patch8, patch9, patch10,
-  patch11, patch12, patch13, patch14, patch0];
-const PATCH_FLAGS = [PATCH_SYMMETRIC, 0, 0, 0,
-  PATCH_SYMMETRIC, 0, 0, 0, PATCH_SYMMETRIC, 0, 0, 0, 0, 0, 0,
-  PATCH_SYMMETRIC + PATCH_INVERTED];
+const PATCH_TYPES = [
+	patch0,
+	patch1,
+	patch2,
+	patch3,
+	patch4,
+	patch5,
+	patch6,
+	patch7,
+	patch8,
+	patch9,
+	patch10,
+	patch11,
+	patch12,
+	patch13,
+	patch14,
+	patch0,
+];
+const PATCH_FLAGS = [
+	PATCH_SYMMETRIC,
+	0,
+	0,
+	0,
+	PATCH_SYMMETRIC,
+	0,
+	0,
+	0,
+	PATCH_SYMMETRIC,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	PATCH_SYMMETRIC + PATCH_INVERTED,
+];
 
 /**
  * 9-block Identicon renderer.
@@ -39,150 +70,268 @@ const PATCH_FLAGS = [PATCH_SYMMETRIC, 0, 0, 0,
  * @inspired by don for NineBlockIdenticon
  */
 export class IdenticonImageBuilder implements IImageBuilder {
+	constructor(
+		private patchSize = DEFAULT_PATCH_SIZE,
+		private backgroundColor = { red: 255, green: 255, blue: 255 }
+	) {}
 
-  constructor(
-    private patchSize = DEFAULT_PATCH_SIZE,
-    private backgroundColor = {red: 255, green: 255, blue: 255}
-  ) {
-  }
+	async buildImage(
+		avatar: IAvatarBuilder,
+		random: IRandom,
+		width: number,
+		height: number
+	): Promise<Canvas> {
+		const size = Math.min(width, height);
 
-  async buildImage(avatar: IAvatarBuilder, random: IRandom, width: number, height: number): Promise<Canvas> {
-    const size = Math.min(width, height);
+		const canvas = createCanvas(width, height);
+		const ctx = canvas.getContext("2d");
 
-    const canvas = createCanvas(width, height);
-    const ctx = canvas.getContext('2d');
+		ctx.translate((width - size) / 2, (height - size) / 2);
+		const code = random.nextInt(4294967296);
 
-    ctx.translate((width - size) / 2, (height - size) / 2);
+		this.renderQuilt(ctx, code, size);
 
-    const code = random.nextInt(4294967296);
+		return canvas;
+	}
 
-    this.renderQuilt(ctx, code, size);
+	// @ts-ignore
+	private renderQuilt(ctx, code: number, size: number): any {
+		const middleType = CENTER_PATCH_TYPES[code & 0x3];
+		const middleInvert = ((code >> 2) & 0x1) != 0;
+		const cornerType = (code >> 3) & 0x0f;
+		const cornerInvert = ((code >> 7) & 0x1) != 0;
+		let cornerTurn = (code >> 8) & 0x3;
+		const sideType = (code >> 10) & 0x0f;
+		const sideInvert = ((code >> 14) & 0x1) != 0;
+		let sideTurn = (code >> 15) & 0x3;
+		const blue = ((code >> 16) & 0x01f) << 3;
+		const green = ((code >> 21) & 0x01f) << 3;
+		const red = ((code >> 27) & 0x01f) << 3;
 
-    return canvas;
-  }
+		const fillColor = `rgb(${red}, ${green}, ${blue})`;
 
-  private renderQuilt(ctx, code: number, size: number): any {
-    const middleType = CENTER_PATCH_TYPES[code & 0x3];
-    const middleInvert = ((code >> 2) & 0x1) != 0;
-    const cornerType = (code >> 3) & 0x0f;
-    const cornerInvert = ((code >> 7) & 0x1) != 0;
-    let cornerTurn = (code >> 8) & 0x3;
-    const sideType = (code >> 10) & 0x0f;
-    const sideInvert = ((code >> 14) & 0x1) != 0;
-    let sideTurn = (code >> 15) & 0x3;
-    const blue = ((code >> 16) & 0x01f) << 3;
-    const green = ((code >> 21) & 0x01f) << 3;
-    const red = ((code >> 27) & 0x01f) << 3;
+		let strokeColor;
+		if (
+			IdenticonImageBuilder.getColorDistance(
+				{ red: red, green: green, blue: blue },
+				{
+					red: this.backgroundColor.red,
+					green: this.backgroundColor.green,
+					blue: this.backgroundColor.blue,
+				}
+			) < 32.0
+		) {
+			const color = IdenticonImageBuilder.getComplementaryColor({
+				red: red,
+				green: green,
+				blue: blue,
+			});
+			strokeColor = `rgb(${color.red}, ${color.green}, ${color.blue})`;
+		}
 
-    const fillColor = `rgb(${red}, ${green}, ${blue})`;
+		ctx.fillStyle = `rgb(${this.backgroundColor.red},${this.backgroundColor.green},${this.backgroundColor.blue}`;
+		ctx.fillRect(0, 0, size, size);
 
-    let strokeColor;
-    if (IdenticonImageBuilder.getColorDistance({red: red, green: green, blue: blue}, {
-      red: this.backgroundColor.red,
-      green: this.backgroundColor.green,
-      blue: this.backgroundColor.blue
-    }) < 32.0) {
-      const color = IdenticonImageBuilder.getComplementaryColor({red: red, green: green, blue: blue});
-      strokeColor = `rgb(${color.red}, ${color.green}, ${color.blue})`;
-    }
+		const blockSize = Math.ceil(size / 3);
+		const blockSize2 = Math.ceil(blockSize * 2);
 
-    ctx.fillStyle = `rgb(${this.backgroundColor.red},${this.backgroundColor.green},${this.backgroundColor.blue}`;
-    ctx.fillRect(0, 0, size, size);
+		// middle patch
+		this.drawPatch(
+			ctx,
+			blockSize,
+			blockSize,
+			blockSize,
+			middleType,
+			0,
+			middleInvert,
+			fillColor,
+			strokeColor
+		);
 
-    const blockSize = Math.ceil(size / 3);
-    const blockSize2 = Math.ceil(blockSize * 2);
+		// side patchs, starting from top and moving clock-wise
+		this.drawPatch(
+			ctx,
+			blockSize,
+			0,
+			blockSize,
+			sideType,
+			sideTurn++,
+			sideInvert,
+			fillColor,
+			strokeColor
+		);
+		this.drawPatch(
+			ctx,
+			blockSize2,
+			blockSize,
+			blockSize,
+			sideType,
+			sideTurn++,
+			sideInvert,
+			fillColor,
+			strokeColor
+		);
+		this.drawPatch(
+			ctx,
+			blockSize,
+			blockSize2,
+			blockSize,
+			sideType,
+			sideTurn++,
+			sideInvert,
+			fillColor,
+			strokeColor
+		);
+		this.drawPatch(
+			ctx,
+			0,
+			blockSize,
+			blockSize,
+			sideType,
+			sideTurn++,
+			sideInvert,
+			fillColor,
+			strokeColor
+		);
 
-    // middle patch
-    this.drawPatch(ctx, blockSize, blockSize, blockSize, middleType, 0,
-      middleInvert, fillColor, strokeColor);
+		// corner patchs, starting from top left and moving clock-wise
+		this.drawPatch(
+			ctx,
+			0,
+			0,
+			blockSize,
+			cornerType,
+			cornerTurn++,
+			cornerInvert,
+			fillColor,
+			strokeColor
+		);
+		this.drawPatch(
+			ctx,
+			blockSize2,
+			0,
+			blockSize,
+			cornerType,
+			cornerTurn++,
+			cornerInvert,
+			fillColor,
+			strokeColor
+		);
+		this.drawPatch(
+			ctx,
+			blockSize2,
+			blockSize2,
+			blockSize,
+			cornerType,
+			cornerTurn++,
+			cornerInvert,
+			fillColor,
+			strokeColor
+		);
+		this.drawPatch(
+			ctx,
+			0,
+			blockSize2,
+			blockSize,
+			cornerType,
+			cornerTurn++,
+			cornerInvert,
+			fillColor,
+			strokeColor
+		);
+	}
 
-    // side patchs, starting from top and moving clock-wise
-    this.drawPatch(ctx, blockSize, 0, blockSize, sideType, sideTurn++, sideInvert,
-      fillColor, strokeColor);
-    this.drawPatch(ctx, blockSize2, blockSize, blockSize, sideType, sideTurn++,
-      sideInvert, fillColor, strokeColor);
-    this.drawPatch(ctx, blockSize, blockSize2, blockSize, sideType, sideTurn++,
-      sideInvert, fillColor, strokeColor);
-    this.drawPatch(ctx, 0, blockSize, blockSize, sideType, sideTurn++, sideInvert,
-      fillColor, strokeColor);
+	private drawPatch(
+		// @ts-ignore
+		ctx,
+		x: number,
+		y: number,
+		size: number,
+		patch: number,
+		turn: number,
+		invert: boolean,
+		fillColor: string,
+		strokeColor: string
+	) {
+		patch %= PATCH_TYPES.length;
+		turn %= 4;
+		if ((PATCH_FLAGS[patch] & PATCH_INVERTED) != 0) {
+			invert = !invert;
+		}
 
-    // corner patchs, starting from top left and moving clock-wise
-    this.drawPatch(ctx, 0, 0, blockSize, cornerType, cornerTurn++, cornerInvert,
-      fillColor, strokeColor);
-    this.drawPatch(ctx, blockSize2, 0, blockSize, cornerType, cornerTurn++,
-      cornerInvert, fillColor, strokeColor);
-    this.drawPatch(ctx, blockSize2, blockSize2, blockSize, cornerType,
-      cornerTurn++, cornerInvert, fillColor, strokeColor);
-    this.drawPatch(ctx, 0, blockSize2, blockSize, cornerType, cornerTurn++,
-      cornerInvert, fillColor, strokeColor);
-  }
+		const scale = size / this.patchSize;
+		const offset = size / 2.0;
 
-  private drawPatch(ctx, x: number, y: number, size: number, patch: number, turn: number, invert: boolean, fillColor: string, strokeColor: string) {
-    patch %= PATCH_TYPES.length;
-    turn %= 4;
-    if ((PATCH_FLAGS[patch] & PATCH_INVERTED) != 0) {
-      invert = !invert;
-    }
+		// paint background
+		ctx.fillStyle = invert
+			? fillColor
+			: `rgb(${this.backgroundColor.red},${this.backgroundColor.green},${this.backgroundColor.blue}`;
+		ctx.fillRect(x, y, size, size);
 
-    const scale = size / this.patchSize;
-    const offset = size / 2.0;
+		ctx.save();
 
-    // paint background
-    ctx.fillStyle = invert ? fillColor : `rgb(${this.backgroundColor.red},${this.backgroundColor.green},${this.backgroundColor.blue}`;
-    ctx.fillRect(x, y, size, size);
+		ctx.translate(x + offset, y + offset);
+		ctx.scale(scale, scale);
+		ctx.rotate(turn * 90 * (Math.PI / 180));
 
-    ctx.save();
+		if (strokeColor != null) {
+			ctx.strokeStyle = strokeColor;
+			ctx.beginPath();
+			this.drawPath(ctx, patch);
+			ctx.stroke();
+		}
 
-    ctx.translate(x + offset, y + offset);
-    ctx.scale(scale, scale);
-    ctx.rotate(turn * 90 * (Math.PI / 180));
+		ctx.fillStyle = invert
+			? `rgb(${this.backgroundColor.red},${this.backgroundColor.green},${this.backgroundColor.blue}`
+			: fillColor;
+		ctx.beginPath();
+		this.drawPath(ctx, patch);
+		ctx.fill();
 
-    if (strokeColor != null) {
-      ctx.strokeStyle = strokeColor;
-      ctx.beginPath();
-      this.drawPath(ctx, patch);
-      ctx.stroke();
-    }
+		ctx.restore();
+	}
+	// @ts-ignore
+	private drawPath(ctx, path: number): void {
+		const patchOffset = this.patchSize / 2;
+		const patchScale = this.patchSize / 4;
 
-    ctx.fillStyle = invert ? `rgb(${this.backgroundColor.red},${this.backgroundColor.green},${this.backgroundColor.blue}` : fillColor;
-    ctx.beginPath();
-    this.drawPath(ctx, patch);
-    ctx.fill();
+		let moveTo = true;
+		const patchVertices = PATCH_TYPES[path];
+		for (let j = 0; j < patchVertices.length; j++) {
+			const v = patchVertices[j];
+			if (v == PATCH_MOVETO) {
+				moveTo = true;
+			}
+			const vx = (v % PATCH_GRIDS) * patchScale - patchOffset;
+			const vy = Math.floor(v / PATCH_GRIDS) * patchScale - patchOffset;
+			if (!moveTo) {
+				ctx.lineTo(vx, vy);
+			} else {
+				moveTo = false;
+				ctx.moveTo(vx, vy);
+			}
+		}
+	}
 
-    ctx.restore();
-  }
+	private static getColorDistance(
+		color1: { red: number; green: number; blue: number },
+		color2: { red: number; green: number; blue: number }
+	): number {
+		const dx = color1.red - color2.red;
+		const dy = color1.green - color2.green;
+		const dz = color1.blue - color2.blue;
+		return Math.sqrt(dx * dx + dy * dy + dz * dz);
+	}
 
-  private drawPath(ctx, path: number): void {
-    const patchOffset = this.patchSize / 2;
-    const patchScale = this.patchSize / 4;
-
-    let moveTo = true;
-    const patchVertices = PATCH_TYPES[path];
-    for (let j = 0; j < patchVertices.length; j++) {
-      const v = patchVertices[j];
-      if (v == PATCH_MOVETO) {
-        moveTo = true;
-      }
-      const vx = ((v % PATCH_GRIDS) * patchScale) - patchOffset;
-      const vy = Math.floor(v / PATCH_GRIDS) * patchScale - patchOffset;
-      if (!moveTo) {
-        ctx.lineTo(vx, vy);
-      } else {
-        moveTo = false;
-        ctx.moveTo(vx, vy);
-      }
-    }
-  }
-
-  private static getColorDistance(color1: { red: number, green: number, blue: number }, color2: { red: number, green: number, blue: number }): number {
-    const dx = color1.red - color2.red;
-    const dy = color1.green - color2.green;
-    const dz = color1.blue - color2.blue;
-    return Math.sqrt(dx * dx + dy * dy + dz * dz);
-  }
-
-  private static getComplementaryColor(color: { red: number, green: number, blue: number }): { red: number, green: number, blue: number } {
-    return {red: color.red ^ 0xFF, green: color.green ^ 0xFF, blue: color.blue ^ 0xFF};
-  }
+	private static getComplementaryColor(color: {
+		red: number;
+		green: number;
+		blue: number;
+	}): { red: number; green: number; blue: number } {
+		return {
+			red: color.red ^ 0xff,
+			green: color.green ^ 0xff,
+			blue: color.blue ^ 0xff,
+		};
+	}
 }
-
