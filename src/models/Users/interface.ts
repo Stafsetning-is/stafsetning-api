@@ -9,6 +9,10 @@ interface UserBase {
 	username: string;
 	points: number;
 	gender?: GenderType;
+	avatars: {
+		male: string;
+		female: string;
+	};
 }
 
 export interface AuthData {
@@ -42,10 +46,7 @@ export interface UserInterface extends Document, UserBase {
 	hashString: (text: string) => Promise<string>;
 	getMinimized: () => MinimizedUser;
 	getAvatar: () => string;
-	avatars: {
-		male: string;
-		female: string;
-	};
+	getPoints: () => number;
 }
 
 export interface UserCollectionInterface extends Model<UserInterface> {
