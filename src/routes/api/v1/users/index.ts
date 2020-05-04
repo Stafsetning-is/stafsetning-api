@@ -6,6 +6,7 @@ import savedExercises from "./saved_exercises";
 import changePassword from "./change_password";
 import editPreferences from "./edit_preferences";
 import getTrophies from "./get_trophies";
+import setGender from "./set_gender";
 import { RouteBuilder } from "../../../utils";
 
 export default RouteBuilder.routerForEndpoints([
@@ -47,6 +48,11 @@ export default RouteBuilder.routerForEndpoints([
 	{
 		route: "/preferences/",
 		controller: editPreferences,
+		method: "post",
+	},
+	{
+		route: "/gender",
+		controller: setGender,
 		method: "post",
 	},
 ]);
