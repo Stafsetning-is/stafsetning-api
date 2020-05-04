@@ -27,7 +27,8 @@ export const getPublic = async function (
 		type: this.type,
 		username: this.username,
 		gender: this.gender,
-		points: this.points ? this.points : 10,
+		avatars: this.avatars,
+		points: this.getPoints(),
 		avatar: this.getAvatar(),
 		preferences: await UserPreferences.getPreferencesByUser(this._id),
 	};
@@ -65,4 +66,8 @@ export const hashString = async function (this: UserInterface, text: string) {
 export const getAvatar = function (this: UserInterface) {
 	if (!this.gender) return this.avatars[DEFAULT_GENDER];
 	return this.avatars[this.gender];
+};
+
+export const getPoints = function (this: UserInterface) {
+	return this.points ? this.points : 10;
 };
