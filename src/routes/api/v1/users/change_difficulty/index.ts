@@ -12,7 +12,7 @@ export default async (req: Request, res: Response) => {
 			{
 				$set: { difficulty: req.body.difficulty },
 			},
-			{ new: true }
+			{ new: true, runValidators: true }
 		);
 		res.send(await user.getPublic());
 	} catch (error) {
