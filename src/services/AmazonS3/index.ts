@@ -11,6 +11,12 @@ const s3 = new AWS.S3({
 	secretAccessKey: S3_SECRET_KEY,
 });
 
+const getOneYearFromNow = () => {
+	const oneYearFromNow = new Date();
+	oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+	return oneYearFromNow;
+};
+
 export const uploadFile = async (
 	fileName: string,
 	buffer: Buffer
@@ -22,6 +28,8 @@ export const uploadFile = async (
 				Key: fileName,
 				Body: buffer,
 				ACL: S3_BUCKET_PERMISSIONS,
+				CacheControl: "max-age=604800",
+				Expires: getOneYearFromNow(),
 			},
 			(error, data) => {
 				if (error) reject();
