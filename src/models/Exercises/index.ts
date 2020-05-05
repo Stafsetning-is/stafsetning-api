@@ -9,9 +9,6 @@ const exerciseSchema = new Schema(
 			type: { min: Number, max: Number },
 			required: true,
 		},
-		number: {
-			type: Number,
-		},
 		text: {
 			type: String,
 			required: true,
@@ -35,6 +32,10 @@ const exerciseSchema = new Schema(
 			ref: "users",
 			required: true,
 		},
+		counter: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{ timestamps: true }
 );
@@ -51,16 +52,12 @@ export const Exercises = model<ExerciseInterface, ExerciseCollectionInterface>(
 // sets one-to-many relationship between the two
 exerciseSchema.index({ fileName: 1, owner: 1 }, { unique: true });
 
-// adds incrementing counter
-exerciseSchema.post<ExerciseInterface>("save", async function () {
-	this.number = await Exercises.countDocuments();
-});
-
 // sets default values to properties
-exerciseSchema.pre<ExerciseInterface>("save", async function () {
+exerciseSchema.pre<ExerciseInterface>("save", function () {
 	if (this.isNew) {
 		this.removed = false;
 		this.published = false;
+		this.counter = 0;
 	}
 });
 

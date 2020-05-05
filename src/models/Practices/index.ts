@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { PracticeInterface } from "./interface";
+import { Exercises, Trophies } from "../";
 import * as methods from "./methods";
 
 const practiceSchema = new Schema(
@@ -30,11 +31,27 @@ const practiceSchema = new Schema(
 			type: Number,
 			required: true,
 		},
+		createdAt: {
+			type: Date,
+		},
 	},
 	{ timestamps: true }
 );
 
 practiceSchema.methods = methods;
+
+practiceSchema.index({ user: 1 }, { name: "user_index" });
+
+// increments counter of exercise
+practiceSchema.pre<PracticeInterface>("save", async function (done) {
+	await Exercises.findByIdAndIncrementCounter(this.exercise);
+	done();
+});
+
+practiceSchema.post<PracticeInterface>("save", async function (doc) {
+	const trophies = await Trophies.allocateNewTrophiesToUser(doc.user);
+	console.log(trophies);
+});
 
 export const Practices = model<PracticeInterface>(
 	"practices",
