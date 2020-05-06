@@ -5,7 +5,6 @@ interface Base {
 		min: number;
 		max: number;
 	};
-	number: number;
 	completed?: boolean;
 	owner: Types.ObjectId;
 }
