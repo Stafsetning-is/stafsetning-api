@@ -72,4 +72,4 @@ Alternatively you can visit the API with the link at the top of the repository p
 You can view the [Postman documentation](https://documenter.getpostman.com/view/6487412/SzmcbeUg?version=latest) to try out the supported routes.
 
 ## License
-Usage is provided under the [MIT License](http://http//opensource.org/licenses/mit-license.php). See LICENSE for the full details.
+Usage is provided under the [MIT License](https://opensource.org/licenses/MIT). See LICENSE for the full details.
