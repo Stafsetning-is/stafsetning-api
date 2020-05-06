@@ -1,9 +1,9 @@
 import {
-	ExerciseCollectionInterface,
-	ExerciseRepr,
-	FinishedExerciseRepr,
-	AdminExerciseRepr,
-	ExerciseInterface,
+    ExerciseCollectionInterface,
+    ExerciseRepr,
+    FinishedExerciseRepr,
+    AdminExerciseRepr,
+    ExerciseInterface
 } from "./interface";
 import { Types } from "mongoose";
 import { Practices } from "../";
@@ -16,16 +16,16 @@ import { Exercises } from ".";
  * @param level the difficulty level
  */
 export const getExercisesByDifficulty = async function (
-	this: ExerciseCollectionInterface,
-	level: number
+    this: ExerciseCollectionInterface,
+    level: number
 ): Promise<ExerciseRepr[]> {
-	const found = await this.find({
-		"difficultRange.min": { $lte: level },
-		"difficultRange.max": { $gte: level },
-		published: true,
-		removed: false,
-	});
-	return found.map((exercise) => exercise.getRepresentation());
+    const found = await this.find({
+        "difficultRange.min": { $lte: level },
+        "difficultRange.max": { $gte: level },
+        published: true,
+        removed: false
+    });
+    return found.map((exercise) => exercise.getRepresentation());
 };
 
 /**
@@ -33,12 +33,12 @@ export const getExercisesByDifficulty = async function (
  * @param data admin exercise interace
  */
 export const create = async function (
-	this: ExerciseCollectionInterface,
-	data: AdminExerciseRepr
+    this: ExerciseCollectionInterface,
+    data: AdminExerciseRepr
 ): Promise<ExerciseInterface> {
-	const exercise = new this(data);
-	exercise.text = data.parts.join(PART_SPLITTER);
-	return await exercise.save();
+    const exercise = new this(data);
+    exercise.text = data.parts.join(PART_SPLITTER);
+    return await exercise.save();
 };
 
 /**
@@ -47,23 +47,23 @@ export const create = async function (
  */
 
 export const updateFile = async function (
-	this: ExerciseCollectionInterface,
-	data: AdminExerciseRepr
+    this: ExerciseCollectionInterface,
+    data: AdminExerciseRepr
 ): Promise<ExerciseInterface> {
-	return await Exercises.findByIdAndUpdate(
-		data._id,
-		{
-			$set: {
-				fileName: data.fileName,
-				text: data.parts.join(PART_SPLITTER),
-				published: false,
-				difficultRange: data.difficultRange,
-			},
-		},
-		{
-			new: true,
-		}
-	);
+    return await Exercises.findByIdAndUpdate(
+        data._id,
+        {
+            $set: {
+                fileName: data.fileName,
+                text: data.parts.join(PART_SPLITTER),
+                published: false,
+                difficultRange: data.difficultRange
+            }
+        },
+        {
+            new: true
+        }
+    );
 };
 
 /**
@@ -73,33 +73,33 @@ export const updateFile = async function (
  * @param removePracticeRefereence should practice's _id be removed from object;
  */
 export const getCompletedExercises = async function (
-	uid: any,
-	removePracticeReference?: boolean
+    uid: any,
+    removePracticeReference?: boolean
 ): Promise<FinishedExerciseRepr[]> {
-	// dict to insert practices by _id to sort by uniquieness of exercise
-	const exerciseDict: { [key: string]: FinishedExerciseRepr } = {};
+    // dict to insert practices by _id to sort by uniquieness of exercise
+    const exerciseDict: { [key: string]: FinishedExerciseRepr } = {};
 
-	// finds all practices for user
-	const practices = await Practices.find({
-		user: uid,
-	}).populate("exercise");
+    // finds all practices for user
+    const practices = await Practices.find({
+        user: uid
+    }).populate("exercise");
 
-	// maps practices to exercise representation with score
-	const exercises = practices.map((practice) => {
-		const exercise = practice.toExercise();
-		if (removePracticeReference) exercise.practice = undefined;
-		return exercise;
-	});
+    // maps practices to exercise representation with score
+    const exercises = practices.map((practice: { toExercise: () => any }) => {
+        const exercise = practice.toExercise();
+        if (removePracticeReference) exercise.practice = undefined;
+        return exercise;
+    });
 
-	// filter by unique exercise Id - keeps the highest score only
-	exercises.forEach((doc) => {
-		const key = doc._id.toString();
-		if (!exerciseDict[key]) exerciseDict[key] = doc;
-		if (doc.score > exerciseDict[key].score) exerciseDict[key] = doc;
-	});
+    // filter by unique exercise Id - keeps the highest score only
+    exercises.forEach((doc: FinishedExerciseRepr) => {
+        const key = doc._id.toString();
+        if (!exerciseDict[key]) exerciseDict[key] = doc;
+        if (doc.score > exerciseDict[key].score) exerciseDict[key] = doc;
+    });
 
-	// maps dict to array
-	return Object.keys(exerciseDict).map((key) => exerciseDict[key]);
+    // maps dict to array
+    return Object.keys(exerciseDict).map((key) => exerciseDict[key]);
 };
 
 /**
@@ -107,16 +107,16 @@ export const getCompletedExercises = async function (
  * @param id
  */
 export const findByIdAndIncrementCounter = async function (
-	this: ExerciseCollectionInterface,
-	id: string
+    this: ExerciseCollectionInterface,
+    id: string
 ) {
-	return await this.findByIdAndUpdate(
-		id,
-		{
-			$inc: { counter: 1 },
-		},
-		{
-			new: true,
-		}
-	);
+    return await this.findByIdAndUpdate(
+        id,
+        {
+            $inc: { counter: 1 }
+        },
+        {
+            new: true
+        }
+    );
 };

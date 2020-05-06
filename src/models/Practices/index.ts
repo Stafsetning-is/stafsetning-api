@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { PracticeInterface, PracticeCollection } from "./interface";
+import { PracticeInterface, PracticeCollectionInterface } from "./interface";
 import { Exercises, Trophies } from "../";
 import * as methods from "./methods";
 import * as statics from "./statics";
@@ -55,7 +55,7 @@ practiceSchema.post<PracticeInterface>("save", async function (doc) {
     console.log(trophies);
 });
 
-export const Practices = model<PracticeInterface, PracticeCollection>(
+export const Practices = model<PracticeInterface, PracticeCollectionInterface>(
     "practices",
     practiceSchema,
     "practices"
