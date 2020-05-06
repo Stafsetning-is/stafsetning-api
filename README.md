@@ -69,7 +69,7 @@ You should see something similar to this:
 Alternatively you can visit the API with the link at the top of the repository page. You can use our Postman collection to try all the specified routes.
 
 ## Documentation
-You can view the [Postman documentation](https://documenter.getpostman.com/view/6487412/SzmcbeUg?version=latest) to try out the supported routes.
+You can view the [Postman documentation](https://documenter.getpostman.com/view/6487412/SzmcbeUg) to try out the supported routes.
 
 ## License
 Usage is provided under the [MIT License](https://opensource.org/licenses/MIT). See LICENSE for the full details.
