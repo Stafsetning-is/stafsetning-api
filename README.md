@@ -1,6 +1,6 @@
-![Logo](./logo.png)
+![Logo](./docs/img/logo.png)
 
-# Stafsetning.is api
+# Stafsetning.is API
 [![Build Status](https://travis-ci.org/Stafsetning-is/stafsetning-api.svg?branch=master)](https://travis-ci.org/Stafsetning-is/stafsetning-api)
 [![codecov](https://codecov.io/gh/Stafsetning-is/stafsetning-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Stafsetning-is/stafsetning-api)
 [![dependencies Status](https://david-dm.org/Stafsetning-is/stafsetning-api/status.svg)](https://david-dm.org/Stafsetning-is/stafsetning-api)
@@ -8,6 +8,10 @@
 API for stafsetning.is
 
 Contains all the routes, methods and more for the site's [frontend](https://github.com/Stafsetning-is/stafsetning-frontend/).
+
+* [Setup](#setup)
+* [Documentation](#documentation)
+* [License](#license)
 
 ## Setup
 
@@ -58,22 +62,14 @@ You should see something similar to this:
 {"level":"info","message":"Connected to MongoDB","timestamp":"2020-05-05T23:37:50.560Z"}
 ```
 
-<b>5.</b> Open a web client (we recommend [Postman](https://www.postman.com/downloads/)) or a browser of your choice and type in the URL: localhost:5000 or 127.0.0.0:5000 if you're a savvy developer. You should be greeted with a pleasant welcome message. 
+**5.** Open a web client (we recommend [Postman](https://www.postman.com/downloads/)) or a browser of your choice and type in the URL: localhost:5000 (or 127.0.0.0:5000 if you're a savvy developer). You should be greeted with a pleasant welcome message. 
 
 `Hello from the API!`
 
 Alternatively you can visit the API with the link at the top of the repository page. You can use our Postman collection to try all the specified routes.
 
-## Contributing
+## Documentation
+You can view the [Postman documentation](https://documenter.getpostman.com/view/6487412/SzmcbeUg) to try out the supported routes.
 
-TODO
-
-#### Bug Reports & Feature Requests
-
-TODO
-
-Please use the issue tracker (add link here) to report any bugs or file feature requests.
-
-#### Developing
-
-TODO
+## License
+Usage is provided under the [MIT License](https://opensource.org/licenses/MIT). See LICENSE for the full details.
