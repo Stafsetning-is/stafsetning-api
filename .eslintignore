@@ -9,4 +9,4 @@ coverage/*
 # custom definition files
 /src/types/
 # Avatar builder (3rd party source)
-/assets
+/src/services/AvatarBuilder/ImageGenerator/*
