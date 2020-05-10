@@ -66,12 +66,13 @@ beforeAll(async (done) => {
 	app.set("userId", signupData.user._id);
 	app.set("adminTestToken", adminSignupData.token);
 	app.set("exerciseId", exercise._id);
-	done();
+	return done();
 });
 
-afterAll(async () => {
+afterAll(async (done) => {
 	await mongoose.disconnect();
 	await mongoServer.stop();
+	done();
 });
 
 jest.setTimeout(30000);
