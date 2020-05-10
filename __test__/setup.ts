@@ -5,7 +5,7 @@ import app from "../src/app";
 
 let mongoServer: MongoMemoryServer;
 
-beforeAll(async (done) => {
+beforeAll(async () => {
     mongoServer = new MongoMemoryServer();
     const mongoUri = await mongoServer.getUri();
     await mongoose.connect(
@@ -14,7 +14,7 @@ beforeAll(async (done) => {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
-            useFindAndModify: false,
+            useFindAndModify: false
         },
         (err) => {
             if (err) console.error(err);
@@ -27,7 +27,7 @@ beforeAll(async (done) => {
         mobile: "5812345",
         type: "user",
         username: "paulyp",
-        difficulty: 5,
+        difficulty: 5
     });
     const adminSignupData = await Users.register({
         name: "Admin Pope",
@@ -35,22 +35,22 @@ beforeAll(async (done) => {
         mobile: "3959373",
         type: "user",
         username: "dungeon master admin",
-        difficulty: 5,
+        difficulty: 5
     });
     const admin = await Users.findById(adminSignupData.user._id);
     await admin.makeAdmin();
     const exercise = await Exercises.create({
         difficultRange: {
             min: 0,
-            max: 0,
+            max: 0
         },
         parts: [
             "Kalli for ut i bud",
             "til ad kaupa mjolk,",
-            "handa mommu sinni.",
+            "handa mommu sinni."
         ],
         owner: "507f1f77bcf86cd799439011",
-        fileName: "test",
+        fileName: "test"
     });
     await Practices.create({
         duration: 25,
@@ -58,18 +58,17 @@ beforeAll(async (done) => {
         exercise: exercise._id,
         errorItems: [
             { charAt: 2, typed: "c" },
-            { charAt: 8, typed: "c" },
+            { charAt: 8, typed: "c" }
         ],
-        user: signupData.user._id,
+        user: signupData.user._id
     });
     app.set("testToken", signupData.token);
     app.set("userId", signupData.user._id);
     app.set("adminTestToken", adminSignupData.token);
     app.set("exerciseId", exercise._id);
-    done();
 });
 
-afterAll(async () => {
-    await mongoose.disconnect();
-    await mongoServer.stop();
-});
+// afterAll(async () => {
+//     await mongoose.disconnect();
+//     await mongoServer.stop();
+// });
