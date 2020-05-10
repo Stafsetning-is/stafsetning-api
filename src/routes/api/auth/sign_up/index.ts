@@ -14,7 +14,6 @@ export default async (req: AuthRequest, res: Response) => {
 		}
 		res.status(201).send(signupData);
 	} catch (error) {
-		console.log("error", error);
 		res.status(400).send({ message: "Sign up failed" });
 	}
 };

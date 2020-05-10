@@ -37,7 +37,9 @@ class Socket {
 	private handleNewConnection = (socket: SocketType) => {
 		this.io.emit(CURRENT_USERS, this.getConnectedUsers());
 		EVENTS.forEach((event) => {
-			socket.on(event, (data) => this.handleIncoming(event, data, socket));
+			socket.on(event, (data) =>
+				this.handleIncoming(event, data, socket)
+			);
 		});
 	};
 
@@ -49,7 +51,8 @@ class Socket {
 		const timeNow = new Date().getTime();
 		for (const key in map) {
 			const sessionInfo = map[key];
-			if (timeNow - sessionInfo.lastActive > SESSION_LENGTH) delete map[key];
+			if (timeNow - sessionInfo.lastActive > SESSION_LENGTH)
+				delete map[key];
 			else sessionInfo.lastActive = timeNow;
 		}
 	}
@@ -92,7 +95,9 @@ class Socket {
 
 	private async handleUserLogin(userId: string) {
 		try {
-			this.usersConnected[userId] = await this.getUserSessionInfoById(userId);
+			this.usersConnected[userId] = await this.getUserSessionInfoById(
+				userId
+			);
 			const connectedUsers = this.getConnectedUsers();
 			this.io.emit(CURRENT_USERS, connectedUsers);
 		} catch (error) {
@@ -139,7 +144,7 @@ class Socket {
 			}
 			this.handleUserActivity(data._id);
 		} catch (error) {
-			console.log(error);
+			// do nothing on error
 		}
 	}
 }
