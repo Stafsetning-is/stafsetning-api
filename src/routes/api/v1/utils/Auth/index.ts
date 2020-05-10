@@ -18,7 +18,6 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
 		req.body.user = await user.getPublic();
 		next();
 	} catch (e) {
-		console.log("e", e);
 		res.status(401).send({
 			message: e.message,
 		});

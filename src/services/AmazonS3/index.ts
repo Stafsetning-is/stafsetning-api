@@ -3,7 +3,7 @@ import {
 	S3_SECRET_KEY,
 	AVATAR_BUCKET_NAME,
 } from "../../util/secrets";
-import { S3_BUCKET_PERMISSIONS } from "./utils";
+import { S3_BUCKET_PERMISSIONS, CACHE_CONTROL } from "./utils";
 import AWS from "aws-sdk";
 
 const s3 = new AWS.S3({
@@ -28,7 +28,7 @@ export const uploadFile = async (
 				Key: fileName,
 				Body: buffer,
 				ACL: S3_BUCKET_PERMISSIONS,
-				CacheControl: "max-age=604800",
+				CacheControl: CACHE_CONTROL,
 				Expires: getOneYearFromNow(),
 			},
 			(error, data) => {
