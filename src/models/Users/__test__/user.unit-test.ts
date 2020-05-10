@@ -9,13 +9,7 @@ beforeAll(async (done) => {
         password: "some password",
         username: "testington7",
         mobile: "5830234",
-        difficulty: 4,
-        avatars: {
-            male:
-                "https://stafs-avatars.s3.amazonaws.com/m-5eaffa4a7033490042df090f",
-            female:
-                "https://stafs-avatars.s3.amazonaws.com/f-5eaffa4a7033490042df090f"
-        }
+        difficulty: 4
     });
     done();
 });
