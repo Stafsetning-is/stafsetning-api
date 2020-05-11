@@ -20,6 +20,7 @@ describe("Exercise Routes V1", () => {
 		expect(Array.isArray(body)).toBe(true);
 		done();
 	});
+
 	it("GET /api/v1/exercises/:id requires auth", async (done) => {
 		const exerciseId = app.get("exerciseId");
 		const { status } = await request(app).get(
