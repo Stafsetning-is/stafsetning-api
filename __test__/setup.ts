@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
-import { Users, Practices, Exercises } from "../src/models";
+import {
+	Users,
+	Practices,
+	Exercises,
+	Trophies,
+	UserTrophies,
+} from "../src/models";
 import app from "../src/app";
 
 let mongoServer: MongoMemoryServer;
@@ -52,7 +58,7 @@ beforeAll(async (done) => {
 		owner: "507f1f77bcf86cd799439011",
 		fileName: "test",
 	});
-	await Practices.create({
+	const practice = await Practices.create({
 		duration: 25,
 		exerciseString: "Kalli for ut i bud",
 		exercise: exercise._id,
@@ -62,10 +68,22 @@ beforeAll(async (done) => {
 		],
 		user: signupData.user._id,
 	});
+	const trophy = await Trophies.create({
+		rules: [],
+		title: "Byrjandi",
+		description:
+			"Það eru allir byrjendur einhverntíman. Þú mátt vera stolt/ur af því að vera kominn af stað. Haltu þessu áfram!",
+		icon: "faBaby",
+	});
+	await UserTrophies.create({
+		trophy: trophy._id,
+		user: signupData.user._id,
+	});
 	app.set("testToken", signupData.token);
 	app.set("userId", signupData.user._id);
 	app.set("adminTestToken", adminSignupData.token);
 	app.set("exerciseId", exercise._id);
+	app.set("practiceId", practice._id);
 	return done();
 });
 
