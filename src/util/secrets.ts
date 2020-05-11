@@ -32,6 +32,10 @@ export const USER_PW_HASH_KEY = test
 	? "testingkey"
 	: process.env["USER_PW_HASH_KEY"];
 
+export const REDIS_URL = prod
+	? process.env["REDIS_URL"]
+	: process.env["REDIS_URL_LOCAL"];
+
 if (!SESSION_SECRET) {
 	logger.error("No client secret. Set SESSION_SECRET environment variable.");
 	exitProcess();
@@ -77,6 +81,13 @@ if (!S3_SECRET_KEY) {
 if (!AVATAR_BUCKET_NAME) {
 	logger.error(
 		"No amazon s3 bucket name for avatrs in env. Set AVATAR_BUCKET_NAME environment variable."
+	);
+	exitProcess();
+}
+
+if (!REDIS_URL) {
+	logger.error(
+		"No amazon redis url env. Set REDIS_URL environment variable. Usually it is local host port 6379 during development"
 	);
 	exitProcess();
 }

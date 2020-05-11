@@ -6,9 +6,11 @@ import path from "path";
 import session from "express-session";
 import mongoose from "mongoose";
 import mongo from "connect-mongo";
-import { MONGODB_URI, SESSION_SECRET } from "../util/secrets";
+import { MONGODB_URI, SESSION_SECRET, REDIS_URL } from "../util/secrets";
 import cors from "cors";
 import logger from "../util/logger";
+import Redis from "ioredis";
+import { Cache } from "../services";
 
 /**
  * Utils class that sets up
@@ -27,6 +29,11 @@ export default class AppUtils {
 		AppUtils.setPort(app);
 		AppUtils.addTestEndpoints(app);
 		AppUtils.connectMongo();
+		AppUtils.setupRedis();
+	}
+
+	private static setupRedis() {
+		Cache.setRedis(new Redis(REDIS_URL));
 	}
 
 	/**
@@ -53,7 +60,9 @@ export default class AppUtils {
 
 		// set static folder
 		app.use(
-			express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
+			express.static(path.join(__dirname, "public"), {
+				maxAge: 31557600000,
+			})
 		);
 
 		// do not execute the below during test
