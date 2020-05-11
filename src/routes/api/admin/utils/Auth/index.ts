@@ -11,6 +11,8 @@ import { Users } from "../../../../../models";
  * and attaches user to req.body
  *
  * this middleware explicitly checks if req.user is admin
+ *
+ * any type is used as type declerations from jwt module are incorrect
  */
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
 	try {

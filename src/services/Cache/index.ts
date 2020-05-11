@@ -2,16 +2,6 @@ import Redis, { Redis as IRedis } from "ioredis";
 
 let booted = false;
 
-/**
- * Caching service class
- * This class can (and only should be) initialized by node on startup
- *
- * The class encapsulates RedisClient
- *
- * .put works sync. Has optional parameter time (in seconds) for expiry
- *
- * .get returns a promise
- */
 class CachingService {
 	private initialized: boolean;
 	private Redis: IRedis;
@@ -20,6 +10,9 @@ class CachingService {
 		this.initialized = false;
 	}
 
+	/**
+	 * Starts singleton class
+	 */
 	public static Start() {
 		if (booted) throw Error("Can't start two redis instances");
 		// static methood to return instance
@@ -27,6 +20,11 @@ class CachingService {
 		return new CachingService();
 	}
 
+	/**
+	 * takes in a redis as argmuent and sets it as the
+	 * store to use
+	 * @param Redis Redis object
+	 */
 	public setRedis(Redis: IRedis) {
 		// sets the redis client
 		if (this.initialized) return;
@@ -68,6 +66,11 @@ class CachingService {
 		});
 	}
 
+	/**
+	 * changes a previous key's TTL in redis
+	 * @param key key in redis store
+	 * @param time new TTL
+	 */
 	public updateTTL(key: string, time: number): void {
 		if (process.env.NODE_ENV === "test") return undefined;
 		this.Redis.expireat(key, time);

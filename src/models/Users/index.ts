@@ -11,6 +11,7 @@ import {
 } from "./utils";
 import { UserScoreCards } from "../";
 import { getImageURLbyUser } from "../../services";
+
 const userSchema = new Schema({
 	name: {
 		type: String,
@@ -104,6 +105,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	next();
 });
 
+// creates score card for user
 userSchema.post<UserInterface>("init", async function (doc) {
 	try {
 		await UserScoreCards.create({ user: doc._id });

@@ -2,6 +2,15 @@ import Avatar from "./ImageGenerator/src";
 import { UserInterface } from "../../models";
 import { uploadFile } from "../";
 
+/**
+ * IMPORTANT NOTICE
+ *
+ * the ImageGenerator package is an open source package
+ * with Apache licence. The coding rules present in the
+ * image generator code base are different from ours. So
+ * linters and code reviews must ignore this package.
+ */
+
 type GenderBasedMethods = "male8bit" | "female8bit";
 
 const makeIcon = async (

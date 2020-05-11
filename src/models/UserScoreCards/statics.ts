@@ -29,13 +29,14 @@ export const logActivity = async function (
 };
 
 /**
- * generates a score card for a single users
+ * generates a score card for a single user
  * @param userId users id
  */
 export const generateScoreCard = async function (
 	this: UserScoreCardCollection,
 	userId: any
 ): Promise<ScoreCard> {
+	// gets practices and scoreCard in single promise
 	const [practices, scoreCard] = await Promise.all([
 		Practices.find({ user: userId }),
 		this.findOne({ user: userId }).lean(),
@@ -43,6 +44,7 @@ export const generateScoreCard = async function (
 
 	const mostRecent = practices[practices.length - 1];
 
+	// returns the scoreCard
 	return {
 		...scoreCard,
 		lastScore: mostRecent.getScore(),

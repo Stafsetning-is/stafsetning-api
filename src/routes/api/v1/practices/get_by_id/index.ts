@@ -10,6 +10,6 @@ export default async ({ params: { id } }: Request, res: Response) => {
 			exercise: exercise.getRepresentation(),
 		});
 	} catch (error) {
-		res.status(400).send(error);
+		res.status(404).send(error);
 	}
 };

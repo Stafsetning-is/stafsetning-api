@@ -7,6 +7,7 @@ export const N_OR_NN = "nOgNn";
 
 /**
  * List of rules that the system uses
+ * to detech grammar in text
  */
 export const rules: Rule[] = [
 	{

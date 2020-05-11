@@ -1,5 +1,6 @@
 import { FontSize, BackgroundColor } from "./interface";
 
+// list of allowed background colors
 export const ALLOWED_BG_COLORS: BackgroundColor[] = [
 	"#F8F8F8",
 	"#96ADFC",
@@ -14,6 +15,7 @@ export const ALLOWED_BG_COLORS: BackgroundColor[] = [
 	"#F8FD89",
 ];
 
+// list of allowed fonts
 export const ALLOWED_FONT_SIZES: FontSize[] = [
 	26,
 	28,
@@ -30,6 +32,7 @@ export const ALLOWED_FONT_SIZES: FontSize[] = [
 	50,
 ];
 
+// default primitive constants
 export const DEF_BG_COLOR: BackgroundColor = "#F8F8F8";
 export const DEF_FONT_SIZE: FontSize = 32;
 export const MAX_PREVIEW_TTL = 15;

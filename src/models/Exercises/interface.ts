@@ -9,7 +9,6 @@ interface Base {
 	owner: Types.ObjectId;
 }
 
-// Muna breytti í any
 export interface ExerciseInterface extends Base, Document {
 	text: string;
 	published: boolean;
