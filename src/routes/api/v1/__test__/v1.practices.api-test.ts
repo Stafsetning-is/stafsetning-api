@@ -1,5 +1,6 @@
 import request from "supertest";
 import app from "../../../../app";
+import { isObject } from "../../../../../__test__/utils";
 
 describe("Practice Routes V1", () => {
 	it("GET /api/v1/practices requires auth", async (done) => {
@@ -102,9 +103,31 @@ describe("Practice Routes V1", () => {
 		done();
 	});
 
-	/**
-	 * Vantar
-	 *
-	 * [ ] fail og success a get by id
-	 */
+	it("GET /api/v1/practices/:id requires auth", async (done) => {
+		const id = app.get("practiceId");
+		const { status } = await request(app).get(`/api/v1/practices/${id}`);
+		expect(status).toEqual(401);
+		done();
+	});
+
+	it("GET /api/v1/practices/:id works with auth", async (done) => {
+		const token = app.get("testToken");
+		const id = app.get("practiceId");
+		const { body, status } = await request(app)
+			.get(`/api/v1/practices/${id}`)
+			.set({ Authorization: `Bearer ${token}` });
+		expect(status).toEqual(200);
+		expect(isObject(body)).toBe(true);
+		expect(body).toHaveProperty("_id");
+		done();
+	});
+
+	it("GET /api/v1/practices/:id sends 404 with incorrect Id", async (done) => {
+		const token = app.get("testToken");
+		const { status } = await request(app)
+			.get("/api/v1/practices/" + "5eb9721de76922235deb5b5a")
+			.set({ Authorization: `Bearer ${token}` });
+		expect(status).toEqual(404);
+		done();
+	});
 });
