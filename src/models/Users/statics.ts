@@ -23,7 +23,7 @@ export const findByCredentials = async function (
 	if (!isMatch) throw new Error("Unable to login");
 	const token = await user.generateAuthToken();
 	return {
-		user: user.getPublic(),
+		user: await user.getPublic(),
 		token: token,
 	};
 };
@@ -36,7 +36,7 @@ export const register = async function (data: {}): Promise<AuthData> {
 	const user: UserInterface = await this.create(data);
 	const token = await user.generateAuthToken();
 	return {
-		user: user.getPublic(),
+		user: await user.getPublic(),
 		token,
 	};
 };

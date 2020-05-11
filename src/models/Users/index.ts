@@ -2,8 +2,15 @@ import { model, Schema } from "mongoose";
 import { UserInterface, UserCollectionInterface } from "./interface";
 import * as methods from "./methods";
 import * as statics from "./statics";
-import { USER_TYPES, UserType, USER_TYPE_USER } from "./utils";
+import {
+	USER_TYPES,
+	UserType,
+	USER_TYPE_USER,
+	GENDER_TYPES,
+	GenderType,
+} from "./utils";
 import { UserScoreCards } from "../";
+import { getImageURLbyUser } from "../../services";
 
 const userSchema = new Schema({
 	name: {
@@ -30,7 +37,7 @@ const userSchema = new Schema({
 		unique: true,
 		validate: {
 			validator: (value: string) => value.length === 7,
-			msg: "Invalid user type",
+			msg: "Invalid mobile number",
 		},
 	},
 	tokens: [
@@ -57,6 +64,22 @@ const userSchema = new Schema({
 		type: Number,
 		default: 10,
 	},
+	avatars: {
+		female: {
+			type: String,
+		},
+		male: {
+			type: String,
+		},
+	},
+	gender: {
+		type: String,
+		validate: {
+			validator: (value: GenderType) =>
+				!value || GENDER_TYPES.includes(value),
+			msg: "Invalid gender type",
+		},
+	},
 });
 
 // Hashes password when it's modified
@@ -75,18 +98,28 @@ userSchema.pre<UserInterface>("save", async function (next) {
 
 // Validates min and max difficulty
 userSchema.pre<UserInterface>("save", async function (next) {
-	if (this.difficulty < 1) throw new Error("Difficulty must be higher than 0");
+	if (this.difficulty < 1)
+		throw new Error("Difficulty must be higher than 0");
 	else if (this.difficulty > 11)
 		throw new Error("Difficulty must be lower than 12");
 	next();
 });
 
+// creates score card for user
 userSchema.post<UserInterface>("init", async function (doc) {
 	try {
 		await UserScoreCards.create({ user: doc._id });
 	} catch (error) {
-		// error creating scoreCard
+		// error
 	}
+});
+
+// gets avatars for both genders
+userSchema.pre<UserInterface>("save", async function (next) {
+	if (this.isNew && process.env.NODE_ENV !== "test") {
+		this.avatars = await getImageURLbyUser(this);
+	}
+	next();
 });
 
 userSchema.statics = statics;

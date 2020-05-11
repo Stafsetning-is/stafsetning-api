@@ -6,6 +6,7 @@ export const DAY = 1;
 export const WEEK = 7;
 export const MONTH = 30;
 export const YEAR = 365;
+export const MAX_GRADE = 10;
 
 /**
  * Helper function to generate a blank
@@ -18,6 +19,13 @@ const getBlankAggregation = (): ScoreAggregation => ({
 	grammarRuleCount: {},
 });
 
+/**
+ * returns an Score aggregation object for
+ * date interval
+ *
+ * @param practices practice array to aggregate
+ * @param daysInAggregation number of days to inclulde in aggregation
+ */
 export const aggregatePractices = (
 	practices: PracticeInterface[],
 	daysInAggregation?: number
@@ -30,13 +38,16 @@ export const aggregatePractices = (
 		);
 	}
 	const aggregation = getBlankAggregation();
-	const gradeSum = practices.reduce((prev, curr) => prev + curr.getScore(), 0);
+	const gradeSum = practices.reduce(
+		(prev, curr) => prev + curr.getScore(),
+		0
+	);
 	const average = practices.length === 0 ? 0 : gradeSum / practices.length;
 	aggregation.count = practices.length;
 	aggregation.average = average;
 	practices.forEach((practice) => {
-		for (let i = 1; i <= 10; i++) {
-			const scoreBaseTen = practice.getScore() * 10;
+		for (let i = 1; i <= MAX_GRADE; i++) {
+			const scoreBaseTen = practice.getScore() * MAX_GRADE;
 			if (i <= scoreBaseTen) aggregation.scoresAbove[i - 1]++;
 			else break;
 		}

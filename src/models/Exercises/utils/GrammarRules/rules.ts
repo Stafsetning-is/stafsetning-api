@@ -1,11 +1,13 @@
 import { Rule } from "./interface";
 
-export const NG_OG_NK = "ng_nk";
-export const KVK_UNN = "kvk_unn";
-export const STOR_NAFN = "stor_nafn";
+export const NG_OG_NK = "ngnk";
+export const KVK_UNN = "kvkunn";
+export const STOR_NAFN = "storStafurNafn";
+export const N_OR_NN = "nOgNn";
 
 /**
  * List of rules that the system uses
+ * to detech grammar in text
  */
 export const rules: Rule[] = [
 	{
@@ -15,17 +17,22 @@ export const rules: Rule[] = [
 	},
 	{
 		regex: /([A-Z]|[Þ])[^. ]*[u](nn)(?=[\s.,])/g,
-		name: "Kvennmannsnöfn sem enda á -unn",
+		name: "kvennmannsnöfn sem enda á -unn",
 		code: KVK_UNN,
 	},
 	{
 		regex: /([A-Z]|[Þ])[^. ]*[u](nn)(?=[\s.,])/g,
-		name: "Kvennmannsnöfn sem enda á -unn",
+		name: "kvennmannsnöfn sem enda á -unn",
 		code: KVK_UNN,
 	},
 	{
 		regex: /(?<=([a-z] ))[A-Z][^\s.,]*/g,
-		name: "Stór stafur í nafni",
+		name: "stór stafur",
 		code: STOR_NAFN,
+	},
+	{
+		regex: /(nn|(n)(\.|,| ))/g,
+		name: "n og nn",
+		code: N_OR_NN,
 	},
 ];

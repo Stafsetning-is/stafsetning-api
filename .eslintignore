@@ -8,3 +8,5 @@ coverage/*
 /src/public/
 # custom definition files
 /src/types/
+# Avatar builder (3rd party source)
+/src/services/AvatarBuilder/ImageGenerator/*

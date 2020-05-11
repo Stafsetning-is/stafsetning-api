@@ -11,6 +11,8 @@ import { Users } from "../../../../../models";
  * and attaches user to req.body
  *
  * this middleware explicitly checks if req.user is admin
+ *
+ * any type is used as type declerations from jwt module are incorrect
  */
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -23,7 +25,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
 		if (!user) throw new Error("User not found");
 		if (user.type !== "admin")
 			throw new Error("Not authorized for admin routes");
-		req.body.user = user.getPublic();
+		req.body.user = await user.getPublic();
 		next();
 	} catch (e) {
 		res.status(401).send({

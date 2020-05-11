@@ -49,8 +49,7 @@ practiceSchema.pre<PracticeInterface>("save", async function (done) {
 });
 
 practiceSchema.post<PracticeInterface>("save", async function (doc) {
-	const trophies = await Trophies.allocateNewTrophiesToUser(doc.user);
-	console.log(trophies);
+	await Trophies.allocateNewTrophiesToUser(doc.user);
 });
 
 export const Practices = model<PracticeInterface>(

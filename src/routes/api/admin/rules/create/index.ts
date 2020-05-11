@@ -10,7 +10,7 @@ export default async (req: Request, res: Response) => {
 			owner: req.body.user._id,
 			...req.body,
 		});
-		res.send(doc);
+		res.status(201).send(doc);
 	} catch (error) {
 		res.status(400).send(error);
 	}

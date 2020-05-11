@@ -81,4 +81,163 @@ describe("Auth routes", () => {
 		expect(status).toEqual(400);
 		done();
 	});
+
+	it("POST /api/v1/users/password responds with 401 with bad auth", async (done) => {
+		const { status } = await request(app).post("/api/v1/users/password");
+		expect(status).toEqual(401);
+		done();
+	});
+
+	it("POST /api/v1/users/password responds with 400 with incorrect old password", async (done) => {
+		const token = app.get("testToken");
+		const { status } = await request(app)
+			.post("/api/v1/users/password")
+			.set({ Authorization: `Bearer ${token}` })
+			.send({
+				password: "not_correcT_pw",
+				newPassword: "1b2b3b4b5",
+			});
+		expect(status).toEqual(400);
+		done();
+	});
+
+	it("POST /api/v1/users/password responds with 200 with correct data", async (done) => {
+		const token = app.get("testToken");
+		const { status, body } = await request(app)
+			.post("/api/v1/users/password")
+			.set({ Authorization: `Bearer ${token}` })
+			.send({
+				password: "Password12.3",
+				newPassword: "1b2b3b4b5",
+			});
+		expect(status).toEqual(200);
+		expect(body).toEqual({ message: "password successfully changed" });
+		done();
+	});
+
+	it("POST /api/v1/users/password responds with 400 with missing data in body", async (done) => {
+		const token = app.get("testToken");
+		const { status, body } = await request(app)
+			.post("/api/v1/users/password")
+			.set({ Authorization: `Bearer ${token}` })
+			.send({});
+		expect(status).toEqual(400);
+		done();
+	});
+
+	it("POST /api/v1/users/difficulty responds with 401 with bad auth", async (done) => {
+		const { status } = await request(app).post("/api/v1/users/difficulty");
+		expect(status).toEqual(401);
+		done();
+	});
+
+	it("POST /api/v1/users/difficulty responds with 400 with missing data in body", async (done) => {
+		const token = app.get("testToken");
+		const { status } = await request(app)
+			.post("/api/v1/users/difficulty")
+			.set({ Authorization: `Bearer ${token}` });
+		expect(status).toEqual(400);
+		done();
+	});
+
+	it("POST /api/v1/users/difficulty responds with 200 with correct data in body", async (done) => {
+		const token = app.get("testToken");
+		const { status } = await request(app)
+			.post("/api/v1/users/difficulty")
+			.send({
+				difficulty: 4,
+			})
+			.set({ Authorization: `Bearer ${token}` });
+		expect(status).toEqual(200);
+		done();
+	});
+
+	it("POST /api/v1/users/gender responds with 401 with bad auth", async (done) => {
+		const { status } = await request(app).post("/api/v1/users/gender");
+		expect(status).toEqual(401);
+		done();
+	});
+
+	it("POST /api/v1/users/gender responds with 400 with missing data in body", async (done) => {
+		const token = app.get("testToken");
+		const { status } = await request(app)
+			.post("/api/v1/users/gender")
+			.set({ Authorization: `Bearer ${token}` });
+		expect(status).toEqual(400);
+		done();
+	});
+
+	it("POST /api/v1/users/gender responds with 200 with correct data in body", async (done) => {
+		const token = app.get("testToken");
+		const { status } = await request(app)
+			.post("/api/v1/users/gender")
+			.send({
+				gender: "female",
+			})
+			.set({ Authorization: `Bearer ${token}` });
+		expect(status).toEqual(200);
+		done();
+	});
+
+	it("POST /api/v1/users/preferences responds with 401 with bad auth", async (done) => {
+		const { status } = await request(app).post("/api/v1/users/preferences");
+		expect(status).toEqual(401);
+		done();
+	});
+
+	it("POST /api/v1/users/preferences responds with 200 with no data in body", async (done) => {
+		const token = app.get("testToken");
+		const { status } = await request(app)
+			.post("/api/v1/users/preferences")
+			.set({ Authorization: `Bearer ${token}` });
+		expect(status).toEqual(200);
+		done();
+	});
+
+	it("POST /api/v1/users/preferences responds with 200 with correct data in body", async (done) => {
+		const token = app.get("testToken");
+		const { status, body } = await request(app)
+			.post("/api/v1/users/preferences")
+			.send({
+				showOnScreenKeyboard: true,
+			})
+			.set({ Authorization: `Bearer ${token}` });
+		expect(status).toEqual(200);
+		expect(body.showOnScreenKeyboard).toEqual(true);
+		done();
+	});
+
+	it("GET /api/v1/users/exercises/saved responds with 401 with bad auth", async (done) => {
+		const { status } = await request(app).get(
+			"/api/v1/users/exercises/saved"
+		);
+		expect(status).toEqual(401);
+		done();
+	});
+
+	it("GET /api/v1/users/exercises/saved responds with 200 and an array body", async (done) => {
+		const token = app.get("testToken");
+		const { status, body } = await request(app)
+			.get("/api/v1/users/exercises/saved")
+			.set({ Authorization: `Bearer ${token}` });
+		expect(status).toEqual(200);
+		expect(Array.isArray(body)).toBe(true);
+		done();
+	});
+
+	it("GET /api/v1/users/trophies responds with 401 with bad auth", async (done) => {
+		const { status } = await request(app).get("/api/v1/users/trophies");
+		expect(status).toEqual(401);
+		done();
+	});
+
+	it("GET /api/v1/users/trophies responds with 200 and an array body", async (done) => {
+		const token = app.get("testToken");
+		const { status, body } = await request(app)
+			.get("/api/v1/users/trophies")
+			.set({ Authorization: `Bearer ${token}` });
+		expect(status).toEqual(200);
+		expect(Array.isArray(body)).toBe(true);
+		done();
+	});
 });

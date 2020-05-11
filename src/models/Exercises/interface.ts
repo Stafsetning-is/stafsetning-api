@@ -5,12 +5,10 @@ interface Base {
 		min: number;
 		max: number;
 	};
-	number: number;
 	completed?: boolean;
 	owner: Types.ObjectId;
 }
 
-// Muna breytti í any
 export interface ExerciseInterface extends Base, Document {
 	text: string;
 	published: boolean;

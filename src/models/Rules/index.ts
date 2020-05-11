@@ -1,5 +1,5 @@
 import { model, Schema, Types } from "mongoose";
-import { COMPARISON } from "./utils";
+import { COMPARISON, Comparison } from "./utils";
 import { RuleInterface, RuleCollectionInterface } from "./interface";
 import * as statics from "./statics";
 
@@ -12,7 +12,7 @@ const ruleSchema = new Schema({
 		type: String,
 		required: true,
 		validate: {
-			validator: (value: any) => COMPARISON.includes(value),
+			validator: (value: Comparison) => COMPARISON.includes(value),
 			msg: "Comparison is invalid",
 		},
 	},

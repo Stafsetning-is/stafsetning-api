@@ -11,4 +11,9 @@ module.exports = {
 	},
 	testEnvironment: "node",
 	setupFilesAfterEnv: ["./__test__/setup.ts"],
+	collectCoverageFrom: [
+		"src/models/**/*.{ts,js}",
+		"src/routes/**/*.{ts,js}",
+		"!**/__test__/**",
+	],
 };

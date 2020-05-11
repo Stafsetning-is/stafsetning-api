@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Exercises } from "../../../../../models";
 
 /**
- * This route saves exercises for an admin
+ * This route publishes an exercise for an admin
  */
 export default async (req: Request, res: Response) => {
 	const { id } = req.params;

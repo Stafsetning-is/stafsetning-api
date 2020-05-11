@@ -2,7 +2,6 @@ import {
 	PublicUser,
 	ExerciseRepr,
 	SavedExercises,
-	FinishedExerciseRepr,
 } from "../../../../../models";
 import { Exercises } from "../../../../../models";
 import { ExerciseReprDict } from "./interface";
@@ -29,12 +28,15 @@ export const getExercisesForUser = async ({
 	]);
 
 	// maps to dict to make sure no duplicate _ids
-	const dict = [...all, ...finished].reduce<ExerciseReprDict>((prev, curr) => {
-		const key = curr._id.toString();
-		prev[key] = curr;
-		prev[key].saved = false;
-		return prev;
-	}, {});
+	const dict = [...all, ...finished].reduce<ExerciseReprDict>(
+		(prev, curr) => {
+			const key = curr._id.toString();
+			prev[key] = curr;
+			prev[key].saved = false;
+			return prev;
+		},
+		{}
+	);
 
 	// marks saved if they're fund in savedexercise collection
 	saved.forEach(({ _id }) => {
@@ -46,6 +48,8 @@ export const getExercisesForUser = async ({
 	return Object.keys(dict)
 		.map((key) => dict[key])
 		.sort((a, b) => {
-			return b._id.getTimestamp().getTime() - a._id.getTimestamp().getTime();
+			return (
+				b._id.getTimestamp().getTime() - a._id.getTimestamp().getTime()
+			);
 		});
 };
