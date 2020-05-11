@@ -5,7 +5,6 @@ import { CACHE_TTL_SEC, getCacheKey } from "./utils";
 
 export default async ({ params: { id } }: Request, res: Response) => {
 	const cacheKey = getCacheKey(id);
-	console.log("cacheKey", cacheKey);
 	Cache.get(cacheKey)
 		.then((data) => {
 			res.send(data);

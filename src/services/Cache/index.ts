@@ -41,6 +41,7 @@ class CachingService {
 	 * @param time optional parameter for expiry of key (seconds)
 	 */
 	public put<T>(key: string, value: T, time?: number) {
+		if (process.env.NODE_ENV === "test") return undefined;
 		const stringified = JSON.stringify(value);
 		if (time) {
 			return this.Redis.setex(key, time, stringified);
@@ -55,6 +56,7 @@ class CachingService {
 	 */
 	public async get<T>(key: string): Promise<T> {
 		return await new Promise((resolve, reject) => {
+			if (process.env.NODE_ENV === "test") return reject();
 			this.Redis.get(key, (err, data) => {
 				try {
 					if (err || !data) reject();
@@ -66,7 +68,8 @@ class CachingService {
 		});
 	}
 
-	public updateTTL(key: string, time: number) {
+	public updateTTL(key: string, time: number): void {
+		if (process.env.NODE_ENV === "test") return undefined;
 		this.Redis.expireat(key, time);
 	}
 }

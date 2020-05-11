@@ -82,7 +82,7 @@ describe("Exercise Routes V1", () => {
 		const token = app.get("testToken");
 
 		const exerciseId = app.get("exerciseId");
-		const { status } = await request(app)
+		const { status, body } = await request(app)
 			.post("/api/v1/exercises/complete/")
 			.send({
 				exercise: exerciseId,
@@ -92,6 +92,10 @@ describe("Exercise Routes V1", () => {
 			})
 			.set({ Authorization: `Bearer ${token}` });
 		expect(status).toEqual(201);
+		expect(body).toHaveProperty("exerciseString", "this is part one");
+		expect(body.exercise.toString()).toBe(exerciseId.toString());
+		expect(isObject(body)).toBe(true);
+
 		done();
 	});
 });
