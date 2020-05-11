@@ -60,6 +60,9 @@ const goodProverbs: string[] = [
 ];
 
 export const getRandomProverb = (numberOfErrors: number) => {
-	if (numberOfErrors < 4) return betterProverbs[Math.floor(betterProverbs.length * Math.random())];
+	if (numberOfErrors < 4)
+		return betterProverbs[
+			Math.floor(betterProverbs.length * Math.random())
+		];
 	else return goodProverbs[Math.floor(goodProverbs.length * Math.random())];
 };

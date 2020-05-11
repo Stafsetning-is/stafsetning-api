@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { UserPreferences } from "../../../../../models";
+
 /**
- * This method creates an saved exericse
+ * edits user's preference
  *
  */
-
 export default async (req: Request, res: Response) => {
 	try {
 		const { _id } = req.body.user;

@@ -1,6 +1,9 @@
 import { Exercises } from "../../../../../models";
 import { Request, Response } from "express";
 
+/**
+ * Get completed exercises by user
+ */
 export default async (req: Request, res: Response) => {
 	try {
 		const docs = await Exercises.getCompletedExercises(req.body.user._id);

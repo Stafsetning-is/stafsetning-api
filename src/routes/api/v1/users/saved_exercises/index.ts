@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { SavedExercises } from "../../../../../models";
 
+/**
+ * Gets all saved exerecises for an usere
+ */
 export default async (req: Request, res: Response) => {
 	try {
 		res.send(

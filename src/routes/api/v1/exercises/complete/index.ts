@@ -1,6 +1,10 @@
 import { Practices } from "../../../../../models";
 import { Request, Response } from "express";
 
+/**
+ * Marks an exercise as completed by user
+ * by creating an practice
+ */
 export default async (req: Request, res: Response) => {
 	try {
 		const doc = await Practices.create({
