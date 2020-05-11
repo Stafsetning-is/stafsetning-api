@@ -7,7 +7,7 @@ import { Trophies } from "../../../../../models";
 export default async (req: Request, res: Response) => {
 	try {
 		const doc = await Trophies.create(req.body);
-		res.send(doc);
+		res.status(201).send(doc);
 	} catch (error) {
 		res.status(400).send(error);
 	}
