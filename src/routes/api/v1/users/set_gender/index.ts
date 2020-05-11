@@ -11,6 +11,7 @@ export default async (req: Request, res: Response) => {
 			user: { _id },
 			gender,
 		} = req.body;
+		if (!gender) throw new Error("No gender in request body");
 		const doc = await Users.findByIdAndUpdate(
 			_id,
 			{
