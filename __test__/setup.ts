@@ -41,8 +41,8 @@ beforeAll(async (done) => {
 	await admin.makeAdmin();
 	const exercise = await Exercises.create({
 		difficultRange: {
-			min: 0,
-			max: 0,
+			min: 1,
+			max: 5,
 		},
 		parts: [
 			"Kalli for ut i bud",

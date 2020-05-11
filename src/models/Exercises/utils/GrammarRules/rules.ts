@@ -1,9 +1,9 @@
 import { Rule } from "./interface";
 
-export const NG_OG_NK = "ng_nk";
-export const KVK_UNN = "kvk_unn";
-export const STOR_NAFN = "stor_nafn";
-export const N_OR_NN = "n_eda_nn";
+export const NG_OG_NK = "ngnk";
+export const KVK_UNN = "kvkunn";
+export const STOR_NAFN = "storStafurNafn";
+export const N_OR_NN = "nOgNn";
 
 /**
  * List of rules that the system uses
