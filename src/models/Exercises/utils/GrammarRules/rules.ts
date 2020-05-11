@@ -16,22 +16,22 @@ export const rules: Rule[] = [
 	},
 	{
 		regex: /([A-Z]|[Þ])[^. ]*[u](nn)(?=[\s.,])/g,
-		name: "Kvennmannsnöfn sem enda á -unn",
+		name: "kvennmannsnöfn sem enda á -unn",
 		code: KVK_UNN,
 	},
 	{
 		regex: /([A-Z]|[Þ])[^. ]*[u](nn)(?=[\s.,])/g,
-		name: "Kvennmannsnöfn sem enda á -unn",
+		name: "kvennmannsnöfn sem enda á -unn",
 		code: KVK_UNN,
 	},
 	{
 		regex: /(?<=([a-z] ))[A-Z][^\s.,]*/g,
-		name: "Stór stafur í nafni",
+		name: "stór stafur",
 		code: STOR_NAFN,
 	},
 	{
 		regex: /(nn|(n)(\.|,| ))/g,
-		name: "Eitt eða tvö n",
+		name: "n og nn",
 		code: N_OR_NN,
 	},
 ];
