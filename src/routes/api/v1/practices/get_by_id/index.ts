@@ -7,7 +7,9 @@ import { Request, Response } from "express";
  */
 export default async ({ params: { id } }: Request, res: Response) => {
 	try {
+		console.log("hi");
 		const practice = await Practices.findById(id).lean();
+		console.log("practice", practice);
 		const exercise = await Exercises.findById(practice.exercise);
 		res.status(200).send({
 			...practice,

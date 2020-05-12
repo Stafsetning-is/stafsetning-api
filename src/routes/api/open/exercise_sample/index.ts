@@ -19,7 +19,8 @@ export default async (_req: Request, res: Response) => {
 			published: true,
 			removed: false,
 		}).limit(DOCUMENT_COUNT);
-		Cache.put(CACHE_KEY, docs, CACHE_TTL_SEC);
-		res.send(docs.map((doc) => doc.getRepresentation()));
+		const repr = docs.map((doc) => doc.getRepresentation());
+		Cache.put(CACHE_KEY, repr, CACHE_TTL_SEC);
+		res.send(repr);
 	}
 };
