@@ -38,6 +38,8 @@ export const createNew = async function (
  * @param user the user wishing to unsave
  * @param exercise exercise to unsave for user
  *
+ * any allowed as the input comes from user sent data and can not be
+ * type checked at run time
  */
 export const deleteSave = async function (
 	this: SavedExercisesCollectionInterface,
