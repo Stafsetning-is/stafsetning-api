@@ -6,9 +6,11 @@ import { Request, Response } from "express";
  */
 export default async (req: Request, res: Response) => {
 	try {
+		console.log("4", 4);
 		const docs = await Exercises.getCompletedExercises(req.body.user._id);
 		res.send(docs);
 	} catch (error) {
+		console.log("error", error);
 		res.status(400).send(error);
 	}
 };
