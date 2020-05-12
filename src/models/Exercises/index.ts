@@ -49,16 +49,4 @@ export const Exercises = model<ExerciseInterface, ExerciseCollectionInterface>(
 	"exercises"
 );
 
-// sets one-to-many relationship between the two
-exerciseSchema.index({ fileName: 1, owner: 1 }, { unique: true });
-
-// sets default values to properties
-exerciseSchema.pre<ExerciseInterface>("save", function () {
-	if (this.isNew) {
-		this.removed = false;
-		this.published = false;
-		this.counter = 0;
-	}
-});
-
 export * from "./interface";

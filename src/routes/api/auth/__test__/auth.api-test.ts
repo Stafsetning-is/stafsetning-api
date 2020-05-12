@@ -20,6 +20,26 @@ describe("Authentication routes", () => {
 		done();
 	});
 
+	it("POST /api/auth/sign_up can requestAdmin", async (done) => {
+		const payload = {
+			name: "John Doe",
+			password: "Password12.3",
+			mobile: "8012946",
+			type: "user",
+			username: "johnyd3",
+			difficulty: 5,
+			requestAdmin: true,
+		};
+		const { body, status } = await request(app)
+			.post("/api/auth/sign_up")
+			.send(payload);
+		expect(body).toHaveProperty("token");
+		expect(body).toHaveProperty("user");
+		expect(body.user).toHaveProperty("type", "pending-admin-invite");
+		expect(status).toEqual(201);
+		done();
+	});
+
 	it("POST /api/auth/sign_up fail", async (done) => {
 		const payload = {
 			name: "Pope John Paul II",

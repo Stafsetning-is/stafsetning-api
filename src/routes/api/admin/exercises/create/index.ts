@@ -10,7 +10,7 @@ export default async (req: Request, res: Response) => {
 			...req.body,
 			owner: req.body.user._id,
 		});
-		res.send(doc.getAdminRepresentation());
+		res.status(201).send(doc.getAdminRepresentation());
 	} catch (error) {
 		res.status(400).send({
 			message: "Unable to save exercise",

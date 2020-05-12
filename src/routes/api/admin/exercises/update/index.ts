@@ -9,7 +9,7 @@ export default async (req: Request, res: Response) => {
 		const doc = await Exercises.updateFile(req.body);
 		res.send(doc.getAdminRepresentation());
 	} catch (error) {
-		res.status(400).send({
+		res.status(404).send({
 			message: "Unable to save exercise",
 		});
 	}
