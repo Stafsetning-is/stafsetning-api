@@ -17,7 +17,7 @@ export const rules: Rule[] = [
 	},
 	{
 		regex: /([A-Z]|[Þ])[^. ]*[u](nn)(?=[\s.,])/g,
-		name: "Kvk nöfn sem enda á -unn",
+		name: "kvk nöfn sem enda á -unn",
 		code: KVK_UNN,
 	},
 	{
