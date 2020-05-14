@@ -9,7 +9,7 @@ export default async (req: Request, res: Response) => {
 		const docs = await Exercises.getCompletedExercises(req.body.user._id);
 		res.send(docs);
 	} catch (error) {
-		console.log("error", error);
+		// console.log("error", error);
 		res.status(400).send(error);
 	}
 };
