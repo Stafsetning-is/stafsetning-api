@@ -31,6 +31,9 @@ export const logActivity = async function (
 /**
  * generates a score card for a single user
  * @param userId users id
+ *
+ * any allowed as the input comes from user sent data and can not be
+ * type checked at run time
  */
 export const generateScoreCard = async function (
 	this: UserScoreCardCollection,

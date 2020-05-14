@@ -5,7 +5,6 @@ import {
 	AdminExerciseRepr,
 	ExerciseInterface,
 } from "./interface";
-import { Types } from "mongoose";
 import { Practices } from "../";
 import { PART_SPLITTER } from "./utils";
 import { Exercises } from ".";
@@ -71,6 +70,9 @@ export const updateFile = async function (
  * highest score for each
  * @param uid User id
  * @param removePracticeRefereence should practice's _id be removed from object;
+ *
+ * any allowed as the input comes from user sent data and can not be
+ * type checked at run time
  */
 export const getCompletedExercises = async function (
 	uid: any,
@@ -80,9 +82,11 @@ export const getCompletedExercises = async function (
 	const exerciseDict: { [key: string]: FinishedExerciseRepr } = {};
 
 	// finds all practices for user
-	const practices = await Practices.find({
-		user: uid,
-	}).populate("exercise");
+	const practices = (
+		await Practices.find({
+			user: uid,
+		}).populate("exercise")
+	).filter((item) => !!item.exercise);
 
 	// maps practices to exercise representation with score
 	const exercises = practices.map((practice) => {

@@ -9,6 +9,7 @@ export interface ConnectedUser {
 	lastActive: number;
 }
 
+// any as data can by any type
 export interface UserData {
 	_id: string;
 	data: any;

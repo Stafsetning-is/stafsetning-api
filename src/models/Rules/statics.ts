@@ -8,6 +8,10 @@ import { RuleCollectionInterface, Rule } from "./interface";
  * @param this type decleration for this
  * @param object any object that has key value storage
  * @param rules array of rules that the object must follow
+ *
+ * any allowed as the input comes from user sent data and can not be
+ * type checked at run time
+ *
  */
 export const reviewObject = function (
 	this: RuleCollectionInterface,

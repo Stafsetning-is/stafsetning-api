@@ -1,9 +1,11 @@
+type Proverb = string;
+
+const GOOD_GRADE_CUTOFF = 4;
 /**
  * more positive proverbs
  * use for 0-3 errors in excersise
  */
-
-const betterProverbs: string[] = [
+const betterProverbs: Proverb[] = [
 	"Allt er það vænt sem vel er grænt",
 	"Fátt er betra en fara vel",
 	"Hver er sinnar gæfu smiður",
@@ -30,7 +32,7 @@ const betterProverbs: string[] = [
  * use for 4+ errors in excersise
  */
 
-const goodProverbs: string[] = [
+const goodProverbs: Proverb[] = [
 	"Betra er hálft brauð en allt misst",
 	"Fyrr lægir ljós en lokið er degi",
 	"Lifir eik þótt laufið fjúki",
@@ -59,10 +61,10 @@ const goodProverbs: string[] = [
 	"Betra er hálfur skaði en allur",
 ];
 
-export const getRandomProverb = (numberOfErrors: number) => {
-	if (numberOfErrors < 4)
-		return betterProverbs[
-			Math.floor(betterProverbs.length * Math.random())
-		];
-	else return goodProverbs[Math.floor(goodProverbs.length * Math.random())];
-};
+const getRandomElement = <T>(array: T[]) =>
+	array[Math.floor(array.length * Math.random())];
+
+export const getRandomProverb = (errorCount: number) =>
+	getRandomElement(
+		errorCount < GOOD_GRADE_CUTOFF ? betterProverbs : goodProverbs
+	);

@@ -11,6 +11,8 @@ import {
 import {
 	UserPreferencesCollection,
 	UserPreferencesInterface,
+	FontSize,
+	BackgroundColor,
 } from "./interface";
 import * as statics from "./statics";
 
@@ -25,7 +27,7 @@ const userPreferencesSchema = new Schema({
 		type: Number,
 		default: DEF_FONT_SIZE,
 		validate: {
-			validator: (value: any) => ALLOWED_FONT_SIZES.includes(value),
+			validator: (value: FontSize) => ALLOWED_FONT_SIZES.includes(value),
 			msg: "Invalid font size",
 		},
 	},
@@ -33,7 +35,7 @@ const userPreferencesSchema = new Schema({
 		type: Number,
 		default: DEF_PREVIEW_TTL,
 		validate: {
-			validator: (value: any) =>
+			validator: (value: number) =>
 				value <= MAX_PREVIEW_TTL && value >= MIN_PREVIEW_TTL,
 			msg: "Invalid preview text TTL",
 		},
@@ -50,7 +52,8 @@ const userPreferencesSchema = new Schema({
 		type: String,
 		default: DEF_BG_COLOR,
 		validate: {
-			validator: (value: any) => ALLOWED_BG_COLORS.includes(value),
+			validator: (value: BackgroundColor) =>
+				ALLOWED_BG_COLORS.includes(value),
 			msg: "Invalid background color",
 		},
 	},

@@ -6,6 +6,7 @@ import {
 	Exercises,
 	Trophies,
 	UserTrophies,
+	SavedExercises,
 } from "../src/models";
 import app from "../src/app";
 
@@ -23,7 +24,7 @@ beforeAll(async (done) => {
 			useFindAndModify: false,
 		},
 		(err) => {
-			if (err) console.error(err);
+			// if (err) console.error(err);
 		}
 	);
 	await Users.createIndexes();
@@ -55,8 +56,25 @@ beforeAll(async (done) => {
 			"til ad kaupa mjolk,",
 			"handa mommu sinni.",
 		],
-		owner: "507f1f77bcf86cd799439011",
+		owner: adminSignupData.user._id,
 		fileName: "test",
+	});
+	const exercise2 = await Exercises.create({
+		difficultRange: {
+			min: 1,
+			max: 5,
+		},
+		parts: [
+			"Kalli for ut i bud",
+			"til ad kaupa mjolk,",
+			"handa mommu sinni.",
+		],
+		owner: adminSignupData.user._id,
+		fileName: "test2",
+	});
+	await SavedExercises.create({
+		user: signupData.user._id,
+		exercise: exercise2._id,
 	});
 	const practice = await Practices.create({
 		duration: 25,

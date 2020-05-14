@@ -37,7 +37,7 @@ describe("User routes", () => {
 		done();
 	});
 
-	it("GET /api/admin/users/invite_list responds with 401 withot admin token", async (done) => {
+	it("GET /api/admin/users/invite_list responds with 401 without admin token", async (done) => {
 		const { status } = await request(app).get(
 			"/api/admin/users/invite_list"
 		);
@@ -49,6 +49,24 @@ describe("User routes", () => {
 		const token = app.get("adminTestToken");
 		const { status, body } = await request(app)
 			.get("/api/admin/users/invite_list")
+			.set({ Authorization: `Bearer ${token}` });
+		expect(status).toEqual(200);
+		expect(Array.isArray(body)).toBe(true);
+		done();
+	});
+
+	it("GET /api/admin/users/exercises responds with 401 without admin token", async (done) => {
+		const { status } = await request(app).get(
+			"/api/admin/users/invite_list"
+		);
+		expect(status).toEqual(401);
+		done();
+	});
+
+	it("GET /api/admin/users/exercises responds with 200 and array as body", async (done) => {
+		const token = app.get("adminTestToken");
+		const { status, body } = await request(app)
+			.get("/api/admin/users/exercises")
 			.set({ Authorization: `Bearer ${token}` });
 		expect(status).toEqual(200);
 		expect(Array.isArray(body)).toBe(true);
