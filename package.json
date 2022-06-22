@@ -38,7 +38,7 @@
 		"@types/mongoose-auto-increment": "^5.0.33",
 		"@types/redis": "^2.8.20",
 		"@types/socket.io": "^2.1.4",
-		"async": "^3.1.0",
+		"async": "^3.2.2",
 		"aws-sdk": "^2.668.0",
 		"bcrypt-nodejs": "^0.0.3",
 		"bcryptjs": "^2.4.3",
